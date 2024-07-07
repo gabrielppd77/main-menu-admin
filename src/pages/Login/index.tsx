@@ -1,15 +1,39 @@
-import {
-  Avatar,
-  Button,
-  TextField,
-  Paper,
-  Box,
-  Grid,
-  Typography,
-} from "@mui/material";
+import { Avatar, Paper, Box, Grid, Typography } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { LoadingButton } from "@mui/lab";
+
+import TextFieldControl from "@components/TextFieldControl";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { FormProvider, useForm } from "react-hook-form";
+import { z } from "zod";
+
+import { useLogin } from "@libs/queries/user";
+
+const schema = z.object({
+  email: z
+    .string()
+    .min(1, { message: "Informe o Email" })
+    .email("Informe um Email válido"),
+  password: z.string().min(1, { message: "Informe a Senha" }),
+});
 
 export default function Login() {
+  const { mutateAsync, isPending } = useLogin();
+
+  const form = useForm({
+    resolver: zodResolver(schema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  form.handleSubmit(async (data) => {
+    const response = await mutateAsync(data);
+    console.log({ response });
+  });
+
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>
       <Grid
@@ -45,30 +69,37 @@ export default function Login() {
           <Typography component="h1" variant="h5">
             Entre
           </Typography>
-          <Box component="form" noValidate sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
+          <Box sx={{ mt: 1 }}>
+            <FormProvider {...form}>
+              <TextFieldControl
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email"
+                name="email"
+                autoComplete="email"
+                autoFocus
+              />
+              <TextFieldControl
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Senha"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+              />
+            </FormProvider>
+            <LoadingButton
+              loading={isPending}
+              variant="contained"
               fullWidth
-              id="email"
-              label="Email"
-              name="email"
-              autoComplete="email"
-              autoFocus
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Senha"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-            <Button type="submit" fullWidth sx={{ mt: 2, mb: 2 }}>
+              sx={{ mt: 2, mb: 2 }}
+            >
               Entrar
-            </Button>
+            </LoadingButton>
             {/* <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
