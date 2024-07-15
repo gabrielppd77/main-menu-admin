@@ -9,6 +9,8 @@ import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { useLogin } from "@libs/queries/user";
+import useAuth from "@hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const schema = z.object({
   email: z
@@ -20,6 +22,8 @@ const schema = z.object({
 
 export default function Login() {
   const { mutateAsync, isPending } = useLogin();
+  const { setToken } = useAuth();
+  const navigate = useNavigate();
 
   const form = useForm({
     resolver: zodResolver(schema),
@@ -27,11 +31,6 @@ export default function Login() {
       email: "",
       password: "",
     },
-  });
-
-  form.handleSubmit(async (data) => {
-    const response = await mutateAsync(data);
-    console.log({ response });
   });
 
   return (
@@ -97,6 +96,11 @@ export default function Login() {
               variant="contained"
               fullWidth
               sx={{ mt: 2, mb: 2 }}
+              onClick={form.handleSubmit(async (data) => {
+                const response = await mutateAsync(data);
+                setToken(response.token);
+                navigate("/home", { replace: true });
+              })}
             >
               Entrar
             </LoadingButton>

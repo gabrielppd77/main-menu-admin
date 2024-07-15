@@ -3,12 +3,32 @@ import {
   createBrowserRouter,
 } from "react-router-dom";
 
-import Login from "../pages/Login";
+import PublicLayout from "@layouts/PublicLayout";
+import MainLayout from "@layouts/MainLayout";
+
+import Login from "@pages/Login";
+import Home from "@pages/Home";
 
 const routes = createBrowserRouter([
   {
     path: "/",
-    element: <Login />,
+    element: <PublicLayout />,
+    children: [
+      {
+        path: "/",
+        element: <Login />,
+      },
+    ],
+  },
+  {
+    path: "/",
+    element: <MainLayout />,
+    children: [
+      {
+        path: "/home",
+        element: <Home />,
+      },
+    ],
   },
 ]);
 
