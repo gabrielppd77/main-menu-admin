@@ -8,6 +8,7 @@ import MainLayout from "@layouts/MainLayout";
 
 import Login from "@pages/Login";
 import Home from "@pages/Home";
+import Product from "@pages/Product";
 
 const routes = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const routes = createBrowserRouter([
       {
         path: "/home",
         element: <Home />,
+      },
+      {
+        path: "/product",
+        element: <Product />,
       },
     ],
   },
