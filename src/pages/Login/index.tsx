@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { useLogin } from "@libs/queries/user";
+import { useUserLogin } from "@libs/queries/user/useUserLogin";
 import useAuth from "@hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 
@@ -21,7 +21,7 @@ const schema = z.object({
 });
 
 export default function Login() {
-  const { mutateAsync, isPending } = useLogin();
+  const { mutateAsync, isPending } = useUserLogin();
   const { setToken } = useAuth();
   const navigate = useNavigate();
 

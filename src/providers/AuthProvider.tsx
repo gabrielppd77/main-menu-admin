@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 
-import axios from "axios";
-
+import api from "@libs/api";
 import AuthContext from "@contexts/AuthContext";
 
 interface AuthProviderProps {
@@ -17,10 +16,10 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 
   useEffect(() => {
     if (token) {
-      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+      api.defaults.headers.common["Authorization"] = "Bearer " + token;
       localStorage.setItem("token", token);
     } else {
-      delete axios.defaults.headers.common["Authorization"];
+      delete api.defaults.headers.common["Authorization"];
       localStorage.removeItem("token");
     }
   }, [token]);
