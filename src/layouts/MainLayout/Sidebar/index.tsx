@@ -32,7 +32,6 @@ export default function Sidebar() {
     >
       <Box
         sx={(theme) => ({
-          bgcolor: "primary.dark",
           height: "100%",
           color: "primary.contrastText",
           width: drawerWidth + "px",

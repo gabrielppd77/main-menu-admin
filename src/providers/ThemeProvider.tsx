@@ -15,6 +15,11 @@ const theme = createTheme({
         style: { textTransform: "none" },
       },
     },
+    MuiSvgIcon: {
+      defaultProps: {
+        fontSize: "small",
+      },
+    },
     MuiIcon: {
       defaultProps: {
         fontSize: "small",

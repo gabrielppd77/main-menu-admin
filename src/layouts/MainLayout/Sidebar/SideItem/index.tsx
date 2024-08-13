@@ -35,10 +35,10 @@ export default function SideItem({
         <ListItem
           sx={{
             borderRadius: 1,
-            bgcolor: isSelected ? "primary.main" : "",
+            bgcolor: isSelected ? "primary.light" : "",
             transition: "background-color 0.3s ease",
-            filter: isSelected ? "" : "brightness(70%)",
-            color: "primary.contrastText",
+            filter: isSelected ? "brightness(100%)" : "brightness(80%)",
+            color: isSelected ? "primary.contrastText" : "text.primary",
             height: 40,
           }}
           disableGutters

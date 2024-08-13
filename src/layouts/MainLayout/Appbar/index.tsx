@@ -58,7 +58,7 @@ export default function Appbar() {
               alignItems: "center",
             }}
           >
-            <IconButton onClick={toggleOpen}>
+            <IconButton color="inherit" onClick={toggleOpen}>
               <MenuIcon />
             </IconButton>
             <Link

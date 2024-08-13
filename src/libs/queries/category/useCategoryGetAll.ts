@@ -5,7 +5,7 @@ import api from "@libs/api";
 import { CategoryResponseDTO } from "./dtos/CategoryResponseDTO";
 import { extractError } from "@libs/alert";
 
-const query = ["category"];
+export const query = ["category"];
 
 export function useCategoryGetAll() {
   async function handleRequest() {
@@ -13,7 +13,7 @@ export function useCategoryGetAll() {
     return response.data;
   }
 
-  const { data, isLoading, isFetching, error } = useQuery({
+  const { error, ...rest } = useQuery({
     queryKey: query,
     queryFn: handleRequest,
   });
@@ -22,5 +22,5 @@ export function useCategoryGetAll() {
     extractError(error);
   }
 
-  return { data, isLoading, isFetching };
+  return rest;
 }
