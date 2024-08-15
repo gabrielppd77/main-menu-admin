@@ -4,5 +4,5 @@ export interface ProductUpdateDTO {
   imageUrl: string;
   order: number;
   price: number;
-  categoryId: undefined;
+  categoryId: string;
 }

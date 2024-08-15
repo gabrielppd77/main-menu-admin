@@ -1,8 +1,8 @@
 export interface ProductCreateDTO {
-  name: undefined;
-  description: undefined;
-  imageUrl: undefined;
+  name: string;
+  description: string;
+  imageUrl: string;
   order: number;
   price: number;
-  categoryId: undefined;
+  categoryId: string;
 }
