@@ -1,22 +1,25 @@
-import { TextField, TextFieldProps } from "@mui/material";
+import {
+  TextField as MUITextField,
+  TextFieldProps as MUITextFieldProps,
+} from "@mui/material";
 import { Controller } from "react-hook-form";
 
-interface TextFieldControlProps extends Omit<TextFieldProps, "label" | "name"> {
+interface TextFieldProps extends Omit<MUITextFieldProps, "label" | "name"> {
   label: string;
   name: string;
 }
 
-export default function TextFieldControl({
+export default function TextField({
   label,
   name,
   type,
   ...restProps
-}: TextFieldControlProps) {
+}: TextFieldProps) {
   return (
     <Controller
       name={name}
       render={({ field: { onChange, value }, fieldState: { error } }) => (
-        <TextField
+        <MUITextField
           helperText={error ? error.message : null}
           error={!!error}
           type={type}
