@@ -1,6 +1,6 @@
 import { Stack } from "@mui/material";
 
-import TextFieldControl from "@components/TextFieldControl";
+import TextField from "@components/TextField";
 import ActionDialog from "@components/ActionDialog";
 
 import { useCategoryCreate } from "@libs/queries/category/useCategoryCreate";
@@ -38,8 +38,8 @@ export default function FormCreate({ onClose }: FormCreateProps) {
     >
       <FormProvider>
         <Stack gap={2}>
-          <TextFieldControl required label="Nome" name="name" />
-          <TextFieldControl
+          <TextField required label="Nome" name="name" />
+          <TextField
             required
             type="number"
             label="Ordem da Categoria"

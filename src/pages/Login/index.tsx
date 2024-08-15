@@ -2,7 +2,7 @@ import { Avatar, Paper, Box, Grid, Typography } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { LoadingButton } from "@mui/lab";
 
-import TextFieldControl from "@components/TextFieldControl";
+import TextField from "@components/TextField";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm } from "react-hook-form";
@@ -70,7 +70,7 @@ export default function Login() {
           </Typography>
           <Box sx={{ mt: 1 }}>
             <FormProvider {...form}>
-              <TextFieldControl
+              <TextField
                 margin="normal"
                 required
                 fullWidth
@@ -80,7 +80,7 @@ export default function Login() {
                 autoComplete="email"
                 autoFocus
               />
-              <TextFieldControl
+              <TextField
                 margin="normal"
                 required
                 fullWidth
