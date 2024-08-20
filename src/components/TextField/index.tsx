@@ -7,14 +7,10 @@ import { Controller } from "react-hook-form";
 interface TextFieldProps extends Omit<MUITextFieldProps, "label" | "name"> {
   label: string;
   name: string;
+  isValidate?: boolean;
 }
 
-export default function TextField({
-  label,
-  name,
-  type,
-  ...restProps
-}: TextFieldProps) {
+function TextFieldControlled({ name, type, ...rest }: TextFieldProps) {
   return (
     <Controller
       name={name}
@@ -22,7 +18,6 @@ export default function TextField({
         <MUITextField
           helperText={error ? error.message : null}
           error={!!error}
-          type={type}
           onChange={(e) => {
             const v =
               type === "number"
@@ -31,10 +26,21 @@ export default function TextField({
             onChange(v);
           }}
           value={value}
-          label={label}
-          {...restProps}
+          name={name}
+          type={type}
+          {...rest}
         />
       )}
     />
   );
+}
+
+export default function TextField({
+  isValidate = true,
+  ...rest
+}: TextFieldProps) {
+  if (isValidate) {
+    return <TextFieldControlled {...rest} />;
+  }
+  return <MUITextField {...rest} />;
 }

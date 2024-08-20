@@ -1,39 +1,60 @@
-import { TextField } from "@mui/material";
+import {
+  TextField as MUITextField,
+  TextFieldProps as MUITextFieldProps,
+} from "@mui/material";
 import { Controller } from "react-hook-form";
 
-import { NumericFormat } from "react-number-format";
+import { NumericFormat, NumericFormatProps } from "react-number-format";
 
-interface CurrencyTextFieldProps {
+interface CurrencyTextFieldProps
+  extends Omit<NumericFormatProps<MUITextFieldProps>, "label" | "name"> {
   label: string;
   name: string;
-  prefix?: string;
-  required?: boolean;
+  isValidate?: boolean;
 }
 
-export default function CurrencyTextField({
-  label,
+function CurrencyTextFieldDefault(
+  props: NumericFormatProps<MUITextFieldProps>
+) {
+  return (
+    <NumericFormat
+      customInput={MUITextField}
+      allowNegative={false}
+      allowLeadingZeros
+      thousandSeparator="."
+      decimalSeparator=","
+      {...props}
+    />
+  );
+}
+
+function CurrencyTextFieldControlled({
   name,
-  prefix,
+  ...rest
 }: CurrencyTextFieldProps) {
   return (
     <Controller
       name={name}
       render={({ field: { onChange, value }, fieldState: { error } }) => (
-        <NumericFormat
-          allowNegative={false}
-          allowLeadingZeros
-          thousandSeparator="."
-          decimalSeparator=","
-          prefix={prefix}
-          customInput={TextField}
+        <CurrencyTextFieldDefault
           helperText={error ? error.message : null}
           error={!!error}
           onValueChange={({ floatValue }) => onChange(floatValue)}
           value={value}
-          label={label}
           name={name}
+          {...rest}
         />
       )}
     />
   );
+}
+
+export default function CurrencyTextField({
+  isValidate = true,
+  ...rest
+}: CurrencyTextFieldProps) {
+  if (isValidate) {
+    return <CurrencyTextFieldControlled {...rest} />;
+  }
+  return <CurrencyTextFieldDefault {...rest} />;
 }
