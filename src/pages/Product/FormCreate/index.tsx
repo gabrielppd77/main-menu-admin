@@ -3,6 +3,7 @@ import { Stack } from "@mui/material";
 import TextField from "@components/TextField";
 import ActionDialog from "@components/ActionDialog";
 import CurrencyTextField from "@components/CurrencyTextField";
+import AutoCompleteCategory from "@components/AutoCompleteCategory";
 
 import { useProductCreate } from "@libs/queries/product/useProductCreate";
 
@@ -59,6 +60,8 @@ export default function FormCreate({ onClose }: FormCreateProps) {
             name="order"
           />
           <CurrencyTextField required label="Preço" name="price" prefix="R$ " />
+
+          <AutoCompleteCategory name="categoryId" />
         </Stack>
       </FormProvider>
     </ActionDialog>

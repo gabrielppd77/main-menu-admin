@@ -7,7 +7,11 @@ import { extractError } from "@libs/alert";
 
 export const query = ["category"];
 
-export function useCategoryGetAll() {
+interface UseCategoryGetAllProps {
+  enabled?: boolean;
+}
+
+export function useCategoryGetAll({ enabled }: UseCategoryGetAllProps) {
   async function handleRequest() {
     const response = await api.get<CategoryResponseDTO[]>("/category");
     return response.data;
@@ -16,6 +20,7 @@ export function useCategoryGetAll() {
   const { error, ...rest } = useQuery({
     queryKey: query,
     queryFn: handleRequest,
+    enabled,
   });
 
   if (error) {

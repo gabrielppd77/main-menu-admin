@@ -24,7 +24,7 @@ export default function Category() {
     data: dataFormUpdate,
   } = useDialog<CategoryResponseDTO>();
 
-  const { data, isLoading, isFetching } = useCategoryGetAll();
+  const { data, isLoading, isFetching } = useCategoryGetAll({});
   const { mutateAsync } = useCategoryRemove();
 
   return (
