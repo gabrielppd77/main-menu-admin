@@ -22,7 +22,7 @@ export default function Category() {
     data: dataForm,
   } = useDialog<CategoryResponseDTO>();
 
-  const { data, isLoading, isFetching } = useCategoryGetAll({});
+  const { data, isLoading, isFetching } = useCategoryGetAll();
   const { mutateAsync } = useCategoryRemove();
 
   return (
@@ -38,13 +38,13 @@ export default function Category() {
         isFetching={isFetching}
         columns={[
           {
+            field: "order",
+            headerName: "Ordem",
+          },
+          {
             field: "name",
             headerName: "Nome",
             flex: 1,
-          },
-          {
-            field: "order",
-            headerName: "Ordem",
           },
           {
             field: "id",

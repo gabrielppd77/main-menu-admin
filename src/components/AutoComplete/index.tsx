@@ -7,7 +7,6 @@ interface AutoCompleteProps<TData> {
   isValidate?: boolean;
   options: TData[];
   renderOptions: (d: TData) => string;
-  fetchData?: () => void;
   isLoading?: boolean;
   idField: keyof TData extends string ? keyof TData : never;
   required?: boolean;
@@ -21,7 +20,6 @@ function AutoCompleteDefault<TData>({
   name,
   options,
   renderOptions,
-  fetchData,
   isLoading,
   idField,
   required,
@@ -37,11 +35,6 @@ function AutoCompleteDefault<TData>({
       }
       value={options.find((d) => d[idField] === value) || null}
       getOptionLabel={renderOptions}
-      onOpen={() => {
-        if (fetchData && options.length === 0) {
-          fetchData();
-        }
-      }}
       getOptionKey={(d) => d[idField] as string}
       options={options}
       loading={isLoading}

@@ -38,6 +38,10 @@ export default function Product() {
         isFetching={isFetching}
         columns={[
           {
+            field: "order",
+            headerName: "Ordem",
+          },
+          {
             field: "name",
             headerName: "Nome",
             flex: 2,
@@ -46,10 +50,6 @@ export default function Product() {
             field: "description",
             headerName: "Descrição",
             flex: 2,
-          },
-          {
-            field: "order",
-            headerName: "Ordem",
           },
           {
             field: "price",

@@ -14,7 +14,7 @@ export default function AutoCompleteCategory({
     isLoading: _isLoading,
     isFetching,
     refetch,
-  } = useCategoryGetAll({ enabled: false });
+  } = useCategoryGetAll();
   const isLoading = _isLoading || isFetching;
 
   return (

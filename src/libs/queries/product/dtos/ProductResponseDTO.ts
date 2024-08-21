@@ -5,5 +5,6 @@ export interface ProductResponseDTO {
   imageUrl: string;
   order: number;
   price: number;
+  categoryId: string;
   categoryName: string;
 }
