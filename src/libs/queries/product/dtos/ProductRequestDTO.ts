@@ -1,4 +1,4 @@
-export interface ProductUpdateDTO {
+export interface ProductRequestDTO {
   name: string;
   description: string;
   imageUrl: string;

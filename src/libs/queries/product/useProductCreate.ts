@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { ProductCreateDTO } from "./dtos/ProductCreateDTO";
+import { ProductRequestDTO } from "./dtos/ProductRequestDTO";
 
 import api from "@libs/api";
 
@@ -10,7 +10,7 @@ import { extractError } from "@libs/alert";
 import { query } from "./useProductGetAll";
 
 interface RequestProps {
-  data: ProductCreateDTO;
+  data: ProductRequestDTO;
 }
 
 export function useProductCreate() {

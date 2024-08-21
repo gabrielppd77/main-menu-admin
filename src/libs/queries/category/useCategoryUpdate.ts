@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { CategoryUpdateDTO } from "./dtos/CategoryUpdateDTO";
+import { CategoryRequestDTO } from "./dtos/CategoryRequestDTO";
 
 import api from "@libs/api";
 
@@ -11,7 +11,7 @@ import { query } from "./useCategoryGetAll";
 
 interface RequestProps {
   id: string;
-  data: CategoryUpdateDTO;
+  data: CategoryRequestDTO;
 }
 
 export function useCategoryUpdate() {
