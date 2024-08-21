@@ -9,19 +9,17 @@ import useDialog from "@hooks/useDialog";
 import { useCategoryGetAll } from "@libs/queries/category/useCategoryGetAll";
 import { useCategoryRemove } from "@libs/queries/category/useCategoryRemove";
 
-import FormCreate from "./FormCreate";
-import FormUpdate from "./FormUpdate";
+import Form from "./Form";
 
 import { confirmDelete } from "@libs/alert";
 
 import { CategoryResponseDTO } from "@libs/queries/category/dtos/CategoryResponseDTO";
 
 export default function Category() {
-  const { toggle: toggleFormCreate, isOpen: isOpenFormCreate } = useDialog();
   const {
-    toggle: toggleFormUpdate,
-    isOpen: isOpenFormUpdate,
-    data: dataFormUpdate,
+    toggle: toggleForm,
+    isOpen: isOpenForm,
+    data: dataForm,
   } = useDialog<CategoryResponseDTO>();
 
   const { data, isLoading, isFetching } = useCategoryGetAll({});
@@ -31,9 +29,7 @@ export default function Category() {
     <Stack gap={1} p={2}>
       <PageHeader
         title="Categorias"
-        renderRight={
-          <Button onClick={() => toggleFormCreate()}>Adicionar</Button>
-        }
+        renderRight={<Button onClick={() => toggleForm()}>Adicionar</Button>}
       />
 
       <DataTable
@@ -55,7 +51,7 @@ export default function Category() {
             headerName: "Ações",
             renderCell: ({ value, row }) => (
               <Stack direction="row" height="100%" gap={0.5}>
-                <IconButton onClick={() => toggleFormUpdate(row)}>
+                <IconButton onClick={() => toggleForm(row)}>
                   <Edit />
                 </IconButton>
                 <IconButton
@@ -71,10 +67,7 @@ export default function Category() {
         ]}
       />
 
-      {isOpenFormCreate && <FormCreate onClose={() => toggleFormCreate()} />}
-      {isOpenFormUpdate && dataFormUpdate && (
-        <FormUpdate data={dataFormUpdate} onClose={() => toggleFormUpdate()} />
-      )}
+      {isOpenForm && <Form data={dataForm} onClose={() => toggleForm()} />}
     </Stack>
   );
 }

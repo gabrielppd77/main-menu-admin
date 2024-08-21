@@ -9,19 +9,17 @@ import useDialog from "@hooks/useDialog";
 import { useProductGetAll } from "@libs/queries/product/useProductGetAll";
 import { useProductRemove } from "@libs/queries/product/useProductRemove";
 
-import FormCreate from "./FormCreate";
-import FormUpdate from "./FormUpdate";
+import Form from "./Form";
 
 import { confirmDelete } from "@libs/alert";
 
 import { ProductResponseDTO } from "@libs/queries/product/dtos/ProductResponseDTO";
 
 export default function Product() {
-  const { toggle: toggleFormCreate, isOpen: isOpenFormCreate } = useDialog();
   const {
-    toggle: toggleFormUpdate,
-    isOpen: isOpenFormUpdate,
-    data: dataFormUpdate,
+    toggle: toggleForm,
+    isOpen: isOpenForm,
+    data: dataForm,
   } = useDialog<ProductResponseDTO>();
 
   const { data, isLoading, isFetching } = useProductGetAll();
@@ -31,9 +29,7 @@ export default function Product() {
     <Stack gap={1} p={2}>
       <PageHeader
         title="Produtos"
-        renderRight={
-          <Button onClick={() => toggleFormCreate()}>Adicionar</Button>
-        }
+        renderRight={<Button onClick={() => toggleForm()}>Adicionar</Button>}
       />
 
       <DataTable
@@ -69,7 +65,7 @@ export default function Product() {
             headerName: "Ações",
             renderCell: ({ value, row }) => (
               <Stack direction="row" height="100%" gap={0.5}>
-                <IconButton onClick={() => toggleFormUpdate(row)}>
+                <IconButton onClick={() => toggleForm(row)}>
                   <Edit />
                 </IconButton>
                 <IconButton
@@ -85,10 +81,7 @@ export default function Product() {
         ]}
       />
 
-      {isOpenFormCreate && <FormCreate onClose={() => toggleFormCreate()} />}
-      {isOpenFormUpdate && dataFormUpdate && (
-        <FormUpdate data={dataFormUpdate} onClose={() => toggleFormUpdate()} />
-      )}
+      {isOpenForm && <Form data={dataForm} onClose={() => toggleForm()} />}
     </Stack>
   );
 }
