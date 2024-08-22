@@ -4,6 +4,8 @@ import {
   GridRowsProp,
   GridColDef,
   GridValidRowModel,
+  GridEventListener,
+  useGridApiRef,
 } from "@mui/x-data-grid";
 
 interface DataTableProps<TData extends GridValidRowModel> {
@@ -11,6 +13,7 @@ interface DataTableProps<TData extends GridValidRowModel> {
   columns: GridColDef<TData>[];
   isLoading: boolean;
   isFetching: boolean;
+  onKeyDown?: (key: string, rows: TData[]) => void;
 }
 
 export default function DataTable<TData extends GridValidRowModel>({
@@ -18,7 +21,18 @@ export default function DataTable<TData extends GridValidRowModel>({
   columns,
   isLoading,
   isFetching,
+  onKeyDown,
 }: DataTableProps<TData>) {
+  const apiRef = useGridApiRef();
+
+  const handleCellKeyDown: GridEventListener<"cellKeyDown"> = (_, { key }) => {
+    if (!onKeyDown) return;
+    const rowsSelected = Array.from(
+      apiRef.current.getSelectedRows().values()
+    ) as TData[];
+    onKeyDown(key, rowsSelected);
+  };
+
   return (
     <Box>
       <LinearProgress
@@ -26,6 +40,7 @@ export default function DataTable<TData extends GridValidRowModel>({
         value={0}
       />
       <DataGrid
+        apiRef={apiRef}
         loading={isLoading}
         autoHeight
         columns={columns}
@@ -37,6 +52,7 @@ export default function DataTable<TData extends GridValidRowModel>({
             },
           },
         }}
+        onCellKeyDown={handleCellKeyDown}
         density="compact"
         disableColumnMenu
         pageSizeOptions={[10, 25, 50]}

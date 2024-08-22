@@ -33,6 +33,14 @@ export default function Product() {
       />
 
       <DataTable
+        onKeyDown={(key, rows) => {
+          if (key === "F2") {
+            toggleForm(rows[0]);
+          }
+          if (key === "Delete") {
+            confirmDelete(async () => await mutateAsync({ id: rows[0].id }));
+          }
+        }}
         data={data}
         isLoading={isLoading}
         isFetching={isFetching}
