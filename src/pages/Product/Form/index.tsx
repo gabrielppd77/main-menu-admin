@@ -21,9 +21,7 @@ const schema = z.object({
   description: z
     .string({ message: "Informe a Descrição" })
     .min(1, { message: "Informe pelo menos um caractere" }),
-  imageUrl: z
-    .string({ message: "Informe uma URL de uma Imagem" })
-    .min(1, "Informe uma URL de uma Imagem válida"),
+  imageUrl: z.string().optional(),
   order: z
     .number({ message: "Informe a Ordem do Produto" })
     .min(1, "Informe uma ordem válida"),
