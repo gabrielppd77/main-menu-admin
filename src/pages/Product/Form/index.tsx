@@ -21,7 +21,7 @@ const schema = z.object({
   description: z
     .string({ message: "Informe a Descrição" })
     .min(1, { message: "Informe pelo menos um caractere" }),
-  imageUrl: z.string().optional(),
+  urlImage: z.string().optional(),
   order: z
     .number({ message: "Informe a Ordem do Produto" })
     .min(1, "Informe uma ordem válida"),
@@ -84,7 +84,7 @@ export default function Form({ data, onClose }: Form) {
             label="Ordem do Produto"
             name="order"
           />
-          <TextField label="URL da Imagem" name="imageUrl" />
+          <TextField label="URL da Imagem" name="urlImage" />
           <CurrencyTextField required label="Preço" name="price" prefix="R$ " />
           <AutoCompleteCategory name="categoryId" />
         </Stack>
