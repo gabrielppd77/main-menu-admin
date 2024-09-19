@@ -1,7 +1,7 @@
 export interface ProductResponseDTO {
   id: string;
   name: string;
-  description: string;
+  description?: string;
   urlImage?: string;
   order: number;
   price: number;

@@ -18,9 +18,7 @@ const schema = z.object({
   name: z
     .string({ message: "Informe o Nome" })
     .min(1, { message: "Informe pelo menos um caractere" }),
-  description: z
-    .string({ message: "Informe a Descrição" })
-    .min(1, { message: "Informe pelo menos um caractere" }),
+  description: z.string().optional(),
   urlImage: z.string().optional(),
   order: z
     .number({ message: "Informe a Ordem do Produto" })
@@ -77,7 +75,7 @@ export default function Form({ data, onClose }: Form) {
       <FormProvider>
         <Stack gap={2}>
           <TextField required label="Nome" name="name" />
-          <TextField required label="Descrição" name="description" />
+          <TextField label="Descrição" name="description" />
           <TextField
             required
             type="number"
