@@ -4,7 +4,7 @@ import { z } from "zod";
 
 interface UseValidateFormProps<TSchema extends z.ZodTypeAny> {
   schema: TSchema;
-  defaultValues: DefaultValues<z.infer<TSchema>>;
+  defaultValues?: DefaultValues<z.infer<TSchema>>;
 }
 
 export default function useValidateForm<TSchema extends z.ZodTypeAny>({
