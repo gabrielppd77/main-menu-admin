@@ -6,6 +6,11 @@ interface MenuProps {
 
 const menu: MenuProps[] = [
   {
+    title: "Empresa",
+    icon: "apartment",
+    link: "/company",
+  },
+  {
     title: "Categorias",
     icon: "category",
     link: "/category",

@@ -64,7 +64,7 @@ export default function Form({ data, onClose }: FormProps) {
       onSubmit={handleSubmit(onSubmit)}
     >
       <FormProvider>
-        <Stack gap={2}>
+        <Stack gap={1}>
           <TextField required label="Nome" name="name" />
           <TextField
             required

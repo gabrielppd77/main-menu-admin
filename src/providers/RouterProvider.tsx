@@ -7,6 +7,7 @@ import PublicLayout from "@layouts/PublicLayout";
 import MainLayout from "@layouts/MainLayout";
 
 import Login from "@pages/Login";
+import Company from "@pages/Company";
 import Home from "@pages/Home";
 import Category from "@pages/Category";
 import Product from "@pages/Product";
@@ -26,6 +27,10 @@ const routes = createBrowserRouter([
     path: "/",
     element: <MainLayout />,
     children: [
+      {
+        path: "/company",
+        element: <Company />,
+      },
       {
         path: "/home",
         element: <Home />,
