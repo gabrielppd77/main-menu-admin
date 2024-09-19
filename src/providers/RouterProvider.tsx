@@ -7,6 +7,7 @@ import PublicLayout from "@layouts/PublicLayout";
 import MainLayout from "@layouts/MainLayout";
 
 import SignIn from "@pages/SignIn";
+import SignUp from "@pages/SignUp";
 import Company from "@pages/Company";
 import Home from "@pages/Home";
 import Category from "@pages/Category";
@@ -23,7 +24,7 @@ const routes = createBrowserRouter([
       },
       {
         path: "/sign-up",
-        element: <>signup</>,
+        element: <SignUp />,
       },
     ],
   },

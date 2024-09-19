@@ -22,10 +22,12 @@ import { useUserLogin } from "@libs/queries/user/useUserLogin";
 
 const schema = z.object({
   email: z
-    .string()
-    .min(1, { message: "Informe o Email" })
+    .string({ message: "Informe o Email" })
+    .min(1, { message: "Informe pelo menos um caracter" })
     .email("Informe um Email válido"),
-  password: z.string().min(1, { message: "Informe a Senha" }),
+  password: z
+    .string({ message: "Informe a senha" })
+    .min(1, { message: "Informe pelo menos um caracter" }),
 });
 export default function SignIn() {
   const { mutateAsync, isPending } = useUserLogin();
@@ -55,7 +57,7 @@ export default function SignIn() {
         </Typography>
         <Box sx={{ mt: 1, width: "100%" }}>
           <FormProvider>
-            <Stack gap={2}>
+            <Stack gap={1}>
               <TextField
                 id="email"
                 type="email"
@@ -74,7 +76,6 @@ export default function SignIn() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                autoFocus
                 required
                 variant="outlined"
                 label="Senha"
@@ -99,7 +100,7 @@ export default function SignIn() {
           <Grid container>
             <Grid item xs></Grid>
             <Grid item>
-              <Link onClick={() => navigate("/sign-up")} variant="body2">
+              <Link href="/sign-up" variant="body2">
                 {"Não tem uma conta? Cadastre"}
               </Link>
             </Grid>
