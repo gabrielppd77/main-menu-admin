@@ -13,7 +13,6 @@ export default function AutoCompleteCategory({
     data,
     isLoading: _isLoading,
     isFetching,
-    refetch,
   } = useCategoryGetAll();
   const isLoading = _isLoading || isFetching;
 
@@ -25,7 +24,6 @@ export default function AutoCompleteCategory({
       name={name}
       idField="id"
       renderOptions={(d) => d.name}
-      fetchData={refetch}
       required
     />
   );
