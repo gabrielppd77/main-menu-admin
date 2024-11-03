@@ -20,6 +20,9 @@ const schema = z.object({
   name: z
     .string({ message: "Informe o Nome" })
     .min(1, "Informe pelo menos um caractere"),
+  path: z
+    .string({ message: "Informe o caminho para acessar o seu site" })
+    .min(1, "Informe pelo menos um caractere"),
   description: z.string().optional(),
   urlImage: z.string().optional(),
 });
@@ -87,6 +90,7 @@ export default function Company() {
       <FormProvider>
         <Stack gap={1}>
           <TextField required label="Nome" name="name" />
+          <TextField required label="Caminho para acesso do site" name="path" />
           <TextField label="Descrição" name="description" />
           <TextField label="URL da Imagem" name="urlImage" />
 
