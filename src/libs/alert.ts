@@ -50,3 +50,44 @@ export function confirmDelete(onConfirm: () => Promise<void>) {
     allowOutsideClick: () => !Swal.isLoading(),
   });
 }
+
+export function confirmPassword(
+  onConfirm: (password: string) => Promise<void>
+) {
+  Swal.fire({
+    icon: "question",
+    title: "Você realmente quer remover?",
+    text: "As alterações não poderão ser desfeitas, confirme digitando a sua senha",
+    showConfirmButton: true,
+    showCancelButton: true,
+    reverseButtons: true,
+    confirmButtonText: "Sim",
+    confirmButtonColor: "red",
+    cancelButtonText: "Não",
+    showLoaderOnConfirm: true,
+    preConfirm: async (password: string) => {
+      await onConfirm(password);
+    },
+    allowOutsideClick: () => !Swal.isLoading(),
+    input: "password",
+    inputPlaceholder: "Digite sua senha",
+    inputAttributes: {
+      autocapitalize: "off",
+      autocorrect: "off",
+    },
+  });
+}
+
+export function confirmMessage(
+  onClose: () => void,
+  { title, text }: { title: string; text: string }
+) {
+  Swal.fire({
+    icon: "success",
+    title,
+    text,
+    showConfirmButton: true,
+    confirmButtonText: "Beleza!",
+    didClose: () => onClose(),
+  });
+}

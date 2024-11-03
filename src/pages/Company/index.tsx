@@ -7,9 +7,13 @@ import TextField from "@components/TextField";
 import useValidateForm from "@hooks/useValidateForm";
 
 import { z } from "zod";
+import { confirmPassword, confirmMessage } from "@libs/alert";
 
 import { useCompanyGetCompany } from "@libs/queries/company/useCompanyGetCompany";
 import { useCompanyUpdate } from "@libs/queries/company/useCompanyUpdate";
+import { useUserRemoveAccount } from "@libs/queries/user/useUserRemoveAccount";
+import { useNavigate } from "react-router-dom";
+import useAuth from "@hooks/useAuth";
 
 const schema = z.object({
   id: z.string().optional(),
@@ -24,9 +28,35 @@ type DataType = z.infer<typeof schema>;
 
 export default function Company() {
   const { data, isLoading, isFetching } = useCompanyGetCompany();
+  const { setToken } = useAuth();
+  const navigate = useNavigate();
 
   const { mutateAsync: mutateAsyncUpdate, isPending: isPendingUpdate } =
     useCompanyUpdate();
+  const {
+    mutateAsync: mutateAsyncRemoveAccount,
+    isPending: isPendingRemoveAccount,
+  } = useUserRemoveAccount();
+
+  function handleRemoveAccount() {
+    confirmPassword(async (password) => {
+      await mutateAsyncRemoveAccount({
+        params: {
+          password,
+        },
+      });
+      confirmMessage(
+        () => {
+          setToken("");
+          navigate("/");
+        },
+        {
+          title: "Conta removida com sucesso!",
+          text: "Você será redirecionado para a página inicial",
+        }
+      );
+    });
+  }
 
   const { FormProvider, handleSubmit } = useValidateForm({
     schema,
@@ -59,6 +89,17 @@ export default function Company() {
           <TextField required label="Nome" name="name" />
           <TextField label="Descrição" name="description" />
           <TextField label="URL da Imagem" name="urlImage" />
+
+          <Box>
+            <LoadingButton
+              variant="contained"
+              color="error"
+              loading={isPendingRemoveAccount}
+              onClick={handleRemoveAccount}
+            >
+              Deletar conta
+            </LoadingButton>
+          </Box>
         </Stack>
         <Box
           sx={{
