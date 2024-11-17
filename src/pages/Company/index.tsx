@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 import { Box, CircularProgress, LinearProgress, Stack } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 
@@ -41,6 +43,26 @@ export default function Company() {
     isPending: isPendingRemoveAccount,
   } = useUserRemoveAccount();
 
+  const { FormProvider, handleSubmit, reset } = useValidateForm({
+    schema,
+    defaultValues: data || {},
+  });
+
+  useEffect(() => {
+    if (data) {
+      reset(data);
+    }
+  }, [data, reset]);
+
+  async function onSubmit(d: DataType) {
+    if (d.id) {
+      await mutateAsyncUpdate({
+        id: d.id,
+        data: d,
+      });
+    }
+  }
+
   function handleRemoveAccount() {
     confirmPassword(async (password) => {
       await mutateAsyncRemoveAccount({
@@ -59,20 +81,6 @@ export default function Company() {
         }
       );
     });
-  }
-
-  const { FormProvider, handleSubmit } = useValidateForm({
-    schema,
-    defaultValues: data || {},
-  });
-
-  async function onSubmit(d: DataType) {
-    if (d.id) {
-      await mutateAsyncUpdate({
-        id: d.id,
-        data: d,
-      });
-    }
   }
 
   return (

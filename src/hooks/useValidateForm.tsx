@@ -25,5 +25,6 @@ export default function useValidateForm<TSchema extends z.ZodTypeAny>({
   return {
     FormProvider: Component,
     handleSubmit: form.handleSubmit,
+    reset: form.reset,
   };
 }
