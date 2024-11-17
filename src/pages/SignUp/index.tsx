@@ -19,7 +19,7 @@ const schema = z
       .min(1, { message: "Informe pelo menos um caracter" })
       .email("Informe um Email válido"),
     companyName: z
-      .string({ message: "Informe o Nome da Empresa" })
+      .string({ message: "Informe o Nome da Loja" })
       .min(1, { message: "Informe pelo menos um caracter" }),
     password: z
       .string({ message: "Informe a senha" })
@@ -83,7 +83,7 @@ export default function SignUp() {
                   required
                   variant="outlined"
                   sx={{ ariaLabel: "companyName" }}
-                  label="Nome da Empresa"
+                  label="Nome da Loja"
                 />
               </Grid>
               <Grid item xs={12}>

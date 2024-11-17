@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 
 import { Box, CircularProgress, LinearProgress, Stack } from "@mui/material";
+import { QrCode2 } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 
 import PageHeader from "@components/PageHeader";
@@ -14,6 +15,8 @@ import { confirmPassword, confirmMessage } from "@libs/alert";
 import { useCompanyGetCompany } from "@libs/queries/company/useCompanyGetCompany";
 import { useCompanyUpdate } from "@libs/queries/company/useCompanyUpdate";
 import { useUserRemoveAccount } from "@libs/queries/user/useUserRemoveAccount";
+import { useCompanyGetQRCode } from "@libs/queries/company/useCompanyGetQRCode";
+
 import { useNavigate } from "react-router-dom";
 import useAuth from "@hooks/useAuth";
 
@@ -42,6 +45,8 @@ export default function Company() {
     mutateAsync: mutateAsyncRemoveAccount,
     isPending: isPendingRemoveAccount,
   } = useUserRemoveAccount();
+  const { mutateAsync: mutateAsyncGetQRCode, isPending: isPendingGetQRCode } =
+    useCompanyGetQRCode();
 
   const { FormProvider, handleSubmit, reset } = useValidateForm({
     schema,
@@ -86,7 +91,7 @@ export default function Company() {
   return (
     <Stack gap={1} p={2}>
       <PageHeader
-        title="Empresa"
+        title="Loja"
         renderRight={isLoading && <CircularProgress size={25} />}
       />
 
@@ -102,16 +107,29 @@ export default function Company() {
           <TextField label="Descrição" name="description" />
           <TextField label="URL da Imagem" name="urlImage" />
 
-          <Box>
-            <LoadingButton
-              variant="contained"
-              color="error"
-              loading={isPendingRemoveAccount}
-              onClick={handleRemoveAccount}
-            >
-              Deletar conta
-            </LoadingButton>
-          </Box>
+          <Stack gap={1}>
+            <Box>
+              <LoadingButton
+                loading={isPendingGetQRCode}
+                onClick={async () => await mutateAsyncGetQRCode()}
+                variant="outlined"
+                startIcon={<QrCode2 />}
+              >
+                Gerar QR Code da Loja
+              </LoadingButton>
+            </Box>
+
+            <Box>
+              <LoadingButton
+                variant="contained"
+                color="error"
+                loading={isPendingRemoveAccount}
+                onClick={handleRemoveAccount}
+              >
+                Deletar Loja
+              </LoadingButton>
+            </Box>
+          </Stack>
         </Stack>
         <Box
           sx={{
