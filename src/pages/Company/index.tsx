@@ -121,6 +121,7 @@ export default function Company() {
         >
           <LoadingButton
             variant="contained"
+            type="submit"
             loading={isPendingUpdate}
             onClick={handleSubmit(onSubmit)}
           >

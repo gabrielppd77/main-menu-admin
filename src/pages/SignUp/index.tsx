@@ -111,20 +111,22 @@ export default function SignUp() {
                 />
               </Grid>
             </Grid>
+
+            <LoadingButton
+              loading={isPending}
+              variant="contained"
+              type="submit"
+              sx={{ mt: 3, mb: 2 }}
+              fullWidth
+              onClick={handleSubmit(async (data) => {
+                const response = await mutateAsync(data);
+                setToken(response.token);
+                navigate("/home");
+              })}
+            >
+              Cadastrar
+            </LoadingButton>
           </FormProvider>
-          <LoadingButton
-            loading={isPending}
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-            fullWidth
-            onClick={handleSubmit(async (data) => {
-              const response = await mutateAsync(data);
-              setToken(response.token);
-              navigate("/home");
-            })}
-          >
-            Cadastrar
-          </LoadingButton>
           <Grid container justifyContent="flex-end">
             <Grid item>
               <Link href="/" variant="body2">

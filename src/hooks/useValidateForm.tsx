@@ -19,7 +19,9 @@ export default function useValidateForm<TSchema extends z.ZodTypeAny>({
   });
 
   const Component = ({ children }: { children: React.ReactNode }) => (
-    <FormProvider {...form}>{children}</FormProvider>
+    <FormProvider {...form}>
+      <form>{children}</form>
+    </FormProvider>
   );
 
   return {
