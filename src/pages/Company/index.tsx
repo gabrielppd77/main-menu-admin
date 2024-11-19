@@ -1,4 +1,7 @@
+import { useEffect } from "react";
+
 import { Box, CircularProgress, LinearProgress, Stack } from "@mui/material";
+import { QrCode2 } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 
 import PageHeader from "@components/PageHeader";
@@ -7,14 +10,23 @@ import TextField from "@components/TextField";
 import useValidateForm from "@hooks/useValidateForm";
 
 import { z } from "zod";
+import { confirmPassword, confirmMessage } from "@libs/alert";
 
 import { useCompanyGetCompany } from "@libs/queries/company/useCompanyGetCompany";
 import { useCompanyUpdate } from "@libs/queries/company/useCompanyUpdate";
+import { useUserRemoveAccount } from "@libs/queries/user/useUserRemoveAccount";
+import { useCompanyGetQRCode } from "@libs/queries/company/useCompanyGetQRCode";
+
+import { useNavigate } from "react-router-dom";
+import useAuth from "@hooks/useAuth";
 
 const schema = z.object({
   id: z.string().optional(),
   name: z
     .string({ message: "Informe o Nome" })
+    .min(1, "Informe pelo menos um caractere"),
+  path: z
+    .string({ message: "Informe o caminho para acessar o seu site" })
     .min(1, "Informe pelo menos um caractere"),
   description: z.string().optional(),
   urlImage: z.string().optional(),
@@ -24,14 +36,28 @@ type DataType = z.infer<typeof schema>;
 
 export default function Company() {
   const { data, isLoading, isFetching } = useCompanyGetCompany();
+  const { setToken } = useAuth();
+  const navigate = useNavigate();
 
   const { mutateAsync: mutateAsyncUpdate, isPending: isPendingUpdate } =
     useCompanyUpdate();
+  const {
+    mutateAsync: mutateAsyncRemoveAccount,
+    isPending: isPendingRemoveAccount,
+  } = useUserRemoveAccount();
+  const { mutateAsync: mutateAsyncGetQRCode, isPending: isPendingGetQRCode } =
+    useCompanyGetQRCode();
 
-  const { FormProvider, handleSubmit } = useValidateForm({
+  const { FormProvider, handleSubmit, reset } = useValidateForm({
     schema,
     defaultValues: data || {},
   });
+
+  useEffect(() => {
+    if (data) {
+      reset(data);
+    }
+  }, [data, reset]);
 
   async function onSubmit(d: DataType) {
     if (d.id) {
@@ -42,10 +68,30 @@ export default function Company() {
     }
   }
 
+  function handleRemoveAccount() {
+    confirmPassword(async (password) => {
+      await mutateAsyncRemoveAccount({
+        params: {
+          password,
+        },
+      });
+      confirmMessage(
+        () => {
+          setToken("");
+          navigate("/");
+        },
+        {
+          title: "Conta removida com sucesso!",
+          text: "Você será redirecionado para a página inicial",
+        }
+      );
+    });
+  }
+
   return (
     <Stack gap={1} p={2}>
       <PageHeader
-        title="Empresa"
+        title="Loja"
         renderRight={isLoading && <CircularProgress size={25} />}
       />
 
@@ -57,8 +103,33 @@ export default function Company() {
       <FormProvider>
         <Stack gap={1}>
           <TextField required label="Nome" name="name" />
+          <TextField required label="Caminho para acesso do site" name="path" />
           <TextField label="Descrição" name="description" />
           <TextField label="URL da Imagem" name="urlImage" />
+
+          <Stack gap={1}>
+            <Box>
+              <LoadingButton
+                loading={isPendingGetQRCode}
+                onClick={async () => await mutateAsyncGetQRCode()}
+                variant="outlined"
+                startIcon={<QrCode2 />}
+              >
+                Gerar QR Code da Loja
+              </LoadingButton>
+            </Box>
+
+            <Box>
+              <LoadingButton
+                variant="contained"
+                color="error"
+                loading={isPendingRemoveAccount}
+                onClick={handleRemoveAccount}
+              >
+                Deletar Loja
+              </LoadingButton>
+            </Box>
+          </Stack>
         </Stack>
         <Box
           sx={{
@@ -68,6 +139,7 @@ export default function Company() {
         >
           <LoadingButton
             variant="contained"
+            type="submit"
             loading={isPendingUpdate}
             onClick={handleSubmit(onSubmit)}
           >

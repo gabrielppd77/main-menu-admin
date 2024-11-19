@@ -25,7 +25,7 @@ function TextFieldControlled({ name, type, ...rest }: TextFieldProps) {
                 : e.target.value;
             onChange(v);
           }}
-          value={value}
+          value={value || ""}
           name={name}
           type={type}
           {...rest}

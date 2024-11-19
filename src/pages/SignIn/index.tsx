@@ -29,6 +29,7 @@ const schema = z.object({
     .string({ message: "Informe a senha" })
     .min(1, { message: "Informe pelo menos um caracter" }),
 });
+
 export default function SignIn() {
   const { mutateAsync, isPending } = useUserLogin();
 
@@ -81,21 +82,22 @@ export default function SignIn() {
                 label="Senha"
               />
             </Stack>
-          </FormProvider>
 
-          <LoadingButton
-            loading={isPending}
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-            fullWidth
-            onClick={handleSubmit(async (data) => {
-              const response = await mutateAsync(data);
-              setToken(response.token);
-              navigate("/home");
-            })}
-          >
-            Entre
-          </LoadingButton>
+            <LoadingButton
+              loading={isPending}
+              type="submit"
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              fullWidth
+              onClick={handleSubmit(async (data) => {
+                const response = await mutateAsync(data);
+                setToken(response.token);
+                navigate("/home");
+              })}
+            >
+              Entre
+            </LoadingButton>
+          </FormProvider>
 
           <Grid container>
             <Grid item xs></Grid>

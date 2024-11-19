@@ -19,7 +19,7 @@ const schema = z
       .min(1, { message: "Informe pelo menos um caracter" })
       .email("Informe um Email válido"),
     companyName: z
-      .string({ message: "Informe o Nome da Empresa" })
+      .string({ message: "Informe o Nome da Loja" })
       .min(1, { message: "Informe pelo menos um caracter" }),
     password: z
       .string({ message: "Informe a senha" })
@@ -83,7 +83,7 @@ export default function SignUp() {
                   required
                   variant="outlined"
                   sx={{ ariaLabel: "companyName" }}
-                  label="Nome da Empresa"
+                  label="Nome da Loja"
                 />
               </Grid>
               <Grid item xs={12}>
@@ -111,20 +111,22 @@ export default function SignUp() {
                 />
               </Grid>
             </Grid>
+
+            <LoadingButton
+              loading={isPending}
+              variant="contained"
+              type="submit"
+              sx={{ mt: 3, mb: 2 }}
+              fullWidth
+              onClick={handleSubmit(async (data) => {
+                const response = await mutateAsync(data);
+                setToken(response.token);
+                navigate("/home");
+              })}
+            >
+              Cadastrar
+            </LoadingButton>
           </FormProvider>
-          <LoadingButton
-            loading={isPending}
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-            fullWidth
-            onClick={handleSubmit(async (data) => {
-              const response = await mutateAsync(data);
-              setToken(response.token);
-              navigate("/home");
-            })}
-          >
-            Cadastrar
-          </LoadingButton>
           <Grid container justifyContent="flex-end">
             <Grid item>
               <Link href="/" variant="body2">
