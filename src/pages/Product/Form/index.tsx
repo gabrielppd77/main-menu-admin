@@ -18,8 +18,8 @@ const schema = z.object({
   name: z
     .string({ message: "Informe o Nome" })
     .min(1, { message: "Informe pelo menos um caractere" }),
-  description: z.string().optional(),
-  urlImage: z.string().optional(),
+  description: z.string().optional().nullable(),
+  urlImage: z.string().optional().nullable(),
   order: z
     .number({ message: "Informe a Ordem do Produto" })
     .min(1, "Informe uma ordem válida"),

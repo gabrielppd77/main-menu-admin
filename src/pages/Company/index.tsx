@@ -36,8 +36,7 @@ const schema = z.object({
   path: z
     .string({ message: "Informe o caminho para acessar o seu site" })
     .min(1, "Informe pelo menos um caractere"),
-  description: z.string().optional(),
-  urlImage: z.string().optional(),
+  description: z.string().optional().nullable(),
 });
 
 type DataType = z.infer<typeof schema>;

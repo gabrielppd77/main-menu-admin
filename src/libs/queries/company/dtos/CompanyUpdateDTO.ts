@@ -1,5 +1,5 @@
 export interface CompanyUpdateDTO {
   name: string;
   path: string;
-  description?: string;
+  description?: string | null;
 }
