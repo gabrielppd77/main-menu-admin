@@ -1,11 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 import api from "@libs/api";
 
 import { CompanyResponseDTO } from "./dtos/CompanyResponseDTO";
 import { extractError } from "@libs/alert";
 
-export const query = ["Company"];
+const query = ["Company"];
 
 export function useCompanyGetCompany() {
   async function handleRequest() {
@@ -23,4 +23,14 @@ export function useCompanyGetCompany() {
   }
 
   return rest;
+}
+
+export function useInvalidate() {
+  const queryClient = useQueryClient();
+  function handleInvalidate() {
+    queryClient.invalidateQueries({
+      queryKey: query,
+    });
+  }
+  return { handleInvalidate };
 }
