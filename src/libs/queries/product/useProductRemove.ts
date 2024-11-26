@@ -1,30 +1,30 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 
 import api from "@libs/api";
 
 import { notifyRemove } from "@libs/notification";
 import { extractError } from "@libs/alert";
 
-import { query } from "./useProductGetAll";
+import { useInvalidate } from "./useProductGetAll";
 
 interface RequestProps {
-  id: string;
+  params: {
+    id: string;
+  };
 }
 
 export function useProductRemove() {
-  const queryClient = useQueryClient();
+  const { handleInvalidate } = useInvalidate();
 
-  async function handleRequest({ id }: RequestProps) {
-    await api.delete("/Product/" + id);
+  async function handleRequest({ params }: RequestProps) {
+    await api.delete("/product", { params });
   }
 
   return useMutation({
     mutationFn: handleRequest,
     onSuccess: () => {
       notifyRemove();
-      queryClient.invalidateQueries({
-        queryKey: query,
-      });
+      handleInvalidate();
     },
     onError: extractError,
   });

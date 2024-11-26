@@ -2,14 +2,18 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 import api from "@libs/api";
 
-import { ProductResponseTableDTO } from "./dtos/ProductResponseTableDTO";
+import { ProductResponseFormDTO } from "./dtos/ProductResponseFormDTO";
 import { extractError } from "@libs/alert";
 
-const query = ["product"];
+const query = ["product-by-id"];
 
-export function useProductGetAll() {
+interface RequestProps {
+  id: string;
+}
+
+export function useProductGetById({ id }: RequestProps) {
   async function handleRequest() {
-    const response = await api.get<ProductResponseTableDTO[]>("/product");
+    const response = await api.get<ProductResponseFormDTO>("/product/" + id);
     return response.data;
   }
 
