@@ -1,4 +1,4 @@
-import { Stack } from "@mui/material";
+import { Box, LinearProgress, Stack } from "@mui/material";
 
 import TextField from "@components/TextField";
 import ActionDialog from "@components/ActionDialog";
@@ -7,11 +7,12 @@ import AutoCompleteCategory from "@components/AutoCompleteCategory";
 
 import { useProductCreate } from "@libs/queries/product/useProductCreate";
 import { useProductUpdate } from "@libs/queries/product/useProductUpdate";
-import { ProductResponseDTO } from "@libs/queries/product/dtos/ProductResponseDTO";
+import { useProductGetById } from "@libs/queries/product/useProductGetById";
 
 import { z } from "zod";
 
 import useValidateForm from "@hooks/useValidateForm";
+import { useEffect } from "react";
 
 const schema = z.object({
   id: z.string().optional(),
@@ -34,27 +35,35 @@ const schema = z.object({
 type DataType = z.infer<typeof schema>;
 
 interface Form {
-  data?: ProductResponseDTO;
+  id: string | null;
   onClose: () => void;
 }
 
-export default function Form({ data, onClose }: Form) {
+export default function Form({ id, onClose }: Form) {
   const { mutateAsync: mutateAsyncCreate, isPending: isPendingCreate } =
     useProductCreate();
   const { mutateAsync: mutateAsyncUpdate, isPending: isPendingUpdate } =
     useProductUpdate();
 
-  const isLoading = isPendingCreate || isPendingUpdate;
+  const { data, isLoading: _isLoading, isFetching } = useProductGetById({ id });
 
-  const { FormProvider, handleSubmit } = useValidateForm({
+  const isLoading = _isLoading || isFetching;
+
+  const isSubmitting = isPendingCreate || isPendingUpdate;
+
+  const { FormProvider, handleSubmit, reset } = useValidateForm({
     schema,
     defaultValues: data || {},
   });
 
+  useEffect(() => {
+    reset(data);
+  }, [data, reset]);
+
   async function onSubmit(d: DataType) {
     if (d.id) {
       await mutateAsyncUpdate({
-        id: d.id,
+        params: { id: d.id },
         data: d,
       });
     } else {
@@ -68,7 +77,7 @@ export default function Form({ data, onClose }: Form) {
   return (
     <ActionDialog
       title="Cadastro de Produto"
-      isLoading={isLoading}
+      isLoading={isSubmitting}
       onClose={() => onClose()}
       onSubmit={handleSubmit(onSubmit)}
     >
@@ -82,9 +91,9 @@ export default function Form({ data, onClose }: Form) {
             label="Ordem do Produto"
             name="order"
           />
-          <TextField label="URL da Imagem" name="urlImage" />
           <CurrencyTextField required label="Preço" name="price" prefix="R$ " />
           <AutoCompleteCategory name="categoryId" />
+          <Box height={4}>{isLoading && <LinearProgress />}</Box>
         </Stack>
       </FormProvider>
     </ActionDialog>
