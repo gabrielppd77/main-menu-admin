@@ -20,7 +20,7 @@ export default function Category() {
     toggle: toggleForm,
     isOpen: isOpenForm,
     data: dataForm,
-  } = useDialog<CategoryResponseDTO>();
+  } = useDialog<CategoryResponseDTO | null>(null);
 
   const { data, isLoading, isFetching } = useCategoryGetAll();
   const { mutateAsync } = useCategoryRemove();
@@ -29,7 +29,9 @@ export default function Category() {
     <Stack gap={1} p={2}>
       <PageHeader
         title="Categorias"
-        renderRight={<Button onClick={() => toggleForm()}>Adicionar</Button>}
+        renderRight={
+          <Button onClick={() => toggleForm(null)}>Adicionar</Button>
+        }
       />
 
       <DataTable
@@ -75,7 +77,7 @@ export default function Category() {
         ]}
       />
 
-      {isOpenForm && <Form data={dataForm} onClose={() => toggleForm()} />}
+      {isOpenForm && <Form data={dataForm} onClose={() => toggleForm(null)} />}
     </Stack>
   );
 }

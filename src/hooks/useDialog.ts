@@ -1,10 +1,10 @@
 import { useState } from "react";
 
-export default function useDialog<TData>() {
-  const [data, setData] = useState<TData>();
+export default function useDialog<TData>(startData: TData) {
+  const [data, setData] = useState(startData);
   const [isOpen, setOpen] = useState(false);
 
-  function toggle(d?: TData) {
+  function toggle(d: TData) {
     setOpen((prev) => !prev);
     setData(d);
   }

@@ -25,7 +25,7 @@ const schema = z.object({
 type DataType = z.infer<typeof schema>;
 
 interface FormProps {
-  data?: CategoryResponseDTO;
+  data: CategoryResponseDTO | null;
   onClose: () => void;
 }
 
