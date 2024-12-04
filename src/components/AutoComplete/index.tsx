@@ -1,4 +1,5 @@
 import { Autocomplete, CircularProgress, TextField } from "@mui/material";
+import { useEffect } from "react";
 import { Controller, FieldError } from "react-hook-form";
 
 interface AutoCompleteProps<TData> {
@@ -7,6 +8,7 @@ interface AutoCompleteProps<TData> {
   isValidate?: boolean;
   options: TData[];
   renderOptions: (d: TData) => string;
+  onRefetch: () => void;
   isLoading?: boolean;
   idField: keyof TData extends string ? keyof TData : never;
   required?: boolean;
@@ -20,6 +22,7 @@ function AutoCompleteDefault<TData>({
   name,
   options,
   renderOptions,
+  onRefetch,
   isLoading,
   idField,
   required,
@@ -27,6 +30,12 @@ function AutoCompleteDefault<TData>({
   value,
   error,
 }: AutoCompleteProps<TData>) {
+  useEffect(() => {
+    if (value && options.length <= 0) {
+      onRefetch();
+    }
+  }, [value, onRefetch, options]);
+
   return (
     <Autocomplete
       id="auto-complete"
@@ -43,6 +52,7 @@ function AutoCompleteDefault<TData>({
       closeText="Fechar"
       loadingText="Carregando..."
       noOptionsText="Sem opções"
+      onOpen={() => options.length <= 0 && onRefetch()}
       renderInput={(params) => (
         <TextField
           {...params}

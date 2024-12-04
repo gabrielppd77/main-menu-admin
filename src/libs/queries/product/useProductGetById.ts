@@ -5,20 +5,21 @@ import api from "@libs/api";
 import { ProductResponseFormDTO } from "./dtos/ProductResponseFormDTO";
 import { extractError } from "@libs/alert";
 
-const query = ["product-by-id"];
+const query = "product-by-id";
 
 interface RequestProps {
-  id: string;
+  id: string | null;
 }
 
 export function useProductGetById({ id }: RequestProps) {
   async function handleRequest() {
+    if (!id) return {};
     const response = await api.get<ProductResponseFormDTO>("/product/" + id);
     return response.data;
   }
 
   const { error, ...rest } = useQuery({
-    queryKey: query,
+    queryKey: [query, id],
     queryFn: handleRequest,
   });
 
@@ -33,7 +34,7 @@ export function useInvalidate() {
   const queryClient = useQueryClient();
   function handleInvalidate() {
     queryClient.invalidateQueries({
-      queryKey: query,
+      queryKey: [query],
     });
   }
   return { handleInvalidate };
