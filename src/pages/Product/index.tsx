@@ -13,14 +13,12 @@ import Form from "./Form";
 
 import { confirmDelete } from "@libs/alert";
 
-import { ProductResponseDTO } from "@libs/queries/product/dtos/ProductResponseDTO";
-
 export default function Product() {
   const {
     toggle: toggleForm,
     isOpen: isOpenForm,
     data: dataForm,
-  } = useDialog<ProductResponseDTO>();
+  } = useDialog<string | null>(null);
 
   const { data, isLoading, isFetching } = useProductGetAll();
   const { mutateAsync } = useProductRemove();
@@ -29,16 +27,20 @@ export default function Product() {
     <Stack gap={1} p={2}>
       <PageHeader
         title="Produtos"
-        renderRight={<Button onClick={() => toggleForm()}>Adicionar</Button>}
+        renderRight={
+          <Button onClick={() => toggleForm(null)}>Adicionar</Button>
+        }
       />
 
       <DataTable
         onKeyDown={(key, rows) => {
           if (key === "F2") {
-            toggleForm(rows[0]);
+            toggleForm(rows[0].id);
           }
           if (key === "Delete") {
-            confirmDelete(async () => await mutateAsync({ id: rows[0].id }));
+            confirmDelete(
+              async () => await mutateAsync({ params: { id: rows[0].id } })
+            );
           }
         }}
         data={data}
@@ -73,12 +75,14 @@ export default function Product() {
             headerName: "Ações",
             renderCell: ({ value, row }) => (
               <Stack direction="row" height="100%" gap={0.5}>
-                <IconButton onClick={() => toggleForm(row)}>
+                <IconButton onClick={() => toggleForm(row.id)}>
                   <Edit />
                 </IconButton>
                 <IconButton
                   onClick={() =>
-                    confirmDelete(async () => await mutateAsync({ id: value }))
+                    confirmDelete(
+                      async () => await mutateAsync({ params: { id: value } })
+                    )
                   }
                 >
                   <Delete />
@@ -89,7 +93,7 @@ export default function Product() {
         ]}
       />
 
-      {isOpenForm && <Form data={dataForm} onClose={() => toggleForm()} />}
+      {isOpenForm && <Form id={dataForm} onClose={() => toggleForm(null)} />}
     </Stack>
   );
 }

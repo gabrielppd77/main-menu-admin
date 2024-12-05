@@ -1,10 +1,9 @@
-export interface ProductResponseDTO {
+export interface ProductResponseFormDTO {
   id: string;
   name: string;
   description?: string;
-  urlImage?: string;
   order: number;
+  urlImage?: string;
   price: number;
   categoryId: string;
-  categoryName: string;
 }

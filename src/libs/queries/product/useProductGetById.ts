@@ -2,19 +2,24 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 import api from "@libs/api";
 
-import { ProductResponseTableDTO } from "./dtos/ProductResponseTableDTO";
+import { ProductResponseFormDTO } from "./dtos/ProductResponseFormDTO";
 import { extractError } from "@libs/alert";
 
-const query = ["product"];
+const query = "product-by-id";
 
-export function useProductGetAll() {
+interface RequestProps {
+  id: string | null;
+}
+
+export function useProductGetById({ id }: RequestProps) {
   async function handleRequest() {
-    const response = await api.get<ProductResponseTableDTO[]>("/product");
+    if (!id) return {} as ProductResponseFormDTO;
+    const response = await api.get<ProductResponseFormDTO>("/product/" + id);
     return response.data;
   }
 
   const { error, ...rest } = useQuery({
-    queryKey: query,
+    queryKey: [query, id],
     queryFn: handleRequest,
   });
 
@@ -29,7 +34,7 @@ export function useInvalidate() {
   const queryClient = useQueryClient();
   function handleInvalidate() {
     queryClient.invalidateQueries({
-      queryKey: query,
+      queryKey: [query],
     });
   }
   return { handleInvalidate };

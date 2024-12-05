@@ -1,4 +1,5 @@
 import CssBaseline from "@mui/material/CssBaseline";
+import "@libs/zodConfig";
 
 import QueryClientProvider from "@providers//QueryClientProvider";
 import ThemeProvider from "@providers//ThemeProvider";

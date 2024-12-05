@@ -1,24 +1,22 @@
 import { useMutation } from "@tanstack/react-query";
 
-import { ProductRequestDTO } from "./dtos/ProductRequestDTO";
+import { useInvalidate } from "./useProductGetById";
 
 import api from "@libs/api";
 
 import { notifyUpdate } from "@libs/notification";
 import { extractError } from "@libs/alert";
 
-import { useInvalidate } from "./useProductGetAll";
-
 interface RequestProps {
   params: { id: string };
-  data: ProductRequestDTO;
+  data: FormData;
 }
 
-export function useProductUpdate() {
+export function useProductUpdateImage() {
   const { handleInvalidate } = useInvalidate();
 
   async function handleRequest({ params, data }: RequestProps) {
-    await api.put("/product", data, { params });
+    await api.put("/product/update-image", data, { params });
   }
 
   return useMutation({

@@ -1,60 +1,66 @@
-import { Stack } from "@mui/material";
+import { useEffect } from "react";
+
+import { Box, LinearProgress, Stack } from "@mui/material";
 
 import TextField from "@components/TextField";
 import ActionDialog from "@components/ActionDialog";
 import CurrencyTextField from "@components/CurrencyTextField";
 import AutoCompleteCategory from "@components/AutoCompleteCategory";
+import UploadImage from "@components/UploadImage";
 
 import { useProductCreate } from "@libs/queries/product/useProductCreate";
 import { useProductUpdate } from "@libs/queries/product/useProductUpdate";
-import { ProductResponseDTO } from "@libs/queries/product/dtos/ProductResponseDTO";
+import { useProductGetById } from "@libs/queries/product/useProductGetById";
+import { useProductUpdateImage } from "@libs/queries/product/useProductUpdateImage";
 
 import { z } from "zod";
 
 import useValidateForm from "@hooks/useValidateForm";
 
 const schema = z.object({
-  id: z.string().optional(),
-  name: z
-    .string({ message: "Informe o Nome" })
-    .min(1, { message: "Informe pelo menos um caractere" }),
-  description: z.string().optional().nullable(),
-  urlImage: z.string().optional().nullable(),
-  order: z
-    .number({ message: "Informe a Ordem do Produto" })
-    .min(1, "Informe uma ordem válida"),
-  price: z
-    .number({ message: "Informe o Preço" })
-    .min(0.01, { message: "Informe um Preço válido" }),
-  categoryId: z
-    .string({ message: "Informe a Categoria" })
-    .min(1, "Informe uma Categoria válida"),
+  name: z.string({ message: "Informe o Nome" }).min(1),
+  description: z.string().optional(),
+  order: z.number({ message: "Informe a Ordem do Produto" }).min(1),
+  price: z.number({ message: "Informe o Preço" }),
+  categoryId: z.string({ message: "Informe a Categoria" }).min(1),
 });
 
 type DataType = z.infer<typeof schema>;
 
-interface Form {
-  data?: ProductResponseDTO;
+interface FormProps {
+  id: string | null;
   onClose: () => void;
 }
 
-export default function Form({ data, onClose }: Form) {
+export default function Form({ id, onClose }: FormProps) {
+  const { data, isLoading: _isLoading, isFetching } = useProductGetById({ id });
+
+  const isLoading = _isLoading || isFetching;
+
+  const { FormProvider, handleSubmit, reset } = useValidateForm({
+    schema,
+    defaultValues: data,
+  });
+
+  useEffect(() => {
+    reset(data);
+  }, [data, reset]);
+
   const { mutateAsync: mutateAsyncCreate, isPending: isPendingCreate } =
     useProductCreate();
   const { mutateAsync: mutateAsyncUpdate, isPending: isPendingUpdate } =
     useProductUpdate();
+  const {
+    mutateAsync: mutateAsyncUpdateImage,
+    isPending: isPendingUpdateImage,
+  } = useProductUpdateImage();
 
-  const isLoading = isPendingCreate || isPendingUpdate;
-
-  const { FormProvider, handleSubmit } = useValidateForm({
-    schema,
-    defaultValues: data || {},
-  });
+  const isSubmitting = isPendingCreate || isPendingUpdate;
 
   async function onSubmit(d: DataType) {
-    if (d.id) {
+    if (id) {
       await mutateAsyncUpdate({
-        id: d.id,
+        params: { id },
         data: d,
       });
     } else {
@@ -65,15 +71,45 @@ export default function Form({ data, onClose }: Form) {
     onClose();
   }
 
+  async function handleUpdateImage(file: File) {
+    if (!id) return;
+    const formData = new FormData();
+    formData.append("file", file);
+    await mutateAsyncUpdateImage({
+      data: formData,
+      params: {
+        id,
+      },
+    });
+  }
+
   return (
     <ActionDialog
       title="Cadastro de Produto"
-      isLoading={isLoading}
+      isLoading={isSubmitting}
       onClose={() => onClose()}
       onSubmit={handleSubmit(onSubmit)}
     >
+      <Box height={4}>{isLoading && <LinearProgress />}</Box>
       <FormProvider>
         <Stack gap={1}>
+          {id && (
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <UploadImage
+                alt="Imagem do produto"
+                src={data?.urlImage}
+                onChange={(value) => handleUpdateImage(value[0])}
+                isLoading={isLoading || isPendingUpdateImage}
+              />
+            </Box>
+          )}
+
           <TextField required label="Nome" name="name" />
           <TextField label="Descrição" name="description" />
           <TextField
@@ -82,7 +118,6 @@ export default function Form({ data, onClose }: Form) {
             label="Ordem do Produto"
             name="order"
           />
-          <TextField label="URL da Imagem" name="urlImage" />
           <CurrencyTextField required label="Preço" name="price" prefix="R$ " />
           <AutoCompleteCategory name="categoryId" />
         </Stack>
