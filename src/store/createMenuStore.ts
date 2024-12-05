@@ -7,7 +7,7 @@ export interface MenuStoreProps {
 
 const createMenuStore = () =>
   create<MenuStoreProps>((set) => ({
-    open: true,
+    open: false,
     toggleOpen: () => set((state) => ({ open: !state.open })),
   }));
 

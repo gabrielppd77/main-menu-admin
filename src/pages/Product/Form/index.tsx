@@ -1,18 +1,21 @@
+import { useEffect } from "react";
+
 import { Box, LinearProgress, Stack } from "@mui/material";
 
 import TextField from "@components/TextField";
 import ActionDialog from "@components/ActionDialog";
 import CurrencyTextField from "@components/CurrencyTextField";
 import AutoCompleteCategory from "@components/AutoCompleteCategory";
+import UploadImage from "@components/UploadImage";
 
 import { useProductCreate } from "@libs/queries/product/useProductCreate";
 import { useProductUpdate } from "@libs/queries/product/useProductUpdate";
 import { useProductGetById } from "@libs/queries/product/useProductGetById";
+import { useProductUpdateImage } from "@libs/queries/product/useProductUpdateImage";
 
 import { z } from "zod";
 
 import useValidateForm from "@hooks/useValidateForm";
-import { useEffect } from "react";
 
 const schema = z.object({
   name: z.string({ message: "Informe o Nome" }).min(1),
@@ -47,6 +50,10 @@ export default function Form({ id, onClose }: FormProps) {
     useProductCreate();
   const { mutateAsync: mutateAsyncUpdate, isPending: isPendingUpdate } =
     useProductUpdate();
+  const {
+    mutateAsync: mutateAsyncUpdateImage,
+    isPending: isPendingUpdateImage,
+  } = useProductUpdateImage();
 
   const isSubmitting = isPendingCreate || isPendingUpdate;
 
@@ -64,6 +71,18 @@ export default function Form({ id, onClose }: FormProps) {
     onClose();
   }
 
+  async function handleUpdateImage(file: File) {
+    if (!id) return;
+    const formData = new FormData();
+    formData.append("file", file);
+    await mutateAsyncUpdateImage({
+      data: formData,
+      params: {
+        id,
+      },
+    });
+  }
+
   return (
     <ActionDialog
       title="Cadastro de Produto"
@@ -74,6 +93,23 @@ export default function Form({ id, onClose }: FormProps) {
       <Box height={4}>{isLoading && <LinearProgress />}</Box>
       <FormProvider>
         <Stack gap={1}>
+          {id && (
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <UploadImage
+                alt="Imagem do produto"
+                src={data?.urlImage}
+                onChange={(value) => handleUpdateImage(value[0])}
+                isLoading={isLoading || isPendingUpdateImage}
+              />
+            </Box>
+          )}
+
           <TextField required label="Nome" name="name" />
           <TextField label="Descrição" name="description" />
           <TextField

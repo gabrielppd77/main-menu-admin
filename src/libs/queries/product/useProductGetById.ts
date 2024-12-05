@@ -13,7 +13,7 @@ interface RequestProps {
 
 export function useProductGetById({ id }: RequestProps) {
   async function handleRequest() {
-    if (!id) return {};
+    if (!id) return {} as ProductResponseFormDTO;
     const response = await api.get<ProductResponseFormDTO>("/product/" + id);
     return response.data;
   }

@@ -55,6 +55,7 @@ export default function DataTable<TData extends GridValidRowModel>({
         onCellKeyDown={handleCellKeyDown}
         density="compact"
         disableColumnMenu
+        disableVirtualization
         pageSizeOptions={[10, 25, 50]}
         localeText={{
           noRowsLabel: "Sem dados",

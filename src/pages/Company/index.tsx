@@ -1,18 +1,12 @@
 import { useEffect } from "react";
 
-import {
-  Avatar,
-  Box,
-  CircularProgress,
-  LinearProgress,
-  Stack,
-} from "@mui/material";
-import { Delete, QrCode2, Upload } from "@mui/icons-material";
+import { Box, CircularProgress, LinearProgress, Stack } from "@mui/material";
+import { Delete, QrCode2 } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 
 import PageHeader from "@components/PageHeader";
 import TextField from "@components/TextField";
-import VisuallyHiddenInput from "@components/VisuallyHiddenInput";
+import UploadImage from "@components/UploadImage";
 
 import useValidateForm from "@hooks/useValidateForm";
 
@@ -124,61 +118,12 @@ export default function Company() {
       <FormProvider>
         <Stack gap={1}>
           <Stack gap={1} flexDirection="row" alignItems="center">
-            <Box
-              sx={{
-                position: "relative",
-                display: "inline-block",
-                height: 100,
-                width: 100,
-              }}
-            >
-              <Avatar
-                alt="Imagem da loja"
-                src={data?.urlImage}
-                sx={{
-                  height: 100,
-                  width: 100,
-                }}
-              />
-              <Box
-                component="label"
-                sx={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  backgroundColor: "rgba(0, 0, 0, 0.5)",
-                  opacity: isPendingUpdateImage ? 1 : 0,
-                  borderRadius: "50%",
-                  transition: "opacity 0.2s",
-                  ":hover": {
-                    cursor: "pointer",
-                    opacity: 1,
-                  },
-                }}
-              >
-                {isPendingUpdateImage ? (
-                  <CircularProgress />
-                ) : (
-                  <Upload sx={{ color: "white", fontSize: 32 }} />
-                )}
-
-                <VisuallyHiddenInput
-                  type="file"
-                  accept=".jpg, .jpeg, .png"
-                  onChange={(event) => {
-                    const files = event.target.files;
-                    if (files) {
-                      handleUpdateImage(files[0]);
-                    }
-                  }}
-                />
-              </Box>
-            </Box>
+            <UploadImage
+              alt="Imagem da loja"
+              src={data?.urlImage}
+              onChange={(value) => handleUpdateImage(value[0])}
+              isLoading={isPendingUpdateImage}
+            />
 
             <Stack gap={1} width="100%">
               <TextField required label="Nome" name="name" />
