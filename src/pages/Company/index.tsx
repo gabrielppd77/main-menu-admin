@@ -23,15 +23,11 @@ import { useNavigate } from "react-router-dom";
 import useAuth from "@hooks/useAuth";
 
 const schema = z.object({
-  id: z.string().optional(),
-  name: z
-    .string({ message: "Informe o Nome" })
-    .min(1, "Informe pelo menos um caractere"),
+  name: z.string({ message: "Informe o Nome" }).min(1),
   path: z
     .string({ message: "Informe o caminho para acessar o seu site" })
-    .min(1, "Informe pelo menos um caractere"),
+    .min(1),
   description: z.string().optional(),
-  urlImage: z.string().optional(),
 });
 
 type DataType = z.infer<typeof schema>;
@@ -66,11 +62,9 @@ export default function Company() {
   }, [data, reset]);
 
   async function onSubmit(d: DataType) {
-    if (d.id) {
-      await mutateAsyncUpdate({
-        data: d,
-      });
-    }
+    await mutateAsyncUpdate({
+      data: d,
+    });
   }
 
   function handleRemoveAccount() {
