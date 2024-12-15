@@ -8,15 +8,14 @@ import { notifyUpdate } from "@libs/notification";
 import { extractError } from "@libs/alert";
 
 interface RequestProps {
-  id: string;
   data: FormData;
 }
 
 export function useCompanyUpdateImage() {
   const { handleInvalidate } = useInvalidate();
 
-  async function handleRequest({ id, data }: RequestProps) {
-    await api.put("/company/update-image/" + id, data);
+  async function handleRequest({ data }: RequestProps) {
+    await api.put("/company/update-image", data);
   }
 
   return useMutation({

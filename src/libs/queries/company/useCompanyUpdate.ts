@@ -10,15 +10,14 @@ import { notifyUpdate } from "@libs/notification";
 import { extractError } from "@libs/alert";
 
 interface RequestProps {
-  id: string;
   data: CompanyUpdateDTO;
 }
 
 export function useCompanyUpdate() {
   const { handleInvalidate } = useInvalidate();
 
-  async function handleRequest({ id, data }: RequestProps) {
-    await api.put("/Company/" + id, data);
+  async function handleRequest({ data }: RequestProps) {
+    await api.put("/Company", data);
   }
 
   return useMutation({

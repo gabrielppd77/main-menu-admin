@@ -68,7 +68,6 @@ export default function Company() {
   async function onSubmit(d: DataType) {
     if (d.id) {
       await mutateAsyncUpdate({
-        id: d.id,
         data: d,
       });
     }
@@ -99,7 +98,6 @@ export default function Company() {
     formData.append("file", file);
     await mutateAsyncUpdateImage({
       data: formData,
-      id: data?.id || "",
     });
   }
 
