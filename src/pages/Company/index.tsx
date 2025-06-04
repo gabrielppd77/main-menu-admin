@@ -5,10 +5,10 @@ import { Delete, QrCode2 } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 
 import PageHeader from "@components/PageHeader";
-import TextField from "@components/TextField";
+import { TextField } from "@components/TextField";
 import UploadImage from "@components/UploadImage";
 
-import useValidateForm from "@hooks/useValidateForm";
+import { useValidateForm } from "@hooks/useValidateForm";
 
 import { z } from "zod";
 import { confirmPassword, confirmMessage } from "@libs/alert";
@@ -20,7 +20,7 @@ import { useCompanyGetQRCode } from "@libs/queries/company/useCompanyGetQRCode";
 import { useCompanyUpdateImage } from "@libs/queries/company/useCompanyUpdateImage";
 
 import { useNavigate } from "react-router-dom";
-import useAuth from "@hooks/useAuth";
+import { useAuth } from "@hooks/useAuth";
 
 const schema = z.object({
   id: z.string().optional(),

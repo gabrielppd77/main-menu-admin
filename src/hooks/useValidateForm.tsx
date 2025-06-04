@@ -7,7 +7,7 @@ interface UseValidateFormProps<TSchema extends z.ZodTypeAny> {
   defaultValues?: DefaultValues<z.infer<TSchema>>;
 }
 
-export default function useValidateForm<TSchema extends z.ZodTypeAny>({
+export function useValidateForm<TSchema extends z.ZodTypeAny>({
   schema,
   defaultValues,
 }: UseValidateFormProps<TSchema>) {

@@ -16,8 +16,8 @@ import {
 
 import { Link, useNavigate } from "react-router-dom";
 
-import useMenuStore from "@hooks/useMenuStore";
-import useAuth from "@hooks/useAuth";
+import { useMenuStore } from "@hooks/useMenuStore";
+import { useAuth } from "@hooks/useAuth";
 
 export default function Appbar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -68,7 +68,7 @@ export default function Appbar() {
               }}
             >
               <Typography sx={{ color: "primary.contrastText" }}>
-                Main Menu
+                Rice & Beans Admin
               </Typography>
             </Link>
           </Box>

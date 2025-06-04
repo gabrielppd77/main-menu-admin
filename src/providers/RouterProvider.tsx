@@ -6,12 +6,15 @@ import {
 import PublicLayout from "@layouts/PublicLayout";
 import MainLayout from "@layouts/MainLayout";
 
-import SignIn from "@pages/SignIn";
-import SignUp from "@pages/SignUp";
-import Company from "@pages/Company";
-import Home from "@pages/Home";
-import Category from "@pages/Category";
-import Product from "@pages/Product";
+import Login from "@modules/Authentication/Login";
+import Register from "@modules/Authentication/Register";
+import Home from "@modules/Home";
+
+export const routePaths = {
+  initial: "/",
+  register: "/register",
+  home: "/home",
+};
 
 const routes = createBrowserRouter([
   {
@@ -19,12 +22,12 @@ const routes = createBrowserRouter([
     element: <PublicLayout />,
     children: [
       {
-        path: "/",
-        element: <SignIn />,
+        path: routePaths.initial,
+        element: <Login />,
       },
       {
-        path: "/sign-up",
-        element: <SignUp />,
+        path: routePaths.register,
+        element: <Register />,
       },
     ],
   },
@@ -33,20 +36,8 @@ const routes = createBrowserRouter([
     element: <MainLayout />,
     children: [
       {
-        path: "/company",
-        element: <Company />,
-      },
-      {
-        path: "/home",
+        path: routePaths.home,
         element: <Home />,
-      },
-      {
-        path: "/category",
-        element: <Category />,
-      },
-      {
-        path: "/product",
-        element: <Product />,
       },
     ],
   },

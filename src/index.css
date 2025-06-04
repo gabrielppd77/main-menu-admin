@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 .swal2-container {
   pointer-events: auto;
   z-index: 1300;

@@ -1,4 +1,3 @@
-import CssBaseline from "@mui/material/CssBaseline";
 import "@libs/zodConfig";
 
 import QueryClientProvider from "@providers//QueryClientProvider";
@@ -13,7 +12,6 @@ function App() {
       <QueryClientProvider>
         <ThemeProvider>
           <ToastProvider>
-            <CssBaseline />
             <RouterProvider />
           </ToastProvider>
         </ThemeProvider>

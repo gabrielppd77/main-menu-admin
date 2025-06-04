@@ -1,6 +1,15 @@
 import { ThemeProvider as ThemeProviderMain, createTheme } from "@mui/material";
 
 const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#e7000b",
+      "500": "#fb2c36",
+    },
+    secondary: {
+      main: "#733e0a",
+    },
+  },
   components: {
     MuiButton: {
       defaultProps: {

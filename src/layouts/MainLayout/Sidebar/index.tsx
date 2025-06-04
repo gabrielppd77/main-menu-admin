@@ -10,7 +10,7 @@ import {
 
 import SideItem from "./SideItem";
 
-import useMenuStore from "@hooks/useMenuStore";
+import { useMenuStore } from "@hooks/useMenuStore";
 
 import menu from "@store/menu";
 import { drawerWidthOpen, drawerWidthClose } from "@store/constants";

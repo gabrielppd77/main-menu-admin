@@ -5,21 +5,21 @@ interface MenuProps {
 }
 
 const menu: MenuProps[] = [
-  {
-    title: "Loja",
-    icon: "apartment",
-    link: "/company",
-  },
-  {
-    title: "Categorias",
-    icon: "category",
-    link: "/category",
-  },
-  {
-    title: "Produtos",
-    icon: "store",
-    link: "/product",
-  },
+  // {
+  //   title: "Loja",
+  //   icon: "apartment",
+  //   link: "/company",
+  // },
+  // {
+  //   title: "Categorias",
+  //   icon: "category",
+  //   link: "/category",
+  // },
+  // {
+  //   title: "Produtos",
+  //   icon: "store",
+  //   link: "/product",
+  // },
 ];
 
 export default menu;

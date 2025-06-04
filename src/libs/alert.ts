@@ -2,10 +2,14 @@ import Swal, { SweetAlertIcon } from "sweetalert2";
 
 import { AxiosError, HttpStatusCode } from "axios";
 
-interface ResponseData {
+interface ProblemDetails {
+  type: string;
+  title: string;
   status: HttpStatusCode;
-  detail: string | string[];
-  title?: string;
+  errors: {
+    [key: string]: string[];
+  };
+  traceId: string;
 }
 
 export function extractError(err: unknown) {
@@ -14,12 +18,17 @@ export function extractError(err: unknown) {
   let icon: SweetAlertIcon = "error";
 
   if (err instanceof AxiosError) {
-    const data: ResponseData | undefined = err?.response?.data;
-    if (data && data.detail) {
-      title = data.status + " " + (data.title || title);
-      text =
-        typeof data.detail === "string" ? data.detail : data.detail.join(",");
-      icon = data.status === HttpStatusCode.BadRequest ? "warning" : "error";
+    const responseData: ProblemDetails | undefined = err?.response?.data;
+    if (responseData) {
+      title = responseData.status + " " + responseData.title;
+      text = "";
+      const allErrors = Object.values(responseData.errors);
+      if (allErrors.length > 0 && allErrors[0].length > 0) {
+        text += " " + allErrors[0][0];
+      }
+      text.trim();
+      icon =
+        responseData.status === HttpStatusCode.BadRequest ? "warning" : "error";
     }
   }
 

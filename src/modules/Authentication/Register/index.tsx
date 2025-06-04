@@ -1,40 +1,37 @@
 import { Avatar, Grid, Box, Link, Typography, Container } from "@mui/material";
 import { LockOutlined as LockOutlinedIcon } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
-
-import TextField from "@components/TextField";
+import { TextField } from "@components/TextField";
+import { TextFieldPassword } from "@components/TextFieldPassword";
 
 import { z } from "zod";
+import { routePaths } from "@providers/RouterProvider";
 
-import useValidateForm from "@hooks/useValidateForm";
+import { useValidateForm } from "@hooks/useValidateForm";
 import { useNavigate } from "react-router-dom";
-import useAuth from "@hooks/useAuth";
-
-import { useUserRegister } from "@libs/queries/user/useUserRegister";
+import { useAuth } from "@hooks/useAuth";
+import { useRegister } from "../hooks/useRegister";
 
 const schema = z
   .object({
+    name: z.string({ message: "Informe o Nome" }).min(1),
     email: z
       .string({ message: "Informe o Email" })
-      .min(1, { message: "Informe pelo menos um caracter" })
+      .min(1)
       .email("Informe um Email válido"),
-    companyName: z
-      .string({ message: "Informe o Nome da Loja" })
-      .min(1, { message: "Informe pelo menos um caracter" }),
-    password: z
-      .string({ message: "Informe a senha" })
-      .min(1, { message: "Informe pelo menos um caracter" }),
+    companyName: z.string({ message: "Informe o Nome da Loja" }).min(1),
+    password: z.string({ message: "Informe a senha" }).min(1),
     confirmPassword: z
       .string({ message: "Informe a confirmação da senha" })
-      .min(1, { message: "Informe pelo menos um caracter" }),
+      .min(1),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "As senhas não correspondem",
     path: ["confirmPassword"],
   });
 
-export default function SignUp() {
-  const { mutateAsync, isPending } = useUserRegister();
+export default function Register() {
+  const { mutateAsync, isPending } = useRegister();
 
   const { setToken } = useAuth();
   const navigate = useNavigate();
@@ -62,52 +59,51 @@ export default function SignUp() {
         <Box sx={{ mt: 3 }}>
           <FormProvider>
             <Grid container spacing={1}>
-              <Grid item xs={12}>
+              <Grid size={12}>
                 <TextField
-                  id="email"
+                  name="name"
+                  autoComplete="given-name"
+                  autoFocus
+                  required
+                  sx={{ ariaLabel: "nome" }}
+                  label="Nome"
+                />
+              </Grid>
+
+              <Grid size={12}>
+                <TextField
                   type="email"
                   name="email"
                   placeholder="seuemail@email.com"
                   autoComplete="email"
-                  autoFocus
                   required
-                  variant="outlined"
                   sx={{ ariaLabel: "email" }}
                   label="Email"
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid size={12}>
                 <TextField
-                  id="companyName"
                   name="companyName"
                   required
                   variant="outlined"
                   sx={{ ariaLabel: "companyName" }}
-                  label="Nome da Loja"
+                  label="Nome da loja"
                 />
               </Grid>
-              <Grid item xs={12}>
-                <TextField
+              <Grid size={12}>
+                <TextFieldPassword
                   required
-                  fullWidth
                   label="Senha"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
                   name="password"
-                  placeholder="••••••"
+                  autoComplete="new-password"
                 />
               </Grid>
-              <Grid item xs={12}>
-                <TextField
+              <Grid size={12}>
+                <TextFieldPassword
                   required
-                  fullWidth
                   name="confirmPassword"
                   label="Confirme a senha"
-                  type="password"
-                  id="confirmPassword"
                   autoComplete="new-password"
-                  placeholder="••••••"
                 />
               </Grid>
             </Grid>
@@ -121,15 +117,20 @@ export default function SignUp() {
               onClick={handleSubmit(async (data) => {
                 const response = await mutateAsync(data);
                 setToken(response.token);
-                navigate("/home");
+                navigate(routePaths.home);
               })}
             >
               Cadastrar
             </LoadingButton>
           </FormProvider>
+
           <Grid container justifyContent="flex-end">
-            <Grid item>
-              <Link href="/" variant="body2">
+            <Grid>
+              <Link
+                className="hover:cursor-pointer"
+                onClick={() => navigate(routePaths.initial)}
+                variant="body2"
+              >
                 Já tem uma conta? Entre
               </Link>
             </Grid>

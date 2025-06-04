@@ -5,8 +5,8 @@ import { Navigate, Outlet } from "react-router-dom";
 import Appbar from "./Appbar";
 import Sidebar from "./Sidebar";
 
-import useMenuStore from "@hooks/useMenuStore";
-import useAuth from "@hooks/useAuth";
+import { useMenuStore } from "@hooks/useMenuStore";
+import { useAuth } from "@hooks/useAuth";
 
 import { drawerWidthClose, drawerWidthOpen } from "@store/constants";
 

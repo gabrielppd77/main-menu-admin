@@ -9,29 +9,27 @@ import {
 } from "@mui/material";
 import { LockOutlined as LockOutlinedIcon } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
+import { TextField } from "@components/TextField";
 
-import TextField from "@components/TextField";
-
-import useValidateForm from "@hooks/useValidateForm";
 import { z } from "zod";
+import { routePaths } from "@providers/RouterProvider";
 
+import { useValidateForm } from "@hooks/useValidateForm";
 import { useNavigate } from "react-router-dom";
-import useAuth from "@hooks/useAuth";
-
-import { useUserLogin } from "@libs/queries/user/useUserLogin";
+import { useAuth } from "@hooks/useAuth";
+import { useLogin } from "../hooks/useLogin";
+import { TextFieldPassword } from "@components/TextFieldPassword";
 
 const schema = z.object({
   email: z
     .string({ message: "Informe o Email" })
-    .min(1, { message: "Informe pelo menos um caracter" })
+    .min(1)
     .email("Informe um Email válido"),
-  password: z
-    .string({ message: "Informe a senha" })
-    .min(1, { message: "Informe pelo menos um caracter" }),
+  password: z.string({ message: "Informe a senha" }).min(1),
 });
 
-export default function SignIn() {
-  const { mutateAsync, isPending } = useUserLogin();
+export default function Login() {
+  const { mutateAsync, isPending } = useLogin();
 
   const { setToken } = useAuth();
   const navigate = useNavigate();
@@ -71,14 +69,10 @@ export default function SignIn() {
                 sx={{ ariaLabel: "email" }}
                 label="Email"
               />
-              <TextField
+              <TextFieldPassword
                 name="password"
-                placeholder="••••••"
-                type="password"
-                id="password"
                 autoComplete="current-password"
                 required
-                variant="outlined"
                 label="Senha"
               />
             </Stack>
@@ -92,7 +86,7 @@ export default function SignIn() {
               onClick={handleSubmit(async (data) => {
                 const response = await mutateAsync(data);
                 setToken(response.token);
-                navigate("/home");
+                navigate(routePaths.home);
               })}
             >
               Entre
@@ -100,10 +94,13 @@ export default function SignIn() {
           </FormProvider>
 
           <Grid container>
-            <Grid item xs></Grid>
-            <Grid item>
-              <Link href="/sign-up" variant="body2">
-                {"Não tem uma conta? Cadastre"}
+            <Grid>
+              <Link
+                className="hover:cursor-pointer"
+                onClick={() => navigate(routePaths.register)}
+                variant="body2"
+              >
+                Não tem uma conta? Cadastre
               </Link>
             </Grid>
           </Grid>
