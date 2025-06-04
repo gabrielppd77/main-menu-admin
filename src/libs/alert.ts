@@ -6,10 +6,11 @@ interface ProblemDetails {
   type: string;
   title: string;
   status: HttpStatusCode;
-  errors: {
+  traceId: string;
+  errors?: {
     [key: string]: string[];
   };
-  traceId: string;
+  errorCodes?: string[];
 }
 
 export function extractError(err: unknown) {
@@ -22,13 +23,21 @@ export function extractError(err: unknown) {
     if (responseData) {
       title = responseData.status + " " + responseData.title;
       text = "";
-      const allErrors = Object.values(responseData.errors);
-      if (allErrors.length > 0 && allErrors[0].length > 0) {
-        text += " " + allErrors[0][0];
+      if (responseData.errors) {
+        const allErrors = Object.values(responseData.errors);
+        if (allErrors.length > 0 && allErrors[0].length > 0) {
+          text += " " + allErrors[0][0];
+        }
+      }
+      if (responseData.errorCodes) {
+        responseData.errorCodes.forEach((err) => (text += " " + err));
       }
       text.trim();
       icon =
-        responseData.status === HttpStatusCode.BadRequest ? "warning" : "error";
+        responseData.status === HttpStatusCode.BadRequest ||
+        responseData.status === HttpStatusCode.Conflict
+          ? "warning"
+          : "error";
     }
   }
 
