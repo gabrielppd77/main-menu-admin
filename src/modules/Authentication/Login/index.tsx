@@ -9,7 +9,8 @@ import {
 } from "@mui/material";
 import { LockOutlined as LockOutlinedIcon } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
-import { TextField } from "@components/TextField";
+import { TextField } from "@modules/core/components/TextField";
+import { TextFieldPassword } from "@modules/core/components/TextFieldPassword";
 
 import { z } from "zod";
 import { routePaths } from "@providers/RouterProvider";
@@ -18,7 +19,6 @@ import { useValidateForm } from "@hooks/useValidateForm";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@hooks/useAuth";
 import { useLogin } from "../hooks/useLogin";
-import { TextFieldPassword } from "@components/TextFieldPassword";
 
 const schema = z.object({
   email: z

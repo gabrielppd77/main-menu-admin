@@ -1,8 +1,8 @@
 import { Avatar, Grid, Box, Link, Typography, Container } from "@mui/material";
 import { LockOutlined as LockOutlinedIcon } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
-import { TextField } from "@components/TextField";
-import { TextFieldPassword } from "@components/TextFieldPassword";
+import { TextField } from "@modules/core/components/TextField";
+import { TextFieldPassword } from "@modules/core/components/TextFieldPassword";
 
 import { z } from "zod";
 import { routePaths } from "@providers/RouterProvider";

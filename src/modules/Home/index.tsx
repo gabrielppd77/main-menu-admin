@@ -1,6 +1,6 @@
 import { Stack } from "@mui/material";
 
-import PageHeader from "@components/PageHeader";
+import PageHeader from "@modules/core/components/PageHeader";
 
 export default function Home() {
   return (

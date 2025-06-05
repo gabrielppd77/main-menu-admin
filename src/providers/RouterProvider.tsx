@@ -6,9 +6,9 @@ import {
 import PublicLayout from "@layouts/PublicLayout";
 import MainLayout from "@layouts/MainLayout";
 
-import Login from "@modules/Authentication/Login";
-import Register from "@modules/Authentication/Register";
-import Home from "@modules/Home";
+import Login from "@modules/authentication/Login";
+import Register from "@modules/authentication/Register";
+import Home from "@modules/home";
 
 export const routePaths = {
   initial: "/",

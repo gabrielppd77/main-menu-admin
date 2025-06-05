@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { TextField, TextFieldProps } from "@components/TextField";
+import { TextField, TextFieldProps } from "../TextField";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { IconButton, InputAdornment } from "@mui/material";
 
