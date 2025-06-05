@@ -5,7 +5,7 @@ import { useInvalidate } from "./useProductGetById";
 import api from "@libs/api";
 
 import { notifyUpdate } from "@libs/notification";
-import { extractError } from "@libs/alert";
+import { fireError } from "@libs/alert";
 
 interface RequestProps {
   params: { id: string };
@@ -25,6 +25,6 @@ export function useProductUpdateImage() {
       notifyUpdate();
       handleInvalidate();
     },
-    onError: extractError,
+    onError: fireError,
   });
 }

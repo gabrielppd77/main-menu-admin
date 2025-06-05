@@ -41,6 +41,12 @@ export function extractError(err: unknown) {
     }
   }
 
+  return { title, text, icon };
+}
+
+export function fireError(err: unknown) {
+  const { icon, title, text } = extractError(err);
+
   Swal.fire({
     icon,
     title,
@@ -70,7 +76,7 @@ export function confirmDelete(onConfirm: () => Promise<void>) {
 }
 
 export function confirmPassword(
-  onConfirm: (password: string) => Promise<void>
+  onConfirm: (password: string) => Promise<void>,
 ) {
   Swal.fire({
     icon: "question",
@@ -98,7 +104,7 @@ export function confirmPassword(
 
 export function confirmMessage(
   onClose: () => void,
-  { title, text }: { title: string; text: string }
+  { title, text }: { title: string; text: string },
 ) {
   Swal.fire({
     icon: "success",

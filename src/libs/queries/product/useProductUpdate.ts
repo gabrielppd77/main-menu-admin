@@ -5,7 +5,7 @@ import { ProductRequestDTO } from "./dtos/ProductRequestDTO";
 import api from "@libs/api";
 
 import { notifyUpdate } from "@libs/notification";
-import { extractError } from "@libs/alert";
+import { fireError } from "@libs/alert";
 
 import { useInvalidate } from "./useProductGetAll";
 
@@ -27,6 +27,6 @@ export function useProductUpdate() {
       notifyUpdate();
       handleInvalidate();
     },
-    onError: extractError,
+    onError: fireError,
   });
 }

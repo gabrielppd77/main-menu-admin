@@ -3,7 +3,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import api from "@libs/api";
 
 import { CompanyResponseDTO } from "./dtos/CompanyResponseDTO";
-import { extractError } from "@libs/alert";
+import { fireError } from "@libs/alert";
 
 const query = ["Company"];
 
@@ -19,7 +19,7 @@ export function useCompanyGetCompany() {
   });
 
   if (error) {
-    extractError(error);
+    fireError(error);
   }
 
   return rest;

@@ -9,11 +9,13 @@ import MainLayout from "@layouts/MainLayout";
 import Login from "@modules/authentication/Login";
 import Register from "@modules/authentication/Register";
 import Home from "@modules/home";
+import ConfirmEmail from "@modules/authentication/ConfirmEmail";
 
 export const routePaths = {
   initial: "/",
   register: "/register",
   home: "/home",
+  confirmEmail: "/confirm-email",
 };
 
 const routes = createBrowserRouter([
@@ -28,6 +30,10 @@ const routes = createBrowserRouter([
       {
         path: routePaths.register,
         element: <Register />,
+      },
+      {
+        path: routePaths.confirmEmail,
+        element: <ConfirmEmail />,
       },
     ],
   },

@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import api from "@libs/api";
 
 import { notifySuccess } from "@libs/notification";
-import { extractError } from "@libs/alert";
+import { fireError } from "@libs/alert";
 
 import { openDownloadData } from "@store/utils";
 
@@ -21,6 +21,6 @@ export function useCompanyGetQRCode() {
       openDownloadData("qrcode.png", d);
       notifySuccess("QR-Code gerado com sucesso");
     },
-    onError: extractError,
+    onError: fireError,
   });
 }

@@ -5,7 +5,7 @@ import { CategoryRequestDTO } from "./dtos/CategoryRequestDTO";
 import api from "@libs/api";
 
 import { notifyCreate } from "@libs/notification";
-import { extractError } from "@libs/alert";
+import { fireError } from "@libs/alert";
 
 import { query } from "./useCategoryGetAll";
 
@@ -28,6 +28,6 @@ export function useCategoryCreate() {
         queryKey: query,
       });
     },
-    onError: extractError,
+    onError: fireError,
   });
 }

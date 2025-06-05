@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 
-import { extractError } from "@libs/alert";
+import { fireError } from "@libs/alert";
 import api from "@libs/api";
 
 import { AuthenticationResponse } from "../@types/AuthenticationResponse";
@@ -11,10 +11,10 @@ export function useLogin() {
     mutationFn: async (data: LoginRequest) => {
       const response = await api.post<AuthenticationResponse>(
         "/auth/login",
-        data
+        data,
       );
       return response.data;
     },
-    onError: extractError,
+    onError: fireError,
   });
 }

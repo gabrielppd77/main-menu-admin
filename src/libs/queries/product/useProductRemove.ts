@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import api from "@libs/api";
 
 import { notifyRemove } from "@libs/notification";
-import { extractError } from "@libs/alert";
+import { fireError } from "@libs/alert";
 
 import { useInvalidate } from "./useProductGetAll";
 
@@ -26,6 +26,6 @@ export function useProductRemove() {
       notifyRemove();
       handleInvalidate();
     },
-    onError: extractError,
+    onError: fireError,
   });
 }

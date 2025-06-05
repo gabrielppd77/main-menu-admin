@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 
-import { extractError } from "@libs/alert";
+import { fireError } from "@libs/alert";
 import api from "@libs/api";
 
 import { RegisterRequest } from "../@types/RegisterRequest";
@@ -11,10 +11,10 @@ export function useRegister() {
     mutationFn: async (data: RegisterRequest) => {
       const response = await api.post<AuthenticationResponse>(
         "/auth/register",
-        data
+        data,
       );
       return response.data;
     },
-    onError: extractError,
+    onError: fireError,
   });
 }

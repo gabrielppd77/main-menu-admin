@@ -3,7 +3,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import api from "@libs/api";
 
 import { ProductResponseTableDTO } from "./dtos/ProductResponseTableDTO";
-import { extractError } from "@libs/alert";
+import { fireError } from "@libs/alert";
 
 const query = ["product"];
 
@@ -19,7 +19,7 @@ export function useProductGetAll() {
   });
 
   if (error) {
-    extractError(error);
+    fireError(error);
   }
 
   return rest;

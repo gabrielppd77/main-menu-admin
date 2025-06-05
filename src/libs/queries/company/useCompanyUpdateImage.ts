@@ -5,7 +5,7 @@ import { useInvalidate } from "./useCompanyGetCompany";
 import api from "@libs/api";
 
 import { notifyUpdate } from "@libs/notification";
-import { extractError } from "@libs/alert";
+import { fireError } from "@libs/alert";
 
 interface RequestProps {
   id: string;
@@ -25,6 +25,6 @@ export function useCompanyUpdateImage() {
       notifyUpdate();
       handleInvalidate();
     },
-    onError: extractError,
+    onError: fireError,
   });
 }

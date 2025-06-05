@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import api from "@libs/api";
 
 import { notifyRemove } from "@libs/notification";
-import { extractError } from "@libs/alert";
+import { fireError } from "@libs/alert";
 
 import { query } from "./useCategoryGetAll";
 
@@ -26,6 +26,6 @@ export function useCategoryRemove() {
         queryKey: query,
       });
     },
-    onError: extractError,
+    onError: fireError,
   });
 }

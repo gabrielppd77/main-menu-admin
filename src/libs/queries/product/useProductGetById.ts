@@ -3,7 +3,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import api from "@libs/api";
 
 import { ProductResponseFormDTO } from "./dtos/ProductResponseFormDTO";
-import { extractError } from "@libs/alert";
+import { fireError } from "@libs/alert";
 
 const query = "product-by-id";
 
@@ -24,7 +24,7 @@ export function useProductGetById({ id }: RequestProps) {
   });
 
   if (error) {
-    extractError(error);
+    fireError(error);
   }
 
   return rest;

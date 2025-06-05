@@ -7,7 +7,7 @@ import { CompanyUpdateDTO } from "./dtos/CompanyUpdateDTO";
 import api from "@libs/api";
 
 import { notifyUpdate } from "@libs/notification";
-import { extractError } from "@libs/alert";
+import { fireError } from "@libs/alert";
 
 interface RequestProps {
   id: string;
@@ -27,6 +27,6 @@ export function useCompanyUpdate() {
       notifyUpdate();
       handleInvalidate();
     },
-    onError: extractError,
+    onError: fireError,
   });
 }
