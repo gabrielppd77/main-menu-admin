@@ -91,7 +91,7 @@ export default function ForgotPassword() {
                 await mutateAsync(data.email);
                 confirmMessage(() => navigate(routePaths.initial), {
                   title: "Email de recuperação enviado com sucesso",
-                  text: "Você deve receber as instruções para recuperação de senha em poucos instantes em seu email",
+                  text: "Você deve receber as instruções para recuperação de senha em poucos instantes em seu email.",
                 });
               })}
             >

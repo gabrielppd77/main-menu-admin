@@ -11,6 +11,7 @@ import Register from "@modules/authentication/Register";
 import Home from "@modules/home";
 import ConfirmEmail from "@modules/authentication/ConfirmEmail";
 import ForgotPassword from "@modules/recover-password/ForgotPassword";
+import RecoverPassword from "@modules/recover-password/RecoverPassword";
 
 export const routePaths = {
   initial: "/",
@@ -18,6 +19,7 @@ export const routePaths = {
   home: "/home",
   confirmEmail: "/confirm-email",
   forgotPasword: "/forgot-pasword",
+  recoverPassword: "/recover-password",
 };
 
 const routes = createBrowserRouter([
@@ -40,6 +42,10 @@ const routes = createBrowserRouter([
       {
         path: routePaths.forgotPasword,
         element: <ForgotPassword />,
+      },
+      {
+        path: routePaths.recoverPassword,
+        element: <RecoverPassword />,
       },
     ],
   },

@@ -87,8 +87,8 @@ export default function Company() {
         },
         {
           title: "Conta removida com sucesso!",
-          text: "Você será redirecionado para a página inicial",
-        }
+          text: "Você será redirecionado para a página inicial.",
+        },
       );
     });
   }
