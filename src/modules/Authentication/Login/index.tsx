@@ -94,14 +94,27 @@ export default function Login() {
           </FormProvider>
 
           <Grid container>
-            <Grid>
-              <Link
-                className="hover:cursor-pointer"
-                onClick={() => navigate(routePaths.register)}
-                variant="body2"
-              >
-                Não tem uma conta? Cadastre
-              </Link>
+            <Grid size={{ xs: 12, sm: 6 }}>
+              <div className="flex items-center justify-center sm:justify-start">
+                <Link
+                  className="hover:cursor-pointer"
+                  onClick={() => navigate(routePaths.register)}
+                  variant="body2"
+                >
+                  Não tem uma conta? Cadastre
+                </Link>
+              </div>
+            </Grid>
+            <Grid size={{ xs: 12, sm: 6 }}>
+              <div className="flex items-center justify-center sm:justify-end">
+                <Link
+                  className="hover:cursor-pointer"
+                  onClick={() => navigate(routePaths.forgotPasword)}
+                  variant="body2"
+                >
+                  Esqueceu a senha?
+                </Link>
+              </div>
             </Grid>
           </Grid>
         </Box>

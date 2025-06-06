@@ -10,12 +10,14 @@ import Login from "@modules/authentication/Login";
 import Register from "@modules/authentication/Register";
 import Home from "@modules/home";
 import ConfirmEmail from "@modules/authentication/ConfirmEmail";
+import ForgotPassword from "@modules/recover-password/ForgotPassword";
 
 export const routePaths = {
   initial: "/",
   register: "/register",
   home: "/home",
   confirmEmail: "/confirm-email",
+  forgotPasword: "/forgot-pasword",
 };
 
 const routes = createBrowserRouter([
@@ -34,6 +36,10 @@ const routes = createBrowserRouter([
       {
         path: routePaths.confirmEmail,
         element: <ConfirmEmail />,
+      },
+      {
+        path: routePaths.forgotPasword,
+        element: <ForgotPassword />,
       },
     ],
   },
