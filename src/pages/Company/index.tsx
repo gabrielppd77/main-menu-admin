@@ -4,9 +4,9 @@ import { Box, CircularProgress, LinearProgress, Stack } from "@mui/material";
 import { Delete, QrCode2 } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 
-import PageHeader from "@components/PageHeader";
-import { TextField } from "@components/TextField";
-import UploadImage from "@components/UploadImage";
+import PageHeader from "@modules/core/components/PageHeader";
+import UploadImage from "@modules/core/components/UploadImage";
+import { TextField } from "@modules/core/components/TextField";
 
 import { useValidateForm } from "@hooks/useValidateForm";
 

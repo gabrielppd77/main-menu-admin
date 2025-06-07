@@ -1,7 +1,7 @@
 import { Avatar, Box, CircularProgress } from "@mui/material";
 
 import { Upload } from "@mui/icons-material";
-import VisuallyHiddenInput from "@components/VisuallyHiddenInput";
+import VisuallyHiddenInput from "../VisuallyHiddenInput";
 
 interface UploadImageProps {
   src?: string;

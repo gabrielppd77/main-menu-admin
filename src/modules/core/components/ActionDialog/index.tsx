@@ -1,11 +1,12 @@
 import React from "react";
 
-import Dialog, { DialogProps } from "@mui/material/Dialog";
+import Dialog from "@mui/material/Dialog";
+// import Dialog, { DialogProps } from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import Slide from "@mui/material/Slide";
+// import Slide from "@mui/material/Slide";
 
-import { TransitionProps } from "@mui/material/transitions";
+// import { TransitionProps } from "@mui/material/transitions";
 import {
   Breakpoint,
   Button,
@@ -19,14 +20,14 @@ import { LoadingButton } from "@mui/lab";
 
 import { Close } from "@mui/icons-material";
 
-const Transition = React.forwardRef(function Transition(
-  props: TransitionProps & {
-    children: React.ReactElement<DialogProps, "div">;
-  },
-  ref: React.Ref<unknown>
-) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
+// const Transition = React.forwardRef(function Transition(
+//   props: TransitionProps & {
+//     children: React.ReactElement<DialogProps, "div">;
+//   },
+//   ref: React.Ref<unknown>,
+// ) {
+//   return <Slide direction="up" ref={ref} {...props} />;
+// });
 
 interface ActionDialogProps {
   title: string;
@@ -48,13 +49,13 @@ export default function ActionDialog({
   isLoading,
 }: ActionDialogProps) {
   const fullScreen = useMediaQuery((theme: Theme) =>
-    theme.breakpoints.down("sm")
+    theme.breakpoints.down("sm"),
   );
   return (
     <Dialog
       fullScreen={fullScreen}
       open={isOpen}
-      TransitionComponent={Transition}
+      // TransitionComponent={Transition}
       keepMounted
       onClose={() => onClose()}
       aria-describedby="action-dialog"

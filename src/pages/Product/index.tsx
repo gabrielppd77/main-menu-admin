@@ -1,17 +1,18 @@
-import { Button, IconButton, Stack } from "@mui/material";
-import { Delete, Edit } from "@mui/icons-material";
+// import { Button, IconButton, Stack } from "@mui/material";
+// import { Delete, Edit } from "@mui/icons-material";
 
-import PageHeader from "@components/PageHeader";
-import DataTable from "@components/DataTable";
+// import PageHeader from "@components/PageHeader";
+// import DataTable from "@components/DataTable";
 
 import useDialog from "@hooks/useDialog";
 
-import { useProductGetAll } from "@libs/queries/product/useProductGetAll";
-import { useProductRemove } from "@libs/queries/product/useProductRemove";
+// import { useProductGetAll } from "@libs/queries/product/useProductGetAll";
+// import { useProductRemove } from "@libs/queries/product/useProductRemove";
 
 import Form from "./Form";
+import { Stack } from "@mui/material";
 
-import { confirmDelete } from "@libs/alert";
+// import { confirmDelete } from "@libs/alert";
 
 export default function Product() {
   const {
@@ -20,26 +21,26 @@ export default function Product() {
     data: dataForm,
   } = useDialog<string | null>(null);
 
-  const { data, isLoading, isFetching } = useProductGetAll();
-  const { mutateAsync } = useProductRemove();
+  // const { data, isLoading, isFetching } = useProductGetAll();
+  // const { mutateAsync } = useProductRemove();
 
   return (
     <Stack gap={1} p={2}>
-      <PageHeader
+      {/* <PageHeader
         title="Produtos"
         renderRight={
           <Button onClick={() => toggleForm(null)}>Adicionar</Button>
         }
-      />
+      /> */}
 
-      <DataTable
+      {/* <DataTable
         onKeyDown={(key, rows) => {
           if (key === "F2") {
             toggleForm(rows[0].id);
           }
           if (key === "Delete") {
             confirmDelete(
-              async () => await mutateAsync({ params: { id: rows[0].id } })
+              async () => await mutateAsync({ params: { id: rows[0].id } }),
             );
           }
         }}
@@ -81,7 +82,7 @@ export default function Product() {
                 <IconButton
                   onClick={() =>
                     confirmDelete(
-                      async () => await mutateAsync({ params: { id: value } })
+                      async () => await mutateAsync({ params: { id: value } }),
                     )
                   }
                 >
@@ -91,7 +92,7 @@ export default function Product() {
             ),
           },
         ]}
-      />
+      /> */}
 
       {isOpenForm && <Form id={dataForm} onClose={() => toggleForm(null)} />}
     </Stack>

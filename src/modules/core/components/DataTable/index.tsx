@@ -27,8 +27,9 @@ export default function DataTable<TData extends GridValidRowModel>({
 
   const handleCellKeyDown: GridEventListener<"cellKeyDown"> = (_, { key }) => {
     if (!onKeyDown) return;
+    if (!apiRef.current) return;
     const rowsSelected = Array.from(
-      apiRef.current.getSelectedRows().values()
+      apiRef.current.getSelectedRows().values(),
     ) as TData[];
     onKeyDown(key, rowsSelected);
   };
@@ -63,11 +64,11 @@ export default function DataTable<TData extends GridValidRowModel>({
             count !== 1
               ? `${count.toLocaleString()} linhas selecionadas`
               : `${count.toLocaleString()} linha selecionada`,
-          MuiTablePagination: {
-            labelRowsPerPage: "Linhas por página",
-            labelDisplayedRows: ({ from, to, count }) =>
-              `${from}-${to} de ${count}`,
-          },
+          // MuiTablePagination: {
+          //   labelRowsPerPage: "Linhas por página",
+          //   labelDisplayedRows: ({ from, to, count }) =>
+          //     `${from}-${to} de ${count}`,
+          // },
         }}
       />
     </Box>

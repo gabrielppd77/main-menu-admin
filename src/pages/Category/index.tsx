@@ -1,8 +1,8 @@
 import { Button, IconButton, Stack } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
 
-import PageHeader from "@components/PageHeader";
-import DataTable from "@components/DataTable";
+import PageHeader from "@modules/core/components/PageHeader";
+import DataTable from "@modules/core/components/DataTable";
 
 import useDialog from "@hooks/useDialog";
 

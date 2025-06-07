@@ -1,6 +1,5 @@
-import AutoComplete from "@components/AutoComplete";
-
 import { useCategoryGetAll } from "@libs/queries/category/useCategoryGetAll";
+import AutoComplete from "../AutoComplete";
 
 interface AutoCompleteCategoryProps {
   name: string;
