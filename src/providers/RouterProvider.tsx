@@ -11,7 +11,7 @@ import Register from "@modules/authentication/Register";
 import ConfirmEmail from "@modules/authentication/ConfirmEmail";
 import ForgotPassword from "@modules/recover-password/ForgotPassword";
 import RecoverPassword from "@modules/recover-password/RecoverPassword";
-import Home from "@modules/Home_rename";
+import Home from "@modules/home";
 
 export const routePaths = {
   initial: "/",
