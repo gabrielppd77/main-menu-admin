@@ -6,6 +6,7 @@ import {
 import PublicLayout from "@layouts/PublicLayout";
 import MainLayout from "@layouts/MainLayout";
 
+import Version from "@modules/app/Version";
 import Login from "@modules/authentication/Login";
 import Register from "@modules/authentication/Register";
 import ConfirmEmail from "@modules/authentication/ConfirmEmail";
@@ -14,6 +15,7 @@ import RecoverPassword from "@modules/recover-password/RecoverPassword";
 import Home from "@modules/home";
 
 export const routePaths = {
+  version: "/version",
   initial: "/",
   register: "/register",
   home: "/home",
@@ -27,6 +29,10 @@ const routes = createBrowserRouter([
     path: "/",
     element: <PublicLayout />,
     children: [
+      {
+        path: routePaths.version,
+        element: <Version />,
+      },
       {
         path: routePaths.initial,
         element: <Login />,
