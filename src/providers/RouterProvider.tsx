@@ -3,9 +3,9 @@ import {
   createBrowserRouter,
 } from "react-router-dom";
 
-import PublicLayout from "@layouts/PublicLayout";
-import MainLayout from "@layouts/MainLayout";
-import UserSettingsLayout from "@layouts/UserSettingsLayout";
+import PublicLayout from "@modules/core/layouts/PublicLayout";
+import MainLayout from "@modules/core/layouts/MainLayout";
+import UserSettingsLayout from "@modules/user-settings/layouts/UserSettingsLayout";
 
 import Version from "@modules/app/Version";
 import Login from "@modules/authentication/Login";
