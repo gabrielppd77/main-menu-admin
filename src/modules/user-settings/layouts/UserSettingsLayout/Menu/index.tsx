@@ -6,7 +6,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import { Person } from "@mui/icons-material";
 
 import { useLocation, useNavigate } from "react-router-dom";
-import { routePaths } from "@providers/RouterProvider";
+import { routes } from "@modules/routing/consts/routes";
 
 export default function Menu() {
   const location = useLocation();
@@ -16,8 +16,8 @@ export default function Menu() {
   return (
     <MenuList>
       <MenuItem
-        selected={currentPath == routePaths.profile}
-        onClick={() => navigate(routePaths.profile)}
+        selected={currentPath == routes.profile}
+        onClick={() => navigate(routes.profile)}
       >
         <ListItemIcon>
           <Person fontSize="small" />

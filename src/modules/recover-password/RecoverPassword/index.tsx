@@ -15,9 +15,9 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useResetPassword } from "../hooks/useResetPassword";
 import { useValidateForm } from "@hooks/useValidateForm";
 
-import { routePaths } from "@providers/RouterProvider";
 import { z } from "zod";
 import { confirmMessage } from "@libs/alert";
+import { routes } from "@modules/routing/consts/routes";
 
 const schema = z
   .object({
@@ -44,7 +44,7 @@ export default function RecoverPassword() {
 
   useEffect(() => {
     if (!token) {
-      navigate(routePaths.initial);
+      navigate(routes.initial);
     }
   }, [token]);
 
@@ -94,7 +94,7 @@ export default function RecoverPassword() {
               fullWidth
               onClick={handleSubmit(async (data) => {
                 await mutateAsync({ token, newPassword: data.password });
-                confirmMessage(() => navigate(routePaths.initial), {
+                confirmMessage(() => navigate(routes.initial), {
                   title: "A sua senha foi alterada com sucesso",
                   text: "Você será redirecionado para a página inicial para entrar no sistema novamente.",
                 });

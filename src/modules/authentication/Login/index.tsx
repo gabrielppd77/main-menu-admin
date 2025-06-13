@@ -13,12 +13,12 @@ import { TextField } from "@modules/core/components/TextField";
 import { TextFieldPassword } from "@modules/core/components/TextFieldPassword";
 
 import { z } from "zod";
-import { routePaths } from "@providers/RouterProvider";
 
 import { useValidateForm } from "@hooks/useValidateForm";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@hooks/useAuth";
 import { useLogin } from "../hooks/useLogin";
+import { routes } from "@modules/routing/consts/routes";
 
 const schema = z.object({
   email: z
@@ -86,7 +86,7 @@ export default function Login() {
               onClick={handleSubmit(async (data) => {
                 const response = await mutateAsync(data);
                 setToken(response.token);
-                navigate(routePaths.home);
+                navigate(routes.home);
               })}
             >
               Entre
@@ -98,7 +98,7 @@ export default function Login() {
               <div className="flex items-center justify-center sm:justify-start">
                 <Link
                   className="hover:cursor-pointer"
-                  onClick={() => navigate(routePaths.register)}
+                  onClick={() => navigate(routes.register)}
                   variant="body2"
                 >
                   Não tem uma conta? Cadastre
@@ -109,7 +109,7 @@ export default function Login() {
               <div className="flex items-center justify-center sm:justify-end">
                 <Link
                   className="hover:cursor-pointer"
-                  onClick={() => navigate(routePaths.forgotPasword)}
+                  onClick={() => navigate(routes.forgotPasword)}
                   variant="body2"
                 >
                   Esqueceu a senha?

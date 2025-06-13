@@ -12,12 +12,12 @@ import { TextField } from "@modules/core/components/TextField";
 import { TextFieldPassword } from "@modules/core/components/TextFieldPassword";
 
 import { z } from "zod";
-import { routePaths } from "@providers/RouterProvider";
 
 import { useValidateForm } from "@hooks/useValidateForm";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@hooks/useAuth";
 import { useRegister } from "../hooks/useRegister";
+import { routes } from "@modules/routing/consts/routes";
 
 const schema = z
   .object({
@@ -124,7 +124,7 @@ export default function Register() {
               onClick={handleSubmit(async (data) => {
                 const response = await mutateAsync(data);
                 setToken(response.token);
-                navigate(routePaths.home);
+                navigate(routes.home);
               })}
             >
               Cadastrar
@@ -135,7 +135,7 @@ export default function Register() {
             <Grid>
               <Link
                 className="hover:cursor-pointer"
-                onClick={() => navigate(routePaths.initial)}
+                onClick={() => navigate(routes.initial)}
                 variant="body2"
               >
                 Já tem uma conta? Entre

@@ -17,7 +17,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { useMenuStore } from "@hooks/useMenuStore";
 import { useAuth } from "@hooks/useAuth";
-import { routePaths } from "@providers/RouterProvider";
+import { routes } from "@modules/routing/consts/routes";
 
 export default function Appbar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -36,7 +36,7 @@ export default function Appbar() {
   function handleLogout() {
     setToken("");
     closeMenu();
-    navigate(routePaths.initial);
+    navigate(routes.initial);
   }
 
   return (
@@ -114,7 +114,7 @@ export default function Appbar() {
               <div className="w-60 p-2 py-0">
                 <MenuItem
                   onClick={() => {
-                    navigate(routePaths.profile);
+                    navigate(routes.profile);
                     closeMenu();
                   }}
                 >

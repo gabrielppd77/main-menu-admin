@@ -51,6 +51,11 @@ const theme = createTheme({
         arrow: true,
       },
     },
+    MuiTab: {
+      defaultProps: {
+        style: { textTransform: "none" },
+      },
+    },
     MuiTableCell: {
       styleOverrides: {
         root: {

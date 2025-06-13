@@ -1,3 +1,5 @@
+import { routes } from "@modules/routing/consts/routes";
+
 interface MenuProps {
   title: string;
   icon: string;
@@ -5,11 +7,11 @@ interface MenuProps {
 }
 
 const menu: MenuProps[] = [
-  // {
-  //   title: "Loja",
-  //   icon: "apartment",
-  //   link: "/company",
-  // },
+  {
+    title: "Loja",
+    icon: "apartment",
+    link: routes.companyMain,
+  },
   // {
   //   title: "Categorias",
   //   icon: "category",

@@ -25,7 +25,7 @@ import { useCompanyUpdateImage } from "@libs/queries/company/useCompanyUpdateIma
 
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@hooks/useAuth";
-import { routePaths } from "@providers/RouterProvider";
+import { routes } from "@modules/routing/consts/routes";
 
 const schema = z.object({
   id: z.string().optional(),
@@ -88,7 +88,7 @@ export default function Company() {
       confirmMessage(
         () => {
           setToken("");
-          navigate(routePaths.initial);
+          navigate(routes.initial);
         },
         {
           title: "Conta removida com sucesso!",

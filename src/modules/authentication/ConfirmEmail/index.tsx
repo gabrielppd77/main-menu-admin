@@ -10,9 +10,9 @@ import {
 
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useConfirmEmail } from "../hooks/useConfirmEmail";
-import { routePaths } from "@providers/RouterProvider";
 import { extractError } from "@libs/alert";
 import { Warning } from "@mui/icons-material";
+import { routes } from "@modules/routing/consts/routes";
 
 export default function ConfirmEmail() {
   const [countdown, setCountdown] = useState(5);
@@ -29,7 +29,7 @@ export default function ConfirmEmail() {
     if (token) {
       mutateAsync(token);
     } else {
-      navigate(routePaths.initial);
+      navigate(routes.initial);
     }
   }, [token]);
 
@@ -40,7 +40,7 @@ export default function ConfirmEmail() {
       setCountdown((prev) => {
         if (prev === 1) {
           clearInterval(interval);
-          navigate(routePaths.initial);
+          navigate(routes.initial);
         }
         return prev - 1;
       });
@@ -83,7 +83,7 @@ export default function ConfirmEmail() {
               </div>
               <Button
                 color="secondary"
-                onClick={() => navigate(routePaths.initial)}
+                onClick={() => navigate(routes.initial)}
               >
                 Voltar para tela inicial
               </Button>
@@ -94,7 +94,7 @@ export default function ConfirmEmail() {
               <div>
                 Email confirmado com sucesso! Redirecionando em {countdown}...
               </div>
-              <Button onClick={() => navigate(routePaths.initial)}>
+              <Button onClick={() => navigate(routes.initial)}>
                 Pressione aqui para redirecionar manualmente
               </Button>
             </p>

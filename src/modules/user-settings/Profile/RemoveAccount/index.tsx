@@ -2,11 +2,11 @@ import { Delete } from "@mui/icons-material";
 import { Button, Divider } from "@mui/material";
 
 import { confirmMessage, confirmPassword } from "@libs/alert";
-import { routePaths } from "@providers/RouterProvider";
 
 import { useAuth } from "@hooks/useAuth";
 import { useRemoveAccount } from "@modules/user-settings/hooks/useRemoveAccount";
 import { useNavigate } from "react-router-dom";
+import { routes } from "@modules/routing/consts/routes";
 
 export default function RemoveAccount() {
   const { isPending, mutateAsync } = useRemoveAccount();
@@ -23,7 +23,7 @@ export default function RemoveAccount() {
       confirmMessage(
         () => {
           setToken("");
-          navigate(routePaths.initial);
+          navigate(routes.initial);
         },
         {
           title: "Conta removida com sucesso!",

@@ -6,6 +6,7 @@ import {
 import PublicLayout from "@modules/core/layouts/PublicLayout";
 import MainLayout from "@modules/core/layouts/MainLayout";
 import UserSettingsLayout from "@modules/user-settings/layouts/UserSettingsLayout";
+import CompanyLayout from "@modules/company/layouts/CompanyLayout";
 
 import Version from "@modules/app/Version";
 import Login from "@modules/authentication/Login";
@@ -15,44 +16,36 @@ import ForgotPassword from "@modules/recover-password/ForgotPassword";
 import RecoverPassword from "@modules/recover-password/RecoverPassword";
 import Home from "@modules/home";
 import Profile from "@modules/user-settings/Profile";
+import MainCompany from "@modules/company/MainCompany";
 
-export const routePaths = {
-  version: "/version",
-  initial: "/",
-  register: "/register",
-  home: "/home",
-  confirmEmail: "/confirm-email",
-  forgotPasword: "/forgot-pasword",
-  recoverPassword: "/recover-password",
-  profile: "/settings/profile",
-};
+import { routes as routesPaths } from "@modules/routing/consts/routes";
 
 const routes = createBrowserRouter([
   {
     element: <PublicLayout />,
     children: [
       {
-        path: routePaths.version,
+        path: routesPaths.version,
         element: <Version />,
       },
       {
-        path: routePaths.initial,
+        path: routesPaths.initial,
         element: <Login />,
       },
       {
-        path: routePaths.register,
+        path: routesPaths.register,
         element: <Register />,
       },
       {
-        path: routePaths.confirmEmail,
+        path: routesPaths.confirmEmail,
         element: <ConfirmEmail />,
       },
       {
-        path: routePaths.forgotPasword,
+        path: routesPaths.forgotPasword,
         element: <ForgotPassword />,
       },
       {
-        path: routePaths.recoverPassword,
+        path: routesPaths.recoverPassword,
         element: <RecoverPassword />,
       },
     ],
@@ -61,15 +54,24 @@ const routes = createBrowserRouter([
     element: <MainLayout />,
     children: [
       {
-        path: routePaths.home,
+        path: routesPaths.home,
         element: <Home />,
       },
       {
         element: <UserSettingsLayout />,
         children: [
           {
-            path: routePaths.profile,
+            path: routesPaths.profile,
             element: <Profile />,
+          },
+        ],
+      },
+      {
+        element: <CompanyLayout />,
+        children: [
+          {
+            path: routesPaths.companyMain,
+            element: <MainCompany />,
           },
         ],
       },

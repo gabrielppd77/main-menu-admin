@@ -16,9 +16,9 @@ import { useValidateForm } from "@hooks/useValidateForm";
 import { useNavigate } from "react-router-dom";
 import { useRecoverPassword } from "../hooks/useRecoverPassword";
 
-import { routePaths } from "@providers/RouterProvider";
 import { z } from "zod";
 import { confirmMessage } from "@libs/alert";
+import { routes } from "@modules/routing/consts/routes";
 
 const schema = z.object({
   email: z
@@ -89,7 +89,7 @@ export default function ForgotPassword() {
               fullWidth
               onClick={handleSubmit(async (data) => {
                 await mutateAsync(data.email);
-                confirmMessage(() => navigate(routePaths.initial), {
+                confirmMessage(() => navigate(routes.initial), {
                   title: "Email de recuperação enviado com sucesso",
                   text: "Você deve receber as instruções para recuperação de senha em poucos instantes em seu email.",
                 });
@@ -103,7 +103,7 @@ export default function ForgotPassword() {
             <Grid>
               <Link
                 className="hover:cursor-pointer"
-                onClick={() => navigate(routePaths.initial)}
+                onClick={() => navigate(routes.initial)}
                 variant="body2"
               >
                 Voltar

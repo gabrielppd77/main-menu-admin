@@ -21,7 +21,7 @@ export default function Sidebar() {
   const drawerWidth = open ? drawerWidthOpen : drawerWidthClose;
 
   const isSmallScreen = useMediaQuery((theme: Theme) =>
-    theme.breakpoints.down("sm")
+    theme.breakpoints.down("sm"),
   );
 
   return (
@@ -49,7 +49,7 @@ export default function Sidebar() {
           }}
         >
           <List disablePadding>
-            <Stack gap={1}>
+            <Stack spacing={1}>
               {menu.map(({ title, icon, link }) => (
                 <SideItem
                   key={link}
