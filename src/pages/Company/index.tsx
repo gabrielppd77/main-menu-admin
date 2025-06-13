@@ -21,7 +21,7 @@ import { confirmPassword, confirmMessage } from "@libs/alert";
 import { useCompanyGetCompany } from "@libs/queries/company/useCompanyGetCompany";
 import { useCompanyUpdate } from "@libs/queries/company/useCompanyUpdate";
 import { useCompanyGetQRCode } from "@libs/queries/company/useCompanyGetQRCode";
-import { useCompanyUpdateImage } from "@libs/queries/company/useCompanyUpdateImage";
+import { useUploadImage } from "@modules/company/hooks/useUploadImage";
 
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@hooks/useAuth";
@@ -56,7 +56,7 @@ export default function Company() {
   const {
     mutateAsync: mutateAsyncUpdateImage,
     isPending: isPendingUpdateImage,
-  } = useCompanyUpdateImage();
+  } = useUploadImage();
 
   const { FormProvider, handleSubmit, reset } = useValidateForm({
     schema,
@@ -103,7 +103,6 @@ export default function Company() {
     formData.append("file", file);
     await mutateAsyncUpdateImage({
       data: formData,
-      id: data?.id || "",
     });
   }
 
