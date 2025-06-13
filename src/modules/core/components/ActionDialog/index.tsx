@@ -16,7 +16,6 @@ import {
   Tooltip,
   useMediaQuery,
 } from "@mui/material";
-import { LoadingButton } from "@mui/lab";
 
 import { Close } from "@mui/icons-material";
 
@@ -81,14 +80,14 @@ export default function ActionDialog({
         <Button fullWidth variant="outlined" onClick={() => onClose()}>
           Cancelar
         </Button>
-        <LoadingButton
+        <Button
           fullWidth
           variant="contained"
           onClick={() => onSubmit()}
           loading={isLoading}
         >
           Salvar
-        </LoadingButton>
+        </Button>
       </DialogActions>
     </Dialog>
   );

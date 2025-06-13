@@ -7,9 +7,9 @@ import {
   Container,
   Stack,
   Divider,
+  Button,
 } from "@mui/material";
 import { LockOutlined as LockOutlinedIcon } from "@mui/icons-material";
-import { LoadingButton } from "@mui/lab";
 import { TextField } from "@modules/core/components/TextField";
 
 import { useValidateForm } from "@hooks/useValidateForm";
@@ -81,7 +81,7 @@ export default function ForgotPassword() {
               />
             </Stack>
 
-            <LoadingButton
+            <Button
               loading={isPending}
               type="submit"
               variant="contained"
@@ -96,7 +96,7 @@ export default function ForgotPassword() {
               })}
             >
               Enviar recuperação de senha
-            </LoadingButton>
+            </Button>
           </FormProvider>
 
           <Grid container justifyContent="flex-end">

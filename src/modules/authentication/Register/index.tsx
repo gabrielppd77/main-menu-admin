@@ -1,6 +1,13 @@
-import { Avatar, Grid, Box, Link, Typography, Container } from "@mui/material";
+import {
+  Avatar,
+  Grid,
+  Box,
+  Link,
+  Typography,
+  Container,
+  Button,
+} from "@mui/material";
 import { LockOutlined as LockOutlinedIcon } from "@mui/icons-material";
-import { LoadingButton } from "@mui/lab";
 import { TextField } from "@modules/core/components/TextField";
 import { TextFieldPassword } from "@modules/core/components/TextFieldPassword";
 
@@ -108,7 +115,7 @@ export default function Register() {
               </Grid>
             </Grid>
 
-            <LoadingButton
+            <Button
               loading={isPending}
               variant="contained"
               type="submit"
@@ -121,7 +128,7 @@ export default function Register() {
               })}
             >
               Cadastrar
-            </LoadingButton>
+            </Button>
           </FormProvider>
 
           <Grid container justifyContent="flex-end">

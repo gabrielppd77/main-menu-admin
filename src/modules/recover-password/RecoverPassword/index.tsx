@@ -1,6 +1,13 @@
 import { useEffect } from "react";
 
-import { Avatar, Box, Container, Grid, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  Container,
+  Grid,
+  Typography,
+} from "@mui/material";
 import { TextFieldPassword } from "@modules/core/components/TextFieldPassword";
 import { LockOutlined } from "@mui/icons-material";
 
@@ -10,7 +17,6 @@ import { useValidateForm } from "@hooks/useValidateForm";
 
 import { routePaths } from "@providers/RouterProvider";
 import { z } from "zod";
-import { LoadingButton } from "@mui/lab";
 import { confirmMessage } from "@libs/alert";
 
 const schema = z
@@ -80,7 +86,7 @@ export default function RecoverPassword() {
               </Grid>
             </Grid>
 
-            <LoadingButton
+            <Button
               loading={isPending}
               variant="contained"
               type="submit"
@@ -95,7 +101,7 @@ export default function RecoverPassword() {
               })}
             >
               Alterar senha
-            </LoadingButton>
+            </Button>
           </FormProvider>
         </Box>
       </Box>

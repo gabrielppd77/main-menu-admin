@@ -9,10 +9,10 @@ interface RequestProps {
   };
 }
 
-export function useUserRemoveAccount() {
+export function useRemoveAccount() {
   return useMutation({
     mutationFn: async ({ params }: RequestProps) => {
-      await api.delete("/user/remove-account", { params });
+      await api.delete("/users/remove-account", { params });
     },
     onError: fireError,
   });

@@ -1,8 +1,13 @@
 import { useEffect } from "react";
 
-import { Box, CircularProgress, LinearProgress, Stack } from "@mui/material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  LinearProgress,
+  Stack,
+} from "@mui/material";
 import { Delete, QrCode2 } from "@mui/icons-material";
-import { LoadingButton } from "@mui/lab";
 
 import PageHeader from "@modules/core/components/PageHeader";
 import UploadImage from "@modules/core/components/UploadImage";
@@ -15,12 +20,12 @@ import { confirmPassword, confirmMessage } from "@libs/alert";
 
 import { useCompanyGetCompany } from "@libs/queries/company/useCompanyGetCompany";
 import { useCompanyUpdate } from "@libs/queries/company/useCompanyUpdate";
-import { useUserRemoveAccount } from "@libs/queries/user/useUserRemoveAccount";
 import { useCompanyGetQRCode } from "@libs/queries/company/useCompanyGetQRCode";
 import { useCompanyUpdateImage } from "@libs/queries/company/useCompanyUpdateImage";
 
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@hooks/useAuth";
+import { routePaths } from "@providers/RouterProvider";
 
 const schema = z.object({
   id: z.string().optional(),
@@ -42,10 +47,10 @@ export default function Company() {
 
   const { mutateAsync: mutateAsyncUpdate, isPending: isPendingUpdate } =
     useCompanyUpdate();
-  const {
-    mutateAsync: mutateAsyncRemoveAccount,
-    isPending: isPendingRemoveAccount,
-  } = useUserRemoveAccount();
+  // const {
+  //   mutateAsync: mutateAsyncRemoveAccount,
+  //   isPending: isPendingRemoveAccount,
+  // } = useUserRemoveAccount();
   const { mutateAsync: mutateAsyncGetQRCode, isPending: isPendingGetQRCode } =
     useCompanyGetQRCode();
   const {
@@ -74,16 +79,16 @@ export default function Company() {
   }
 
   function handleRemoveAccount() {
-    confirmPassword(async (password) => {
-      await mutateAsyncRemoveAccount({
-        params: {
-          password,
-        },
-      });
+    confirmPassword(async () => {
+      // await mutateAsyncRemoveAccount({
+      //   params: {
+      //     password,
+      //   },
+      // });
       confirmMessage(
         () => {
           setToken("");
-          navigate("/");
+          navigate(routePaths.initial);
         },
         {
           title: "Conta removida com sucesso!",
@@ -144,26 +149,26 @@ export default function Company() {
 
           <Stack gap={1}>
             <Box>
-              <LoadingButton
+              <Button
                 loading={isPendingGetQRCode}
                 onClick={async () => await mutateAsyncGetQRCode()}
                 variant="outlined"
                 startIcon={<QrCode2 />}
               >
                 Gerar QR Code da Loja
-              </LoadingButton>
+              </Button>
             </Box>
 
             <Box>
-              <LoadingButton
+              <Button
                 variant="contained"
                 color="error"
                 startIcon={<Delete />}
-                loading={isPendingRemoveAccount}
+                // loading={isPendingRemoveAccount}
                 onClick={handleRemoveAccount}
               >
                 Deletar Loja
-              </LoadingButton>
+              </Button>
             </Box>
           </Stack>
         </Stack>
@@ -173,14 +178,14 @@ export default function Company() {
             justifyContent: "flex-end",
           }}
         >
-          <LoadingButton
+          <Button
             variant="contained"
             type="submit"
             loading={isPendingUpdate}
             onClick={handleSubmit(onSubmit)}
           >
             Salvar
-          </LoadingButton>
+          </Button>
         </Box>
       </FormProvider>
     </Stack>

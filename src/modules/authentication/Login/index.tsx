@@ -6,9 +6,9 @@ import {
   Typography,
   Container,
   Stack,
+  Button,
 } from "@mui/material";
 import { LockOutlined as LockOutlinedIcon } from "@mui/icons-material";
-import { LoadingButton } from "@mui/lab";
 import { TextField } from "@modules/core/components/TextField";
 import { TextFieldPassword } from "@modules/core/components/TextFieldPassword";
 
@@ -77,7 +77,7 @@ export default function Login() {
               />
             </Stack>
 
-            <LoadingButton
+            <Button
               loading={isPending}
               type="submit"
               variant="contained"
@@ -90,7 +90,7 @@ export default function Login() {
               })}
             >
               Entre
-            </LoadingButton>
+            </Button>
           </FormProvider>
 
           <Grid container>

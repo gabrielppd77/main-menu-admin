@@ -8,16 +8,16 @@ import {
   Typography,
   Menu,
   MenuItem,
+  Divider,
+  Avatar,
 } from "@mui/material";
-import {
-  AccountCircle as AccountCircleIcon,
-  Menu as MenuIcon,
-} from "@mui/icons-material";
+import { Menu as MenuIcon } from "@mui/icons-material";
 
 import { Link, useNavigate } from "react-router-dom";
 
 import { useMenuStore } from "@hooks/useMenuStore";
 import { useAuth } from "@hooks/useAuth";
+import { routePaths } from "@providers/RouterProvider";
 
 export default function Appbar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -26,9 +26,17 @@ export default function Appbar() {
   const { setToken } = useAuth();
   const navigate = useNavigate();
 
+  const userName = "Gabriel Domingos";
+  const userImage = "rice-and-beans-logo.svg";
+
+  function closeMenu() {
+    setAnchorEl(null);
+  }
+
   function handleLogout() {
     setToken("");
-    navigate("/");
+    closeMenu();
+    navigate(routePaths.initial);
   }
 
   return (
@@ -82,7 +90,11 @@ export default function Appbar() {
               onClick={(event) => setAnchorEl(event.currentTarget)}
               color="inherit"
             >
-              <AccountCircleIcon />
+              <Avatar
+                alt={userName}
+                src={userImage}
+                sx={{ width: 32, height: 32 }}
+              />
             </IconButton>
             <Menu
               id="menu-appbar"
@@ -97,9 +109,20 @@ export default function Appbar() {
                 horizontal: "center",
               }}
               open={Boolean(anchorEl)}
-              onClose={() => setAnchorEl(null)}
+              onClose={() => closeMenu()}
             >
-              <MenuItem onClick={handleLogout}>Sair</MenuItem>
+              <div className="w-60 p-2 py-0">
+                <MenuItem
+                  onClick={() => {
+                    navigate(routePaths.profile);
+                    closeMenu();
+                  }}
+                >
+                  Perfil
+                </MenuItem>
+                <Divider />
+                <MenuItem onClick={handleLogout}>Sair</MenuItem>
+              </div>
             </Menu>
           </Box>
         </Box>
