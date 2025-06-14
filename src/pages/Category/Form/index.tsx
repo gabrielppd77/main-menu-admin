@@ -37,7 +37,7 @@ export default function Form({ data, onClose }: FormProps) {
 
   const { FormProvider, handleSubmit } = useValidateForm({
     schema,
-    defaultValues: data || {},
+    values: data || {},
   });
 
   async function onSubmit(d: DataType) {

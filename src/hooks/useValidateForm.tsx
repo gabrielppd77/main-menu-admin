@@ -4,18 +4,18 @@ import { z } from "zod";
 
 interface UseValidateFormProps<TSchema extends z.ZodTypeAny> {
   schema: TSchema;
-  defaultValues?: DefaultValues<z.infer<TSchema>>;
+  values?: DefaultValues<z.infer<TSchema>>;
 }
 
 export function useValidateForm<TSchema extends z.ZodTypeAny>({
   schema,
-  defaultValues,
+  values,
 }: UseValidateFormProps<TSchema>) {
   type FormValues = z.infer<typeof schema>;
 
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
-    defaultValues,
+    values,
   });
 
   const Component = ({ children }: { children: React.ReactNode }) => (

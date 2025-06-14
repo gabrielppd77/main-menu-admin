@@ -11,7 +11,8 @@ interface RequestProps {
 
 export function useUploadImage() {
   async function handleRequest({ data }: RequestProps) {
-    await api.patch("/companies/upload-image", data);
+    const response = await api.patch<string>("/companies/upload-image", data);
+    return response.data;
   }
 
   return useMutation({

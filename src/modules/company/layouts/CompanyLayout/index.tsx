@@ -24,9 +24,7 @@ export default function CompanyLayout() {
             <Tab label="Principal" value={routes.companyMain} />
           </TabList>
         </Box>
-        <div className="py-2">
-          <Outlet />
-        </div>
+        <Outlet />
       </TabContext>
     </Container>
   );

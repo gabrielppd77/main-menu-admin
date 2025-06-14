@@ -60,7 +60,7 @@ export default function Company() {
 
   const { FormProvider, handleSubmit, reset } = useValidateForm({
     schema,
-    defaultValues: data || {},
+    values: data || {},
   });
 
   useEffect(() => {

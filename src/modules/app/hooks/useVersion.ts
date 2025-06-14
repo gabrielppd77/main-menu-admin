@@ -11,14 +11,14 @@ export function useVersion() {
     return response.data;
   }
 
-  const { error, ...rest } = useQuery({
+  const result = useQuery({
     queryKey: ["version"],
     queryFn: handleRequest,
   });
 
-  if (error) {
-    fireError(error);
+  if (result.error) {
+    fireError(result.error);
   }
 
-  return rest;
+  return result;
 }

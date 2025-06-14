@@ -32,8 +32,8 @@ export default function UploadImage({
             alt={alt}
             src={src}
             sx={{
-              height: 72,
-              width: 72,
+              height: 180,
+              width: 180,
             }}
             onClick={() => inputRef.current?.click()}
           />
@@ -48,7 +48,7 @@ export default function UploadImage({
         ref={inputRef}
         type="file"
         className="sr-only"
-        accept=".jpg, .jpeg, .png"
+        accept=".jpg, .jpeg, .png, .webp"
         onChange={handleFileChange}
       />
     </div>
