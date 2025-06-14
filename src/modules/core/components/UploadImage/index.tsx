@@ -30,7 +30,7 @@ export default function UploadImage({
         <IconButton>
           <Avatar
             alt={alt}
-            src={src}
+            src={src + "?time=" + new Date().getTime()}
             sx={{
               height: 180,
               width: 180,
