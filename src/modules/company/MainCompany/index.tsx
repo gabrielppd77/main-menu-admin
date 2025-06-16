@@ -10,6 +10,7 @@ import { z } from "zod";
 
 const schema = z.object({
   name: z.string({ message: "Informe o Nome da loja" }),
+  description: z.string({ message: "Informe a Descrição da loja" }).optional(),
   path: z.string({ message: "Informe o Caminho para acesso da loja" }),
 });
 
@@ -54,6 +55,13 @@ export default function MainCompany() {
                 label="Caminho para acesso da loja"
                 name="path"
                 className="max-w-2xl"
+              />
+              <TextField
+                label="Descrição da loja"
+                name="description"
+                className="max-w-2xl"
+                multiline
+                rows={4}
               />
             </Stack>
           </FormProvider>
