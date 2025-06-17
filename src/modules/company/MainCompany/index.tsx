@@ -1,35 +1,33 @@
-import { Grid, LinearProgress, Stack } from "@mui/material";
-import UploadImage from "@modules/core/components/UploadImage";
+import { Button, Grid, LinearProgress, Stack } from "@mui/material";
 import { TextField } from "@modules/core/components/TextField";
 import SimpleLoadingPage from "@modules/core/components/SimpleLoadingPage";
 
-import { useUploadImage } from "../hooks/useUploadImage";
-import { useGetFormData, useUpdateGetFormData } from "../hooks/useGetFormData";
+import { useUpdateFormData } from "../hooks/useUpdateFormData";
+import { useGetFormData } from "../hooks/useGetFormData";
 import { useValidateForm } from "@hooks/useValidateForm";
 import { z } from "zod";
+import MainPhoto from "./MainPhoto";
 
 const schema = z.object({
-  name: z.string({ message: "Informe o Nome da loja" }),
+  name: z.string({ message: "Informe o Nome da loja" }).min(1),
   description: z.string({ message: "Informe a Descrição da loja" }).optional(),
-  path: z.string({ message: "Informe o Caminho para acesso da loja" }),
+  path: z.string({ message: "Informe o Caminho para acesso da loja" }).min(1),
 });
+
+type DataType = z.infer<typeof schema>;
 
 export default function MainCompany() {
   const { data, isLoading, isFetching } = useGetFormData();
-  const { mutateAsync, isPending } = useUploadImage();
-  const { handleChange } = useUpdateGetFormData();
-  const { FormProvider } = useValidateForm({
+  const { mutateAsync, isPending } = useUpdateFormData();
+  const { FormProvider, handleSubmit } = useValidateForm({
     schema,
     values: data,
   });
 
-  async function handleUploadImage(files: FileList) {
-    const formData = new FormData();
-    formData.append("file", files[0]);
-    const imageUrl = await mutateAsync({
-      data: formData,
+  async function onSubmit(d: DataType) {
+    await mutateAsync({
+      data: d,
     });
-    handleChange({ urlImage: imageUrl });
   }
 
   if (isLoading) {
@@ -65,18 +63,16 @@ export default function MainCompany() {
               />
             </Stack>
           </FormProvider>
+
+          <div className="mt-2">
+            <Button onClick={handleSubmit(onSubmit)} loading={isPending}>
+              Salvar Alterações
+            </Button>
+          </div>
         </Grid>
 
         <Grid size={{ xs: 12, sm: 5, md: 4, lg: 2 }}>
-          <div className="flex flex-col gap-2">
-            <p className="text-lg font-medium">Foto principal</p>
-            <UploadImage
-              onChange={handleUploadImage}
-              src={data?.urlImage}
-              alt="Foto principal"
-              isLoading={isPending}
-            />
-          </div>
+          <MainPhoto urlImage={data?.urlImage} />
         </Grid>
       </Grid>
     </div>

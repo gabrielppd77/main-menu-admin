@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-
 import {
   Box,
   Button,
@@ -7,104 +5,18 @@ import {
   LinearProgress,
   Stack,
 } from "@mui/material";
-import { Delete, QrCode2 } from "@mui/icons-material";
+import { QrCode2 } from "@mui/icons-material";
 
 import PageHeader from "@modules/core/components/PageHeader";
-import UploadImage from "@modules/core/components/UploadImage";
-import { TextField } from "@modules/core/components/TextField";
-
-import { useValidateForm } from "@hooks/useValidateForm";
-
-import { z } from "zod";
-import { confirmPassword, confirmMessage } from "@libs/alert";
 
 import { useCompanyGetCompany } from "@libs/queries/company/useCompanyGetCompany";
-import { useCompanyUpdate } from "@libs/queries/company/useCompanyUpdate";
 import { useCompanyGetQRCode } from "@libs/queries/company/useCompanyGetQRCode";
-import { useUploadImage } from "@modules/company/hooks/useUploadImage";
-
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "@hooks/useAuth";
-import { routes } from "@modules/routing/consts/routes";
-
-const schema = z.object({
-  id: z.string().optional(),
-  name: z
-    .string({ message: "Informe o Nome" })
-    .min(1, "Informe pelo menos um caractere"),
-  path: z
-    .string({ message: "Informe o caminho para acessar o seu site" })
-    .min(1, "Informe pelo menos um caractere"),
-  description: z.string().optional().nullable(),
-});
-
-type DataType = z.infer<typeof schema>;
 
 export default function Company() {
-  const { data, isLoading, isFetching } = useCompanyGetCompany();
-  const { setToken } = useAuth();
-  const navigate = useNavigate();
+  const { isLoading, isFetching } = useCompanyGetCompany();
 
-  const { mutateAsync: mutateAsyncUpdate, isPending: isPendingUpdate } =
-    useCompanyUpdate();
-  // const {
-  //   mutateAsync: mutateAsyncRemoveAccount,
-  //   isPending: isPendingRemoveAccount,
-  // } = useUserRemoveAccount();
   const { mutateAsync: mutateAsyncGetQRCode, isPending: isPendingGetQRCode } =
     useCompanyGetQRCode();
-  const {
-    mutateAsync: mutateAsyncUpdateImage,
-    isPending: isPendingUpdateImage,
-  } = useUploadImage();
-
-  const { FormProvider, handleSubmit, reset } = useValidateForm({
-    schema,
-    values: data || {},
-  });
-
-  useEffect(() => {
-    if (data) {
-      reset(data);
-    }
-  }, [data, reset]);
-
-  async function onSubmit(d: DataType) {
-    if (d.id) {
-      await mutateAsyncUpdate({
-        id: d.id,
-        data: d,
-      });
-    }
-  }
-
-  function handleRemoveAccount() {
-    confirmPassword(async () => {
-      // await mutateAsyncRemoveAccount({
-      //   params: {
-      //     password,
-      //   },
-      // });
-      confirmMessage(
-        () => {
-          setToken("");
-          navigate(routes.initial);
-        },
-        {
-          title: "Conta removida com sucesso!",
-          text: "Você será redirecionado para a página inicial.",
-        },
-      );
-    });
-  }
-
-  async function handleUpdateImage(file: File) {
-    const formData = new FormData();
-    formData.append("file", file);
-    await mutateAsyncUpdateImage({
-      data: formData,
-    });
-  }
 
   return (
     <Stack gap={1} p={2}>
@@ -118,75 +30,25 @@ export default function Company() {
         value={0}
       />
 
-      <FormProvider>
-        <Stack gap={1}>
-          <Stack gap={1} flexDirection="row" alignItems="center">
-            <UploadImage
-              alt="Imagem da loja"
-              src={data?.urlImage}
-              onChange={(value) => handleUpdateImage(value[0])}
-              isLoading={isPendingUpdateImage}
-            />
-
-            <Stack gap={1} width="100%">
-              <TextField required label="Nome" name="name" />
-              <TextField
-                required
-                label="Caminho para acesso do site"
-                name="path"
-              />
-            </Stack>
-          </Stack>
-
-          <TextField
-            label="Descrição"
-            name="description"
-            inputProps={{ maxLength: 500 }}
-            rows={2}
-            multiline
-          />
-
-          <Stack gap={1}>
-            <Box>
-              <Button
-                loading={isPendingGetQRCode}
-                onClick={async () => await mutateAsyncGetQRCode()}
-                variant="outlined"
-                startIcon={<QrCode2 />}
-              >
-                Gerar QR Code da Loja
-              </Button>
-            </Box>
-
-            <Box>
-              <Button
-                variant="contained"
-                color="error"
-                startIcon={<Delete />}
-                // loading={isPendingRemoveAccount}
-                onClick={handleRemoveAccount}
-              >
-                Deletar Loja
-              </Button>
-            </Box>
-          </Stack>
+      <Stack gap={1}>
+        <Stack gap={1} flexDirection="row" alignItems="center">
+          <Stack gap={1} width="100%"></Stack>
         </Stack>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "flex-end",
-          }}
-        >
-          <Button
-            variant="contained"
-            type="submit"
-            loading={isPendingUpdate}
-            onClick={handleSubmit(onSubmit)}
-          >
-            Salvar
-          </Button>
-        </Box>
-      </FormProvider>
+
+        <Stack gap={1}>
+          <Box>
+            <Button
+              loading={isPendingGetQRCode}
+              onClick={async () => await mutateAsyncGetQRCode()}
+              variant="outlined"
+              startIcon={<QrCode2 />}
+            >
+              Gerar QR Code da Loja
+            </Button>
+          </Box>
+          <Box></Box>
+        </Stack>
+      </Stack>
     </Stack>
   );
 }
