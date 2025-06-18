@@ -18,6 +18,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useMenuStore } from "@hooks/useMenuStore";
 import { useAuth } from "@hooks/useAuth";
 import { routes } from "@modules/routing/consts/routes";
+import { useGetGeneralData } from "@modules/user-settings/hooks/useGetGeneralData";
 
 export default function Appbar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -26,8 +27,7 @@ export default function Appbar() {
   const { setToken } = useAuth();
   const navigate = useNavigate();
 
-  const userName = "Gabriel Domingos";
-  const userImage = "rice-and-beans-logo.svg";
+  const { data } = useGetGeneralData();
 
   function closeMenu() {
     setAnchorEl(null);
@@ -91,8 +91,8 @@ export default function Appbar() {
               color="inherit"
             >
               <Avatar
-                alt={userName}
-                src={userImage}
+                alt="Foto da pessoa"
+                src={data?.urlImage}
                 sx={{ width: 32, height: 32 }}
               />
             </IconButton>
