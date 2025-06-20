@@ -6,11 +6,12 @@ interface ProblemDetails {
   type: string;
   title: string;
   status: HttpStatusCode;
-  traceId: string;
+  traceId?: string;
   errors?: {
     [key: string]: string[];
   };
   errorCodes?: string[];
+  detail?: string;
 }
 
 export function extractError(err: unknown) {
@@ -31,6 +32,9 @@ export function extractError(err: unknown) {
       }
       if (responseData.errorCodes) {
         responseData.errorCodes.forEach((err) => (text += " " + err));
+      }
+      if (responseData.detail) {
+        text = responseData.detail;
       }
       text.trim();
       icon =
