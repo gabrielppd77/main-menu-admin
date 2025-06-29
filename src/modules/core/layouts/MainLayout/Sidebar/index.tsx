@@ -10,15 +10,15 @@ import {
 
 import SideItem from "./SideItem";
 
-import { useMenuStore } from "@hooks/useMenuStore";
+import { useStore } from "@modules/core/store";
 
 import menu from "@store/menu";
 import { drawerWidthOpen, drawerWidthClose } from "@store/constants";
 
 export default function Sidebar() {
-  const { open, toggleOpen } = useMenuStore();
+  const { isOpen, toggle } = useStore((store) => store.menu);
 
-  const drawerWidth = open ? drawerWidthOpen : drawerWidthClose;
+  const drawerWidth = isOpen ? drawerWidthOpen : drawerWidthClose;
 
   const isSmallScreen = useMediaQuery((theme: Theme) =>
     theme.breakpoints.down("sm"),
@@ -26,9 +26,9 @@ export default function Sidebar() {
 
   return (
     <Drawer
-      open={open}
+      open={isOpen}
       variant={isSmallScreen ? "temporary" : "permanent"}
-      onClose={toggleOpen}
+      onClose={() => toggle()}
     >
       <Box
         sx={(theme) => ({
@@ -56,7 +56,7 @@ export default function Sidebar() {
                   title={title}
                   icon={icon}
                   link={link}
-                  showText={open}
+                  showText={isOpen}
                 />
               ))}
             </Stack>

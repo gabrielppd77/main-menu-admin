@@ -5,23 +5,23 @@ import { Navigate, Outlet } from "react-router-dom";
 import Appbar from "./Appbar";
 import Sidebar from "./Sidebar";
 
-import { useMenuStore } from "@hooks/useMenuStore";
 import { useAuth } from "@hooks/useAuth";
+import { useStore } from "@modules/core/store";
 
 import { drawerWidthClose, drawerWidthOpen } from "@store/constants";
 
 export default function MainLayout() {
   const { token } = useAuth();
-  const { open } = useMenuStore();
+  const isOpenMenu = useStore((store) => store.menu.isOpen);
   const isSmallScreen = useMediaQuery((theme: Theme) =>
-    theme.breakpoints.down("sm")
+    theme.breakpoints.down("sm"),
   );
 
   const drawerWidth = isSmallScreen
     ? 0
-    : open
-    ? drawerWidthOpen
-    : drawerWidthClose;
+    : isOpenMenu
+      ? drawerWidthOpen
+      : drawerWidthClose;
 
   if (!token) {
     return <Navigate to="/" />;

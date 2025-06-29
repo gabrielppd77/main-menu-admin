@@ -15,15 +15,15 @@ import { Menu as MenuIcon } from "@mui/icons-material";
 
 import { Link, useNavigate } from "react-router-dom";
 
-import { useMenuStore } from "@hooks/useMenuStore";
 import { useAuth } from "@hooks/useAuth";
 import { routes } from "@modules/routing/consts/routes";
 import { useGetGeneralData } from "@modules/user-settings/hooks/useGetGeneralData";
+import { useStore } from "@modules/core/store";
 
 export default function Appbar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
-  const { toggleOpen } = useMenuStore();
+  const toggleMenu = useStore((store) => store.menu.toggle);
   const { setToken } = useAuth();
   const navigate = useNavigate();
 
@@ -66,7 +66,7 @@ export default function Appbar() {
               alignItems: "center",
             }}
           >
-            <IconButton color="inherit" onClick={toggleOpen}>
+            <IconButton color="inherit" onClick={() => toggleMenu()}>
               <MenuIcon />
             </IconButton>
             <Link
