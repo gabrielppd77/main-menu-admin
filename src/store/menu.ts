@@ -12,11 +12,11 @@ const menu: MenuProps[] = [
     icon: "apartment",
     link: routes.companyMain,
   },
-  // {
-  //   title: "Categorias",
-  //   icon: "category",
-  //   link: "/category",
-  // },
+  {
+    title: "Categorias",
+    icon: "category",
+    link: routes.category,
+  },
   // {
   //   title: "Produtos",
   //   icon: "store",

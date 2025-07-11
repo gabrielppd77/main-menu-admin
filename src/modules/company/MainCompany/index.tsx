@@ -4,7 +4,7 @@ import SimpleLoadingPage from "@modules/core/components/SimpleLoadingPage";
 
 import { useUpdateFormData } from "../hooks/useUpdateFormData";
 import { useGetFormData } from "../hooks/useGetFormData";
-import { useValidateForm } from "@hooks/useValidateForm";
+import { useValidateForm } from "@modules/core/hooks/useValidateForm";
 import { z } from "zod";
 import MainPhoto from "./MainPhoto";
 

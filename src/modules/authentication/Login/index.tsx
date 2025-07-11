@@ -14,7 +14,7 @@ import { TextFieldPassword } from "@modules/core/components/TextFieldPassword";
 
 import { z } from "zod";
 
-import { useValidateForm } from "@hooks/useValidateForm";
+import { useValidateForm } from "@modules/core/hooks/useValidateForm";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@hooks/useAuth";
 import { useLogin } from "../hooks/useLogin";

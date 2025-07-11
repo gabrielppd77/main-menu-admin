@@ -6,7 +6,7 @@ import { useCategoryUpdate } from "@libs/queries/category/useCategoryUpdate";
 import { z } from "zod";
 
 import { CategoryResponseDTO } from "@libs/queries/category/dtos/CategoryResponseDTO";
-import { useValidateForm } from "@hooks/useValidateForm";
+import { useValidateForm } from "@modules/core/hooks/useValidateForm";
 import ActionDialog from "@modules/core/components/ActionDialog";
 import { TextField } from "@modules/core/components/TextField";
 

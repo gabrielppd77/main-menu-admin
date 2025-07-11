@@ -12,7 +12,7 @@ import {
 import { LockOutlined as LockOutlinedIcon } from "@mui/icons-material";
 import { TextField } from "@modules/core/components/TextField";
 
-import { useValidateForm } from "@hooks/useValidateForm";
+import { useValidateForm } from "@modules/core/hooks/useValidateForm";
 import { useNavigate } from "react-router-dom";
 import { useRecoverPassword } from "../hooks/useRecoverPassword";
 

@@ -8,4 +8,5 @@ export const routes = {
   recoverPassword: "/recover-password",
   profile: "/settings/profile",
   companyMain: "/company/main",
+  category: "/category",
 };

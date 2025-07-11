@@ -17,6 +17,7 @@ import RecoverPassword from "@modules/recover-password/RecoverPassword";
 import Home from "@modules/home";
 import Profile from "@modules/user-settings/Profile";
 import MainCompany from "@modules/company/MainCompany";
+import Category from "@modules/category";
 
 import { routes as routesPaths } from "@modules/routing/consts/routes";
 
@@ -74,6 +75,10 @@ const routes = createBrowserRouter([
             element: <MainCompany />,
           },
         ],
+      },
+      {
+        element: <Category />,
+        path: routesPaths.category,
       },
     ],
   },

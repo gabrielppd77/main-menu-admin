@@ -1,12 +1,9 @@
 import React from "react";
 
 import Dialog from "@mui/material/Dialog";
-// import Dialog, { DialogProps } from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-// import Slide from "@mui/material/Slide";
 
-// import { TransitionProps } from "@mui/material/transitions";
 import {
   Breakpoint,
   Button,
@@ -19,20 +16,11 @@ import {
 
 import { Close } from "@mui/icons-material";
 
-// const Transition = React.forwardRef(function Transition(
-//   props: TransitionProps & {
-//     children: React.ReactElement<DialogProps, "div">;
-//   },
-//   ref: React.Ref<unknown>,
-// ) {
-//   return <Slide direction="up" ref={ref} {...props} />;
-// });
-
 interface ActionDialogProps {
   title: string;
   maxWidth?: Breakpoint;
   children: React.ReactNode;
-  isOpen?: boolean;
+  isOpen: boolean;
   onClose: () => void;
   onSubmit: () => void;
   isLoading: boolean;
@@ -42,7 +30,7 @@ export default function ActionDialog({
   title,
   maxWidth = "xs",
   children,
-  isOpen = true,
+  isOpen,
   onClose,
   onSubmit,
   isLoading,
@@ -54,7 +42,6 @@ export default function ActionDialog({
     <Dialog
       fullScreen={fullScreen}
       open={isOpen}
-      // TransitionComponent={Transition}
       keepMounted
       onClose={() => onClose()}
       aria-describedby="action-dialog"

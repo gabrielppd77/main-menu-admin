@@ -1,29 +1,24 @@
 import { Button, IconButton, Stack } from "@mui/material";
-import { Delete, Edit } from "@mui/icons-material";
 
 import PageHeader from "@modules/core/components/PageHeader";
-import DataTable from "@modules/core/components/DataTable";
-
 import useDialog from "@modules/core/hooks/useDialog";
 
-import { useCategoryGetAll } from "@libs/queries/category/useCategoryGetAll";
-import { useCategoryRemove } from "@libs/queries/category/useCategoryRemove";
-
 import Form from "./Form";
-
+import DataTable from "@modules/core/components/DataTable";
+import { Delete, Edit } from "@mui/icons-material";
 import { confirmDelete } from "@libs/alert";
 
-import { CategoryResponseDTO } from "@libs/queries/category/dtos/CategoryResponseDTO";
+const data = Array.from({ length: 50 }, (_, i) => ({
+  id: i + 1,
+  name: `Name ${i + 1}`,
+}));
 
 export default function Category() {
   const {
     toggle: toggleForm,
     isOpen: isOpenForm,
     data: dataForm,
-  } = useDialog<CategoryResponseDTO | null>(null);
-
-  const { data, isLoading, isFetching } = useCategoryGetAll({});
-  const { mutateAsync } = useCategoryRemove();
+  } = useDialog<null>(null);
 
   return (
     <Stack gap={1} p={2}>
@@ -36,21 +31,19 @@ export default function Category() {
 
       <DataTable
         onKeyDown={(key, rows) => {
+          console.log({ key, rows });
           if (key === "F2") {
-            toggleForm(rows[0]);
+            toggleForm(null);
+            // toggleForm(rows[0]);
           }
           if (key === "Delete") {
-            confirmDelete(async () => await mutateAsync({ id: rows[0].id }));
+            confirmDelete(async () => undefined);
+            // confirmDelete(async () => await mutateAsync({ id: rows[0].id }));
           }
         }}
         data={data}
-        isLoading={isLoading}
-        isFetching={isFetching}
+        isLoading={false}
         columns={[
-          {
-            field: "order",
-            headerName: "Ordem",
-          },
           {
             field: "name",
             headerName: "Nome",
@@ -61,13 +54,16 @@ export default function Category() {
             headerName: "Ações",
             renderCell: ({ value, row }) => (
               <Stack direction="row" height="100%" gap={0.5}>
-                <IconButton onClick={() => toggleForm(row)}>
+                <IconButton
+                //   onClick={() => toggleForm(row)}
+                >
                   <Edit />
                 </IconButton>
                 <IconButton
-                  onClick={() =>
-                    confirmDelete(async () => await mutateAsync({ id: value }))
-                  }
+                  // onClick={() =>
+                  //   confirmDelete(async () => await mutateAsync({ id: value }))
+                  // }
+                  onClick={() => console.log({ value, row })}
                 >
                   <Delete />
                 </IconButton>
@@ -77,7 +73,11 @@ export default function Category() {
         ]}
       />
 
-      {isOpenForm && <Form data={dataForm} onClose={() => toggleForm(null)} />}
+      <Form
+        isOpen={isOpenForm}
+        //   data={dataForm}
+        onClose={() => toggleForm(null)}
+      />
     </Stack>
   );
 }

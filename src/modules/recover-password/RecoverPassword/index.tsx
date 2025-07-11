@@ -13,7 +13,7 @@ import { LockOutlined } from "@mui/icons-material";
 
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useResetPassword } from "../hooks/useResetPassword";
-import { useValidateForm } from "@hooks/useValidateForm";
+import { useValidateForm } from "@modules/core/hooks/useValidateForm";
 
 import { z } from "zod";
 import { confirmMessage } from "@libs/alert";

@@ -1,4 +1,3 @@
-import { Box, LinearProgress } from "@mui/material";
 import {
   DataGrid,
   GridRowsProp,
@@ -9,10 +8,9 @@ import {
 } from "@mui/x-data-grid";
 
 interface DataTableProps<TData extends GridValidRowModel> {
-  data?: GridRowsProp<TData>;
+  data: GridRowsProp<TData>;
   columns: GridColDef<TData>[];
-  isLoading: boolean;
-  isFetching: boolean;
+  isLoading?: boolean;
   onKeyDown?: (key: string, rows: TData[]) => void;
 }
 
@@ -20,7 +18,6 @@ export default function DataTable<TData extends GridValidRowModel>({
   data,
   columns,
   isLoading,
-  isFetching,
   onKeyDown,
 }: DataTableProps<TData>) {
   const apiRef = useGridApiRef();
@@ -35,42 +32,33 @@ export default function DataTable<TData extends GridValidRowModel>({
   };
 
   return (
-    <Box>
-      <LinearProgress
-        variant={isFetching ? "indeterminate" : "determinate"}
-        value={0}
-      />
-      <DataGrid
-        apiRef={apiRef}
-        loading={isLoading}
-        autoHeight
-        columns={columns}
-        rows={data}
-        initialState={{
-          pagination: {
-            paginationModel: {
-              pageSize: 25,
-            },
+    <DataGrid
+      apiRef={apiRef}
+      loading={isLoading}
+      columns={columns}
+      rows={data}
+      initialState={{
+        pagination: {
+          paginationModel: {
+            pageSize: 25,
           },
-        }}
-        onCellKeyDown={handleCellKeyDown}
-        density="compact"
-        disableColumnMenu
-        disableVirtualization
-        pageSizeOptions={[10, 25, 50]}
-        localeText={{
-          noRowsLabel: "Sem dados",
-          footerRowSelected: (count) =>
-            count !== 1
-              ? `${count.toLocaleString()} linhas selecionadas`
-              : `${count.toLocaleString()} linha selecionada`,
-          // MuiTablePagination: {
-          //   labelRowsPerPage: "Linhas por página",
-          //   labelDisplayedRows: ({ from, to, count }) =>
-          //     `${from}-${to} de ${count}`,
-          // },
-        }}
-      />
-    </Box>
+        },
+      }}
+      onCellKeyDown={handleCellKeyDown}
+      density="compact"
+      disableColumnMenu
+      disableColumnSorting
+      pageSizeOptions={[10, 25, 50]}
+      localeText={{
+        noRowsLabel: "Sem dados",
+        footerRowSelected: (count) =>
+          count !== 1
+            ? `${count.toLocaleString()} linhas selecionadas`
+            : `${count.toLocaleString()} linha selecionada`,
+        paginationRowsPerPage: "Linhas por página",
+        paginationDisplayedRows: ({ from, to, count }) =>
+          `${from}-${to} de ${count}`,
+      }}
+    />
   );
 }

@@ -7,7 +7,7 @@ import {
   useGetGeneralData,
   useUpdateGetGeneralData,
 } from "../hooks/useGetGeneralData";
-import { useValidateForm } from "@hooks/useValidateForm";
+import { useValidateForm } from "@modules/core/hooks/useValidateForm";
 import { z } from "zod";
 import { TextField } from "@modules/core/components/TextField";
 import SimpleLoadingPage from "@modules/core/components/SimpleLoadingPage";
