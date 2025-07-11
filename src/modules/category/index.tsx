@@ -1,12 +1,13 @@
 import { Button, IconButton, Stack } from "@mui/material";
 
 import PageHeader from "@modules/core/components/PageHeader";
-import useDialog from "@modules/core/hooks/useDialog";
-
-import Form from "./Form";
 import DataTable from "@modules/core/components/DataTable";
+import useDialog from "@modules/core/hooks/useDialog";
 import { Delete, Edit } from "@mui/icons-material";
 import { confirmDelete } from "@libs/alert";
+
+import Form from "./Form";
+import ChangePosition from "./ChangePosition";
 
 const data = Array.from({ length: 50 }, (_, i) => ({
   id: i + 1,
@@ -28,6 +29,8 @@ export default function Category() {
           <Button onClick={() => toggleForm(null)}>Adicionar</Button>
         }
       />
+
+      <ChangePosition />
 
       <DataTable
         onKeyDown={(key, rows) => {
