@@ -73,11 +73,7 @@ export function SortTable<TData extends BaseItem>({
     >
       <SortableContext items={data} strategy={verticalListSortingStrategy}>
         <TableContainer className="relative" component={Paper}>
-          <Table
-            size="small"
-            aria-label="a dense table"
-            sx={{ tableLayout: "fixed" }}
-          >
+          <Table size="small" aria-label="a dense table">
             <TableHead>
               <TableRow>
                 {columns.map((d) => (

@@ -20,7 +20,7 @@ interface ActionDialogProps {
   title: string;
   maxWidth?: Breakpoint;
   children: React.ReactNode;
-  isOpen: boolean;
+  isOpen?: boolean;
   onClose: () => void;
   onSubmit: () => void;
   isLoading: boolean;
@@ -30,7 +30,7 @@ export default function ActionDialog({
   title,
   maxWidth = "xs",
   children,
-  isOpen,
+  isOpen = true,
   onClose,
   onSubmit,
   isLoading,

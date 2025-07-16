@@ -1,34 +1,43 @@
 import { Button, IconButton, Stack } from "@mui/material";
+import { Delete, Edit } from "@mui/icons-material";
 
 import PageHeader from "@modules/core/components/PageHeader";
 import DataTable from "@modules/core/components/DataTable";
+
 import useDialog from "@modules/core/hooks/useDialog";
-import { Delete, Edit } from "@mui/icons-material";
 import { confirmDelete } from "@libs/alert";
 
-import Form from "./Form";
+import Form, { FormDataType } from "./Form";
 import ChangePosition from "./ChangePosition";
 
-import { useListAll } from "./@hooks/useListAll";
+import { useListAll, useUpdateListAll } from "./@hooks/useListAll";
+import { useRemove } from "./@hooks/useRemove";
 
 export default function Category() {
   const {
     toggle: toggleForm,
     isOpen: isOpenForm,
     data: dataForm,
-  } = useDialog<null>(null);
+  } = useDialog<FormDataType | null>(null);
 
   const { toggle: toggleChangePosition, isOpen: isOpenChangePosition } =
-    useDialog();
+    useDialog(null);
+  const { mutateAsync: mutateAsyncRemove } = useRemove();
 
   const { data, isPending } = useListAll();
+  const { handleChange } = useUpdateListAll();
+
+  async function removeCategory(categoryId: string) {
+    await mutateAsyncRemove({ categoryId });
+    handleChange();
+  }
 
   return (
     <Stack gap={1} p={2}>
       <PageHeader
         title="Categorias"
         renderRight={
-          <div className="flex gap-4">
+          <div className="flex gap-2">
             <Button onClick={() => toggleChangePosition(null)}>
               Mudar posição
             </Button>
@@ -39,14 +48,11 @@ export default function Category() {
 
       <DataTable
         onKeyDown={(key, rows) => {
-          console.log({ key, rows });
           if (key === "F2") {
-            toggleForm(null);
-            // toggleForm(rows[0]);
+            toggleForm(rows[0]);
           }
           if (key === "Delete") {
-            confirmDelete(async () => undefined);
-            // confirmDelete(async () => await mutateAsync({ id: rows[0].id }));
+            confirmDelete(async () => await removeCategory(rows[0].id));
           }
         }}
         data={data}
@@ -62,16 +68,13 @@ export default function Category() {
             headerName: "Ações",
             renderCell: ({ value, row }) => (
               <Stack direction="row" height="100%" gap={0.5}>
-                <IconButton
-                //   onClick={() => toggleForm(row)}
-                >
+                <IconButton onClick={() => toggleForm(row)}>
                   <Edit />
                 </IconButton>
                 <IconButton
-                  // onClick={() =>
-                  //   confirmDelete(async () => await mutateAsync({ id: value }))
-                  // }
-                  onClick={() => console.log({ value, row })}
+                  onClick={() =>
+                    confirmDelete(async () => await removeCategory(value))
+                  }
                 >
                   <Delete />
                 </IconButton>
@@ -81,11 +84,7 @@ export default function Category() {
         ]}
       />
 
-      <Form
-        isOpen={isOpenForm}
-        //   data={dataForm}
-        onClose={() => toggleForm(null)}
-      />
+      {isOpenForm && <Form data={dataForm} onClose={() => toggleForm(null)} />}
 
       <ChangePosition
         isOpen={isOpenChangePosition}
