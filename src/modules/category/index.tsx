@@ -9,10 +9,7 @@ import { confirmDelete } from "@libs/alert";
 import Form from "./Form";
 import ChangePosition from "./ChangePosition";
 
-const data = Array.from({ length: 50 }, (_, i) => ({
-  id: i + 1,
-  name: `Name ${i + 1}`,
-}));
+import { useListAll } from "./@hooks/useListAll";
 
 export default function Category() {
   const {
@@ -21,16 +18,24 @@ export default function Category() {
     data: dataForm,
   } = useDialog<null>(null);
 
+  const { toggle: toggleChangePosition, isOpen: isOpenChangePosition } =
+    useDialog();
+
+  const { data, isPending } = useListAll();
+
   return (
     <Stack gap={1} p={2}>
       <PageHeader
         title="Categorias"
         renderRight={
-          <Button onClick={() => toggleForm(null)}>Adicionar</Button>
+          <div className="flex gap-4">
+            <Button onClick={() => toggleChangePosition(null)}>
+              Mudar posição
+            </Button>
+            <Button onClick={() => toggleForm(null)}>Adicionar</Button>
+          </div>
         }
       />
-
-      <ChangePosition />
 
       <DataTable
         onKeyDown={(key, rows) => {
@@ -45,7 +50,7 @@ export default function Category() {
           }
         }}
         data={data}
-        isLoading={false}
+        isPending={isPending}
         columns={[
           {
             field: "name",
@@ -80,6 +85,11 @@ export default function Category() {
         isOpen={isOpenForm}
         //   data={dataForm}
         onClose={() => toggleForm(null)}
+      />
+
+      <ChangePosition
+        isOpen={isOpenChangePosition}
+        onClose={() => toggleChangePosition(null)}
       />
     </Stack>
   );

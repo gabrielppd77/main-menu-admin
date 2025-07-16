@@ -1,27 +1,82 @@
-import { useState } from "react";
-import { SortableList } from "@modules/core/components/SortableList";
+import { useEffect, useState } from "react";
+
+import { SortableTable } from "@modules/core/components/SortableTable";
+import ActionDialog from "@modules/core/components/ActionDialog";
+
 import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
 
-const data = Array.from({ length: 20 }, (_, i) => ({
-  id: i + 1,
-  name: `Name ${i + 1}`,
-}));
+import { useListAll, useUpdateListAll } from "../@hooks/useListAll";
+import { useChangePosition } from "../@hooks/useChangePosition";
 
-export default function ChangePosition() {
-  const [dataHere, setDataHere] = useState(data);
+import { CategoryResponse } from "../@types/CategoryResponse";
+
+interface ChangePositionProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export default function ChangePosition({
+  isOpen,
+  onClose,
+}: ChangePositionProps) {
+  const [dataToChangePosition, setDataToChangePosition] = useState<
+    CategoryResponse[]
+  >([]);
+
+  const { data, isPending } = useListAll();
+  const { handleChange } = useUpdateListAll();
+  const {
+    mutateAsync: mutateAsyncChangePosition,
+    isPending: isPendingChangePosition,
+  } = useChangePosition();
+
+  useEffect(() => {
+    setDataToChangePosition(data);
+  }, [data]);
+
+  async function handleSubmit() {
+    const categoriesWithNewPosition = dataToChangePosition.map(
+      (categoria, index) => ({
+        id: categoria.id,
+        newPosition: index + 1,
+      }),
+    );
+    await mutateAsyncChangePosition(categoriesWithNewPosition);
+    handleChange();
+    onClose();
+  }
+
   return (
-    <SortableList
-      items={dataHere}
-      onChange={setDataHere}
-      className="flex flex-col gap-1"
-      renderItem={(item) => (
-        <SortableList.Item id={item.id}>
-          <SortableList.DragHandle className="flex h-9 w-full cursor-pointer items-center justify-between rounded bg-slate-50 px-4">
-            {item.name}
-            <DragIndicatorIcon color="primary" />
-          </SortableList.DragHandle>
-        </SortableList.Item>
-      )}
-    />
+    <ActionDialog
+      title="Ajustar posição das categorias"
+      isOpen={isOpen}
+      maxWidth="sm"
+      onClose={onClose}
+      isLoading={isPendingChangePosition}
+      onSubmit={() => handleSubmit()}
+    >
+      <SortableTable.Root
+        data={dataToChangePosition}
+        isLoading={isPending}
+        columns={[
+          {
+            field: "name",
+            headerName: "Nome",
+            width: "80%",
+          },
+          {
+            field: "id",
+            headerName: "Ação",
+            width: "20%",
+            renderRow: () => (
+              <SortableTable.DragHandle className="h-8 w-8 cursor-grab rounded-full hover:bg-gray-100">
+                <DragIndicatorIcon color="primary" />
+              </SortableTable.DragHandle>
+            ),
+          },
+        ]}
+        onChange={setDataToChangePosition}
+      />
+    </ActionDialog>
   );
 }

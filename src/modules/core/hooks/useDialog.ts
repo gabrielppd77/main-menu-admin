@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function useDialog<TData>(startData: TData) {
+export default function useDialog<TData>(startData?: TData) {
   const [data, setData] = useState(startData);
   const [isOpen, setOpen] = useState(false);
 

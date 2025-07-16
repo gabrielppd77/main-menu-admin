@@ -64,11 +64,10 @@ export default function ActionDialog({
       </Tooltip>
       <DialogContent dividers>{children}</DialogContent>
       <DialogActions>
-        <Button fullWidth variant="outlined" onClick={() => onClose()}>
+        <Button variant="outlined" onClick={() => onClose()}>
           Cancelar
         </Button>
         <Button
-          fullWidth
           variant="contained"
           onClick={() => onSubmit()}
           loading={isLoading}

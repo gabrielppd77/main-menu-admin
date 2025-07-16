@@ -10,14 +10,14 @@ import {
 interface DataTableProps<TData extends GridValidRowModel> {
   data: GridRowsProp<TData>;
   columns: GridColDef<TData>[];
-  isLoading?: boolean;
+  isPending?: boolean;
   onKeyDown?: (key: string, rows: TData[]) => void;
 }
 
 export default function DataTable<TData extends GridValidRowModel>({
   data,
   columns,
-  isLoading,
+  isPending,
   onKeyDown,
 }: DataTableProps<TData>) {
   const apiRef = useGridApiRef();
@@ -34,7 +34,7 @@ export default function DataTable<TData extends GridValidRowModel>({
   return (
     <DataGrid
       apiRef={apiRef}
-      loading={isLoading}
+      loading={isPending}
       columns={columns}
       rows={data}
       initialState={{
