@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { SortableTable } from "@modules/core/components/SortableTable";
-import ActionDialog from "@modules/core/components/ActionDialog";
+import { XDialog } from "@modules/core/components/XDialog";
 
 import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
 
@@ -47,36 +47,39 @@ export default function ChangePosition({
   }
 
   return (
-    <ActionDialog
-      title="Ajustar posição das categorias"
+    <XDialog.Root
       isOpen={isOpen}
-      maxWidth="sm"
       onClose={onClose}
+      maxWidth="sm"
       isLoading={isPendingChangePosition}
       onSubmit={() => handleSubmit()}
     >
-      <SortableTable.Root
-        data={dataToChangePosition}
-        isLoading={isPending}
-        columns={[
-          {
-            field: "name",
-            headerName: "Nome",
-            width: "80%",
-          },
-          {
-            field: "id",
-            headerName: "Ação",
-            width: "20%",
-            renderRow: () => (
-              <SortableTable.DragHandle className="h-8 w-8 cursor-grab rounded-full hover:bg-gray-100">
-                <DragIndicatorIcon color="primary" />
-              </SortableTable.DragHandle>
-            ),
-          },
-        ]}
-        onChange={setDataToChangePosition}
-      />
-    </ActionDialog>
+      <XDialog.Title title="Ajustar posição das categorias" />
+      <XDialog.Content>
+        <SortableTable.Root
+          data={dataToChangePosition}
+          isLoading={isPending}
+          columns={[
+            {
+              field: "name",
+              headerName: "Nome",
+              width: "80%",
+            },
+            {
+              field: "id",
+              headerName: "Ação",
+              width: "20%",
+              renderRow: () => (
+                <SortableTable.DragHandle className="h-8 w-8 cursor-grab rounded-full hover:bg-gray-100">
+                  <DragIndicatorIcon color="primary" />
+                </SortableTable.DragHandle>
+              ),
+            },
+          ]}
+          onChange={setDataToChangePosition}
+        />
+      </XDialog.Content>
+      <XDialog.Actions />
+    </XDialog.Root>
   );
 }

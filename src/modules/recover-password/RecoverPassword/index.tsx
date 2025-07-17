@@ -13,9 +13,8 @@ import { LockOutlined } from "@mui/icons-material";
 
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useResetPassword } from "../hooks/useResetPassword";
-import { useValidateForm } from "@modules/core/hooks/useValidateForm";
+import { FormValidateProvider, z } from "@modules/core/validation";
 
-import { z } from "zod";
 import { confirmMessage } from "@libs/alert";
 import { routes } from "@modules/routing/consts/routes";
 
@@ -37,10 +36,6 @@ export default function RecoverPassword() {
 
   const navigate = useNavigate();
   const { mutateAsync, isPending } = useResetPassword();
-
-  const { FormProvider, handleSubmit } = useValidateForm({
-    schema,
-  });
 
   useEffect(() => {
     if (!token) {
@@ -66,7 +61,17 @@ export default function RecoverPassword() {
         </Typography>
 
         <Box className="mt-4 w-full">
-          <FormProvider>
+          <FormValidateProvider
+            schema={schema}
+            values={{ confirmPassword: "", password: "" }}
+            onSubmit={async (data) => {
+              await mutateAsync({ token, newPassword: data.password });
+              confirmMessage(() => navigate(routes.initial), {
+                title: "A sua senha foi alterada com sucesso",
+                text: "Você será redirecionado para a página inicial para entrar no sistema novamente.",
+              });
+            }}
+          >
             <Grid container spacing={1}>
               <Grid size={12}>
                 <TextFieldPassword
@@ -92,17 +97,10 @@ export default function RecoverPassword() {
               type="submit"
               sx={{ mt: 3, mb: 2 }}
               fullWidth
-              onClick={handleSubmit(async (data) => {
-                await mutateAsync({ token, newPassword: data.password });
-                confirmMessage(() => navigate(routes.initial), {
-                  title: "A sua senha foi alterada com sucesso",
-                  text: "Você será redirecionado para a página inicial para entrar no sistema novamente.",
-                });
-              })}
             >
               Alterar senha
             </Button>
-          </FormProvider>
+          </FormValidateProvider>
         </Box>
       </Box>
     </Container>

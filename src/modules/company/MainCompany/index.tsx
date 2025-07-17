@@ -4,8 +4,7 @@ import SimpleLoadingPage from "@modules/core/components/SimpleLoadingPage";
 
 import { useUpdateFormData } from "../hooks/useUpdateFormData";
 import { useGetFormData } from "../hooks/useGetFormData";
-import { useValidateForm } from "@modules/core/hooks/useValidateForm";
-import { z } from "zod";
+import { FormValidateProvider, z } from "@modules/core/validation";
 import MainPhoto from "./MainPhoto";
 
 const schema = z.object({
@@ -19,10 +18,6 @@ type DataType = z.infer<typeof schema>;
 export default function MainCompany() {
   const { data, isLoading, isFetching } = useGetFormData();
   const { mutateAsync, isPending } = useUpdateFormData();
-  const { FormProvider, handleSubmit } = useValidateForm({
-    schema,
-    values: data,
-  });
 
   async function onSubmit(d: DataType) {
     await mutateAsync({
@@ -42,12 +37,17 @@ export default function MainCompany() {
 
       <Grid container spacing={2} className="p-2">
         <Grid size={{ xs: 12, sm: 7, md: 8, lg: 10 }}>
-          <FormProvider>
+          <FormValidateProvider
+            schema={schema}
+            values={data || { description: "", name: "", path: "" }}
+            onSubmit={onSubmit}
+          >
             <Stack spacing={1} className="flex-1">
               <TextField
                 label="Nome da loja"
                 name="name"
                 className="max-w-2xl"
+                autoFocus
               />
               <TextField
                 label="Caminho para acesso da loja"
@@ -62,13 +62,13 @@ export default function MainCompany() {
                 rows={4}
               />
             </Stack>
-          </FormProvider>
 
-          <div className="mt-2">
-            <Button onClick={handleSubmit(onSubmit)} loading={isPending}>
-              Salvar Alterações
-            </Button>
-          </div>
+            <div className="mt-2">
+              <Button type="submit" loading={isPending}>
+                Salvar Alterações
+              </Button>
+            </div>
+          </FormValidateProvider>
         </Grid>
 
         <Grid size={{ xs: 12, sm: 5, md: 4, lg: 2 }}>

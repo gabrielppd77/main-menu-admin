@@ -1,8 +1,7 @@
-import ActionDialog from "@modules/core/components/ActionDialog";
+import { XDialog } from "@modules/core/components/XDialog";
 import { TextField } from "@modules/core/components/TextField";
 
-import { useValidateForm } from "@modules/core/hooks/useValidateForm";
-import { z } from "zod";
+import { FormValidateProvider, z } from "@modules/core/validation";
 
 import { useCreate } from "../@hooks/useCreate";
 import { useUpdate } from "../@hooks/useUpdate";
@@ -16,11 +15,12 @@ const schema = z.object({
 export type FormDataType = z.infer<typeof schema>;
 
 interface FormProps {
+  isOpen: boolean;
   data: FormDataType | null;
   onClose: () => void;
 }
 
-export default function Form({ data, onClose }: FormProps) {
+export default function Form({ isOpen, data, onClose }: FormProps) {
   const { mutateAsync: mutateAsyncCreate, isPending: isPendingCreate } =
     useCreate();
   const { mutateAsync: mutateAsyncUpdate, isPending: isPendingUpdate } =
@@ -29,12 +29,7 @@ export default function Form({ data, onClose }: FormProps) {
 
   const isPending = isPendingCreate || isPendingUpdate;
 
-  const { FormProvider, handleSubmit } = useValidateForm({
-    schema,
-    values: data || { id: "", name: "" },
-  });
-
-  async function onSubmit(d: FormDataType) {
+  async function handleSubmit(d: FormDataType) {
     if (d.id) {
       await mutateAsyncUpdate({ categoryId: d.id, name: d.name });
     } else {
@@ -45,15 +40,22 @@ export default function Form({ data, onClose }: FormProps) {
   }
 
   return (
-    <ActionDialog
-      title="Cadastro de categoria"
-      isLoading={isPending}
+    <XDialog.Root
+      isOpen={isOpen}
       onClose={() => onClose()}
-      onSubmit={handleSubmit(onSubmit)}
+      isLoading={isPending}
     >
-      <FormProvider>
-        <TextField required label="Nome" name="name" autoFocus />
-      </FormProvider>
-    </ActionDialog>
+      <FormValidateProvider
+        schema={schema}
+        values={data || { id: "", name: "" }}
+        onSubmit={handleSubmit}
+      >
+        <XDialog.Title title="Cadastro de categoria" />
+        <XDialog.Content>
+          <TextField required label="Nome" name="name" autoFocus />
+        </XDialog.Content>
+        <XDialog.Actions />
+      </FormValidateProvider>
+    </XDialog.Root>
   );
 }

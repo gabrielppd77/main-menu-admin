@@ -15,8 +15,9 @@ function TextFieldControlled({ name, type, ...rest }: TextFieldProps) {
   return (
     <Controller
       name={name}
-      render={({ field: { onChange, value }, fieldState: { error } }) => (
+      render={({ field: { onChange, value, ref }, fieldState: { error } }) => (
         <MUITextField
+          inputRef={ref}
           helperText={error ? error.message : null}
           error={!!error}
           onChange={(e) => {

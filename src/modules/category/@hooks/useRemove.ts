@@ -3,6 +3,7 @@ import api from "@libs/api";
 import { fireError } from "@libs/alert";
 
 import { RemoveCategoryRequest } from "../@types/RemoveCategoryRequest";
+import { notifyRemove } from "@libs/notification";
 
 export function useRemove() {
   return useMutation({
@@ -10,5 +11,6 @@ export function useRemove() {
       await api.delete("/categories/remove", { data });
     },
     onError: fireError,
+    onSuccess: () => notifyRemove(),
   });
 }

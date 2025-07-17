@@ -3,6 +3,7 @@ import api from "@libs/api";
 import { fireError } from "@libs/alert";
 
 import { UpdateCategoryRequest } from "../@types/UpdateCategoryRequest";
+import { notifyUpdate } from "@libs/notification";
 
 export function useUpdate() {
   return useMutation({
@@ -10,5 +11,6 @@ export function useUpdate() {
       await api.put("/categories/update", data);
     },
     onError: fireError,
+    onSuccess: () => notifyUpdate(),
   });
 }

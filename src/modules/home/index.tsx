@@ -1,11 +1,11 @@
-import { Stack } from "@mui/material";
+import { Container } from "@mui/material";
 
 import PageHeader from "@modules/core/components/PageHeader";
 
 export default function Home() {
   return (
-    <Stack gap={1} p={2}>
+    <Container maxWidth="xl" className="p-2">
       <PageHeader title="Bem vindo" />
-    </Stack>
+    </Container>
   );
 }

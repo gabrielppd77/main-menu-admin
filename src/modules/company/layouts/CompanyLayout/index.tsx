@@ -14,7 +14,7 @@ export default function CompanyLayout() {
   const currentPath = location.pathname;
 
   return (
-    <Container maxWidth="xl" className="py-2">
+    <Container maxWidth="xl" className="p-2">
       <TabContext value={currentPath}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <TabList

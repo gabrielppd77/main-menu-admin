@@ -11,9 +11,7 @@ import { LockOutlined as LockOutlinedIcon } from "@mui/icons-material";
 import { TextField } from "@modules/core/components/TextField";
 import { TextFieldPassword } from "@modules/core/components/TextFieldPassword";
 
-import { z } from "zod";
-
-import { useValidateForm } from "@modules/core/hooks/useValidateForm";
+import { FormValidateProvider, z } from "@modules/core/validation";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@hooks/useAuth";
 import { useRegister } from "../hooks/useRegister";
@@ -43,10 +41,6 @@ export default function Register() {
   const { setToken } = useAuth();
   const navigate = useNavigate();
 
-  const { FormProvider, handleSubmit } = useValidateForm({
-    schema,
-  });
-
   return (
     <Container component="main" maxWidth="xs">
       <Box
@@ -64,7 +58,21 @@ export default function Register() {
           Cadastre
         </Typography>
         <Box sx={{ mt: 3 }}>
-          <FormProvider>
+          <FormValidateProvider
+            schema={schema}
+            values={{
+              companyName: "",
+              confirmPassword: "",
+              email: "",
+              name: "",
+              password: "",
+            }}
+            onSubmit={async (data) => {
+              const response = await mutateAsync(data);
+              setToken(response.token);
+              navigate(routes.home);
+            }}
+          >
             <Grid container spacing={1}>
               <Grid size={12}>
                 <TextField
@@ -121,15 +129,10 @@ export default function Register() {
               type="submit"
               sx={{ mt: 3, mb: 2 }}
               fullWidth
-              onClick={handleSubmit(async (data) => {
-                const response = await mutateAsync(data);
-                setToken(response.token);
-                navigate(routes.home);
-              })}
             >
               Cadastrar
             </Button>
-          </FormProvider>
+          </FormValidateProvider>
 
           <Grid container justifyContent="flex-end">
             <Grid>

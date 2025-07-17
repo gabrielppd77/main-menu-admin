@@ -12,11 +12,10 @@ import {
 import { LockOutlined as LockOutlinedIcon } from "@mui/icons-material";
 import { TextField } from "@modules/core/components/TextField";
 
-import { useValidateForm } from "@modules/core/hooks/useValidateForm";
+import { FormValidateProvider, z } from "@modules/core/validation";
 import { useNavigate } from "react-router-dom";
 import { useRecoverPassword } from "../hooks/useRecoverPassword";
 
-import { z } from "zod";
 import { confirmMessage } from "@libs/alert";
 import { routes } from "@modules/routing/consts/routes";
 
@@ -31,10 +30,6 @@ export default function ForgotPassword() {
   const navigate = useNavigate();
 
   const { mutateAsync, isPending } = useRecoverPassword();
-
-  const { FormProvider, handleSubmit } = useValidateForm({
-    schema,
-  });
 
   return (
     <Container component="main" maxWidth="xs">
@@ -65,7 +60,17 @@ export default function ForgotPassword() {
         <Divider className="w-full" />
 
         <Box sx={{ mt: 1, width: "100%" }}>
-          <FormProvider>
+          <FormValidateProvider
+            schema={schema}
+            values={{ email: "" }}
+            onSubmit={async (data) => {
+              await mutateAsync(data.email);
+              confirmMessage(() => navigate(routes.initial), {
+                title: "Email de recuperação enviado com sucesso",
+                text: "Você deve receber as instruções para recuperação de senha em poucos instantes em seu email.",
+              });
+            }}
+          >
             <Stack gap={1}>
               <TextField
                 id="email"
@@ -87,17 +92,10 @@ export default function ForgotPassword() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
               fullWidth
-              onClick={handleSubmit(async (data) => {
-                await mutateAsync(data.email);
-                confirmMessage(() => navigate(routes.initial), {
-                  title: "Email de recuperação enviado com sucesso",
-                  text: "Você deve receber as instruções para recuperação de senha em poucos instantes em seu email.",
-                });
-              })}
             >
               Enviar recuperação de senha
             </Button>
-          </FormProvider>
+          </FormValidateProvider>
 
           <Grid container justifyContent="flex-end">
             <Grid>

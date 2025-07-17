@@ -1,4 +1,4 @@
-import { Button, IconButton, Stack } from "@mui/material";
+import { Button, Container, IconButton, Stack } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
 
 import PageHeader from "@modules/core/components/PageHeader";
@@ -33,63 +33,73 @@ export default function Category() {
   }
 
   return (
-    <Stack gap={1} p={2}>
-      <PageHeader
-        title="Categorias"
-        renderRight={
-          <div className="flex gap-2">
-            <Button onClick={() => toggleChangePosition(null)}>
-              Mudar posição
-            </Button>
-            <Button onClick={() => toggleForm(null)}>Adicionar</Button>
-          </div>
-        }
-      />
-
-      <DataTable
-        onKeyDown={(key, rows) => {
-          if (key === "F2") {
-            toggleForm(rows[0]);
+    <Container maxWidth="xl" className="p-2">
+      <Stack gap={1}>
+        <PageHeader
+          title="Categorias"
+          renderRight={
+            <div className="flex flex-col gap-2 sm:flex-row">
+              <Button onClick={() => toggleChangePosition(null)}>
+                Mudar posição
+              </Button>
+              <Button onClick={() => toggleForm(null)}>Adicionar</Button>
+            </div>
           }
-          if (key === "Delete") {
-            confirmDelete(async () => await removeCategory(rows[0].id));
-          }
-        }}
-        data={data}
-        isPending={isPending}
-        columns={[
-          {
-            field: "name",
-            headerName: "Nome",
-            flex: 1,
-          },
-          {
-            field: "id",
-            headerName: "Ações",
-            renderCell: ({ value, row }) => (
-              <Stack direction="row" height="100%" gap={0.5}>
-                <IconButton onClick={() => toggleForm(row)}>
-                  <Edit />
-                </IconButton>
-                <IconButton
-                  onClick={() =>
-                    confirmDelete(async () => await removeCategory(value))
-                  }
-                >
-                  <Delete />
-                </IconButton>
-              </Stack>
-            ),
-          },
-        ]}
-      />
+        />
 
-      {isOpenForm && <Form data={dataForm} onClose={() => toggleForm(null)} />}
+        <DataTable
+          onKeyDown={(key, rows) => {
+            const row = rows[0];
+            if (key === "+") {
+              toggleForm(null);
+            }
+            if (key === "F2" && row) {
+              toggleForm(row);
+            }
+            if (key === "Delete" && row) {
+              confirmDelete(async () => await removeCategory(row.id));
+            }
+          }}
+          data={data}
+          isPending={isPending}
+          columns={[
+            {
+              field: "name",
+              headerName: "Nome",
+              flex: 1,
+            },
+            {
+              field: "id",
+              headerName: "Ações",
+              renderCell: ({ value, row }) => (
+                <Stack direction="row" height="100%" gap={0.5}>
+                  <IconButton onClick={() => toggleForm(row)}>
+                    <Edit />
+                  </IconButton>
+                  <IconButton
+                    onClick={() =>
+                      confirmDelete(async () => await removeCategory(value))
+                    }
+                  >
+                    <Delete />
+                  </IconButton>
+                </Stack>
+              ),
+            },
+          ]}
+        />
 
-      <ChangePosition
-        isOpen={isOpenChangePosition}
-        onClose={() => toggleChangePosition(null)}
-      />
-    </Stack>
+        <Form
+          isOpen={isOpenForm}
+          data={dataForm}
+          onClose={() => toggleForm(null)}
+        />
+
+        <ChangePosition
+          isOpen={isOpenChangePosition}
+          onClose={() => toggleChangePosition(null)}
+        />
+      </Stack>
+    </Container>
   );
 }

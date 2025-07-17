@@ -12,13 +12,11 @@ import { LockOutlined as LockOutlinedIcon } from "@mui/icons-material";
 import { TextField } from "@modules/core/components/TextField";
 import { TextFieldPassword } from "@modules/core/components/TextFieldPassword";
 
-import { z } from "zod";
-
-import { useValidateForm } from "@modules/core/hooks/useValidateForm";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@hooks/useAuth";
 import { useLogin } from "../hooks/useLogin";
 import { routes } from "@modules/routing/consts/routes";
+import { FormValidateProvider, z } from "@modules/core/validation";
 
 const schema = z.object({
   email: z
@@ -33,10 +31,6 @@ export default function Login() {
 
   const { setToken } = useAuth();
   const navigate = useNavigate();
-
-  const { FormProvider, handleSubmit } = useValidateForm({
-    schema,
-  });
 
   return (
     <Container component="main" maxWidth="xs">
@@ -55,7 +49,15 @@ export default function Login() {
           Entre
         </Typography>
         <Box sx={{ mt: 1, width: "100%" }}>
-          <FormProvider>
+          <FormValidateProvider
+            schema={schema}
+            values={{ email: "", password: "" }}
+            onSubmit={async (d) => {
+              const response = await mutateAsync(d);
+              setToken(response.token);
+              navigate(routes.home);
+            }}
+          >
             <Stack gap={1}>
               <TextField
                 id="email"
@@ -83,15 +85,10 @@ export default function Login() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
               fullWidth
-              onClick={handleSubmit(async (data) => {
-                const response = await mutateAsync(data);
-                setToken(response.token);
-                navigate(routes.home);
-              })}
             >
               Entre
             </Button>
-          </FormProvider>
+          </FormValidateProvider>
 
           <Grid container>
             <Grid size={{ xs: 12, sm: 6 }}>

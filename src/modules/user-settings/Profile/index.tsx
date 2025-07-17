@@ -7,8 +7,7 @@ import {
   useGetGeneralData,
   useUpdateGetGeneralData,
 } from "../hooks/useGetGeneralData";
-import { useValidateForm } from "@modules/core/hooks/useValidateForm";
-import { z } from "zod";
+import { FormValidateProvider, z } from "@modules/core/validation";
 import { TextField } from "@modules/core/components/TextField";
 import SimpleLoadingPage from "@modules/core/components/SimpleLoadingPage";
 import { useUpdateFormData } from "../hooks/useUpdateFormData";
@@ -22,10 +21,6 @@ type DataType = z.infer<typeof schema>;
 export default function Profile() {
   const { data, isLoading, isFetching } = useGetGeneralData();
   const { mutateAsync, isPending } = useUpdateFormData();
-  const { FormProvider, handleSubmit } = useValidateForm({
-    schema,
-    values: data,
-  });
   const { handleChange } = useUpdateGetGeneralData();
 
   async function onSubmit(d: DataType) {
@@ -46,17 +41,26 @@ export default function Profile() {
       />
       <Grid container spacing={2}>
         <Grid size={{ xs: 12, sm: 7, md: 8, lg: 10 }}>
-          <FormProvider>
+          <FormValidateProvider
+            schema={schema}
+            values={data || { name: "" }}
+            onSubmit={onSubmit}
+          >
             <Stack spacing={1} className="flex-1">
-              <TextField label="Nome" name="name" className="max-w-2xl" />
+              <TextField
+                label="Nome"
+                name="name"
+                className="max-w-2xl"
+                autoFocus
+              />
             </Stack>
-          </FormProvider>
 
-          <div className="mt-2">
-            <Button onClick={handleSubmit(onSubmit)} loading={isPending}>
-              Salvar Alterações
-            </Button>
-          </div>
+            <div className="mt-2">
+              <Button type="submit" loading={isPending}>
+                Salvar Alterações
+              </Button>
+            </div>
+          </FormValidateProvider>
         </Grid>
 
         <Grid size={{ xs: 12, sm: 5, md: 4, lg: 2 }}>
