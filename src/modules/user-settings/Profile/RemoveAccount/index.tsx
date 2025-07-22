@@ -3,12 +3,12 @@ import { Button, Divider } from "@mui/material";
 
 import { confirmMessage, confirmPassword } from "@libs/alert";
 
-import { useAuth } from "@hooks/useAuth";
-import { useRemoveAccount } from "@modules/user-settings/hooks/useRemoveAccount";
+import { useAuth } from "@modules/core/@hooks/useAuth";
+import { useRemoveAccount } from "@modules/user-settings/@hooks/useRemoveAccount";
 import { useNavigate } from "react-router-dom";
-import { routes } from "@modules/routing/consts/routes";
+import { routes } from "@modules/routing/@consts/routes";
 
-export default function RemoveAccount() {
+export function RemoveAccount() {
   const { isPending, mutateAsync } = useRemoveAccount();
   const { setToken } = useAuth();
   const navigate = useNavigate();

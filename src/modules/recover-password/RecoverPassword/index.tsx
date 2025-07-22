@@ -8,15 +8,15 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
-import { TextFieldPassword } from "@modules/core/components/TextFieldPassword";
+import { TextFieldPassword } from "@modules/core/@components/TextFieldPassword";
 import { LockOutlined } from "@mui/icons-material";
 
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useResetPassword } from "../hooks/useResetPassword";
-import { FormValidateProvider, z } from "@modules/core/validation";
+import { useResetPassword } from "../@hooks/useResetPassword";
+import { FormValidateProvider, z } from "@modules/core/@validation";
 
 import { confirmMessage } from "@libs/alert";
-import { routes } from "@modules/routing/consts/routes";
+import { routes } from "@modules/routing/@consts/routes";
 
 const schema = z
   .object({
@@ -30,7 +30,7 @@ const schema = z
     path: ["confirmPassword"],
   });
 
-export default function RecoverPassword() {
+export function RecoverPassword() {
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token") || "";
 

@@ -9,12 +9,12 @@ import {
 } from "@mui/material";
 
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useConfirmEmail } from "../hooks/useConfirmEmail";
+import { useConfirmEmail } from "../@hooks/useConfirmEmail";
 import { extractError } from "@libs/alert";
 import { Warning } from "@mui/icons-material";
-import { routes } from "@modules/routing/consts/routes";
+import { routes } from "@modules/routing/@consts/routes";
 
-export default function ConfirmEmail() {
+export function ConfirmEmail() {
   const [countdown, setCountdown] = useState(5);
 
   const [searchParams] = useSearchParams();

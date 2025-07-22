@@ -1,6 +1,6 @@
 import { UploadImage } from "@modules/core/@components/UploadImage";
-import { useUpdateGetGeneralData } from "@modules/user-settings/@hooks/useGetGeneralData";
-import { useUploadImage } from "@modules/user-settings/@hooks/useUploadImage";
+import { useUpdateGetFormData } from "@modules/company/@hooks/useGetFormData";
+import { useUploadImage } from "@modules/company/@hooks/useUploadImage";
 
 interface MainPhotoProps {
   urlImage?: string;
@@ -8,7 +8,7 @@ interface MainPhotoProps {
 
 export function MainPhoto({ urlImage }: MainPhotoProps) {
   const { mutateAsync, isPending } = useUploadImage();
-  const { handleChange } = useUpdateGetGeneralData();
+  const { handleChange } = useUpdateGetFormData();
 
   async function handleUploadImage(files: FileList) {
     const formData = new FormData();

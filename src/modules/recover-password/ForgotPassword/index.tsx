@@ -10,14 +10,14 @@ import {
   Button,
 } from "@mui/material";
 import { LockOutlined as LockOutlinedIcon } from "@mui/icons-material";
-import { TextField } from "@modules/core/components/TextField";
+import { TextField } from "@modules/core/@components/TextField";
 
-import { FormValidateProvider, z } from "@modules/core/validation";
+import { FormValidateProvider, z } from "@modules/core/@validation";
 import { useNavigate } from "react-router-dom";
-import { useRecoverPassword } from "../hooks/useRecoverPassword";
+import { useRecoverPassword } from "../@hooks/useRecoverPassword";
 
 import { confirmMessage } from "@libs/alert";
-import { routes } from "@modules/routing/consts/routes";
+import { routes } from "@modules/routing/@consts/routes";
 
 const schema = z.object({
   email: z
@@ -26,7 +26,7 @@ const schema = z.object({
     .email("Informe um Email válido"),
 });
 
-export default function ForgotPassword() {
+export function ForgotPassword() {
   const navigate = useNavigate();
 
   const { mutateAsync, isPending } = useRecoverPassword();

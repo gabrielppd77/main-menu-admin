@@ -1,33 +1,28 @@
 import { Button, Grid, LinearProgress, Stack } from "@mui/material";
-
-import { RemoveAccount } from "./RemoveAccount";
-import { MainPhoto } from "./MainPhoto";
-
-import {
-  useGetGeneralData,
-  useUpdateGetGeneralData,
-} from "../@hooks/useGetGeneralData";
-import { FormValidateProvider, z } from "@modules/core/@validation";
 import { TextField } from "@modules/core/@components/TextField";
 import { SimpleLoadingPage } from "@modules/core/@components/SimpleLoadingPage";
+
 import { useUpdateFormData } from "../@hooks/useUpdateFormData";
+import { useGetFormData } from "../@hooks/useGetFormData";
+import { FormValidateProvider, z } from "@modules/core/@validation";
+import { MainPhoto } from "./MainPhoto";
 
 const schema = z.object({
-  name: z.string({ message: "Informe o Nome" }).min(1),
+  name: z.string({ message: "Informe o Nome da loja" }).min(1),
+  description: z.string({ message: "Informe a Descrição da loja" }).optional(),
+  path: z.string({ message: "Informe o Caminho para acesso da loja" }).min(1),
 });
 
 type DataType = z.infer<typeof schema>;
 
-export function Profile() {
-  const { data, isLoading, isFetching } = useGetGeneralData();
+export function Main() {
+  const { data, isLoading, isFetching } = useGetFormData();
   const { mutateAsync, isPending } = useUpdateFormData();
-  const { handleChange } = useUpdateGetGeneralData();
 
   async function onSubmit(d: DataType) {
     await mutateAsync({
       data: d,
     });
-    handleChange(d);
   }
 
   if (isLoading) {
@@ -35,23 +30,36 @@ export function Profile() {
   }
 
   return (
-    <Stack>
+    <div className="p-2">
       <LinearProgress
         className={`invisible w-full ${isFetching && "visible"}`}
       />
-      <Grid container spacing={2}>
+
+      <Grid container spacing={2} className="p-2">
         <Grid size={{ xs: 12, sm: 7, md: 8, lg: 10 }}>
           <FormValidateProvider
             schema={schema}
-            values={data || { name: "" }}
+            values={data || { description: "", name: "", path: "" }}
             onSubmit={onSubmit}
           >
             <Stack spacing={1} className="flex-1">
               <TextField
-                label="Nome"
+                label="Nome da loja"
                 name="name"
                 className="max-w-2xl"
                 autoFocus
+              />
+              <TextField
+                label="Caminho para acesso da loja"
+                name="path"
+                className="max-w-2xl"
+              />
+              <TextField
+                label="Descrição da loja"
+                name="description"
+                className="max-w-2xl"
+                multiline
+                rows={4}
               />
             </Stack>
 
@@ -67,7 +75,6 @@ export function Profile() {
           <MainPhoto urlImage={data?.urlImage} />
         </Grid>
       </Grid>
-      <RemoveAccount />
-    </Stack>
+    </div>
   );
 }

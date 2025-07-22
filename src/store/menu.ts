@@ -1,4 +1,4 @@
-import { routes } from "@modules/routing/consts/routes";
+import { routes } from "@modules/routing/@consts/routes";
 
 interface MenuProps {
   title: string;

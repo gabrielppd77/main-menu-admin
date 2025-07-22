@@ -9,14 +9,14 @@ import {
   Button,
 } from "@mui/material";
 import { LockOutlined as LockOutlinedIcon } from "@mui/icons-material";
-import { TextField } from "@modules/core/components/TextField";
-import { TextFieldPassword } from "@modules/core/components/TextFieldPassword";
+import { TextField } from "@modules/core/@components/TextField";
+import { TextFieldPassword } from "@modules/core/@components/TextFieldPassword";
 
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "@hooks/useAuth";
-import { useLogin } from "../hooks/useLogin";
-import { routes } from "@modules/routing/consts/routes";
-import { FormValidateProvider, z } from "@modules/core/validation";
+import { useAuth } from "@modules/core/@hooks/useAuth";
+import { useLogin } from "../@hooks/useLogin";
+import { routes } from "@modules/routing/@consts/routes";
+import { FormValidateProvider, z } from "@modules/core/@validation";
 
 const schema = z.object({
   email: z
@@ -26,7 +26,7 @@ const schema = z.object({
   password: z.string({ message: "Informe a senha" }).min(1),
 });
 
-export default function Login() {
+export function Login() {
   const { mutateAsync, isPending } = useLogin();
 
   const { setToken } = useAuth();

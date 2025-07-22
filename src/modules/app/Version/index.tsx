@@ -1,6 +1,6 @@
-import { useVersion } from "../hooks/useVersion";
+import { useVersion } from "../@hooks/useVersion";
 
-export default function Version() {
+export function Version() {
   const { data } = useVersion();
 
   return <>{JSON.stringify(data || {})}</>;

@@ -6,7 +6,7 @@
 // import ActionDialog from "@components/ActionDialog";
 // import CurrencyTextField from "@components/CurrencyTextField";
 // import AutoCompleteCategory from "@components/AutoCompleteCategory";
-// import UploadImage from "@components/UploadImage";
+// import {UploadImage} from "@components/UploadImage";
 
 // import { useProductCreate } from "@libs/queries/product/useProductCreate";
 // import { useProductUpdate } from "@libs/queries/product/useProductUpdate";

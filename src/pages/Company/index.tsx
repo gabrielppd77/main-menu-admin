@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import { QrCode2 } from "@mui/icons-material";
 
-import PageHeader from "@modules/core/components/PageHeader";
+import { PageHeader } from "@modules/core/@components/PageHeader";
 
 import { useCompanyGetCompany } from "@libs/queries/company/useCompanyGetCompany";
 import { useCompanyGetQRCode } from "@libs/queries/company/useCompanyGetQRCode";

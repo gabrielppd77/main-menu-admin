@@ -4,7 +4,7 @@
 // import PageHeader from "@components/PageHeader";
 // import DataTable from "@components/DataTable";
 
-import useDialog from "@modules/core/hooks/useDialog";
+import { useDialog } from "@modules/core/@hooks/useDialog";
 
 // import { useProductGetAll } from "@libs/queries/product/useProductGetAll";
 // import { useProductRemove } from "@libs/queries/product/useProductRemove";

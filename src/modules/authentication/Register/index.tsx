@@ -8,14 +8,14 @@ import {
   Button,
 } from "@mui/material";
 import { LockOutlined as LockOutlinedIcon } from "@mui/icons-material";
-import { TextField } from "@modules/core/components/TextField";
-import { TextFieldPassword } from "@modules/core/components/TextFieldPassword";
+import { TextField } from "@modules/core/@components/TextField";
+import { TextFieldPassword } from "@modules/core/@components/TextFieldPassword";
 
-import { FormValidateProvider, z } from "@modules/core/validation";
+import { FormValidateProvider, z } from "@modules/core/@validation";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "@hooks/useAuth";
-import { useRegister } from "../hooks/useRegister";
-import { routes } from "@modules/routing/consts/routes";
+import { useAuth } from "@modules/core/@hooks/useAuth";
+import { useRegister } from "../@hooks/useRegister";
+import { routes } from "@modules/routing/@consts/routes";
 
 const schema = z
   .object({
@@ -35,7 +35,7 @@ const schema = z
     path: ["confirmPassword"],
   });
 
-export default function Register() {
+export function Register() {
   const { mutateAsync, isPending } = useRegister();
 
   const { setToken } = useAuth();

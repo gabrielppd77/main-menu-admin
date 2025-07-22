@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
-import { SortableTable } from "@modules/core/components/SortableTable";
-import { XDialog } from "@modules/core/components/XDialog";
+import { SortableTable } from "@modules/core/@components/SortableTable";
+import { XDialog } from "@modules/core/@components/XDialog";
 
 import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
 
@@ -15,10 +15,7 @@ interface ChangePositionProps {
   onClose: () => void;
 }
 
-export default function ChangePosition({
-  isOpen,
-  onClose,
-}: ChangePositionProps) {
+export function ChangePosition({ isOpen, onClose }: ChangePositionProps) {
   const [dataToChangePosition, setDataToChangePosition] = useState<
     CategoryResponse[]
   >([]);
