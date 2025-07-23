@@ -8,7 +8,8 @@ import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
 import { useListAll, useUpdateListAll } from "../@hooks/useListAll";
 import { useChangePosition } from "../@hooks/useChangePosition";
 
-import { CategoryResponse } from "../@types/CategoryResponse";
+import { ProductResponse } from "../@types/ProductResponse";
+import { formatToCurrency } from "@libs/currency";
 
 interface ChangePositionProps {
   isOpen: boolean;
@@ -17,10 +18,10 @@ interface ChangePositionProps {
 
 export function ChangePosition({ isOpen, onClose }: ChangePositionProps) {
   const [dataToChangePosition, setDataToChangePosition] = useState<
-    CategoryResponse[]
+    ProductResponse[]
   >([]);
 
-  const { data, isPending } = useListAll({});
+  const { data, isPending } = useListAll();
   const { handleChange } = useUpdateListAll();
   const {
     mutateAsync: mutateAsyncChangePosition,
@@ -47,11 +48,11 @@ export function ChangePosition({ isOpen, onClose }: ChangePositionProps) {
     <XDialog.Root
       isOpen={isOpen}
       onClose={onClose}
-      maxWidth="sm"
+      maxWidth="md"
       isLoading={isPendingChangePosition}
       onSubmit={() => handleSubmit()}
     >
-      <XDialog.Title title="Ajustar posição das categorias" />
+      <XDialog.Title title="Ajustar posição dos produtos" />
       <XDialog.Content>
         <SortableTable.Root
           data={dataToChangePosition}
@@ -60,12 +61,25 @@ export function ChangePosition({ isOpen, onClose }: ChangePositionProps) {
             {
               field: "name",
               headerName: "Nome",
-              width: "80%",
+              width: "20%",
+            },
+            {
+              field: "description",
+              headerName: "Descrição",
+              width: "35%",
+            },
+            {
+              field: "price",
+              headerName: "Preço",
+              renderRow: (d) => formatToCurrency(d.price),
+            },
+            {
+              field: "categoryName",
+              headerName: "Categoria",
             },
             {
               field: "id",
               headerName: "Ação",
-              width: "20%",
               renderRow: () => (
                 <SortableTable.DragHandle className="h-8 w-8 cursor-grab rounded-full hover:bg-gray-100">
                   <DragIndicatorIcon color="primary" />

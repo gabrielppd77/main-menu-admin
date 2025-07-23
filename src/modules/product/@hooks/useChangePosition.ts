@@ -7,7 +7,7 @@ import { ChangePositionRequest } from "@modules/core/@common/@types/ChangePositi
 export function useChangePosition() {
   return useMutation({
     mutationFn: async (data: ChangePositionRequest[]) => {
-      await api.patch("/categories/change-position", data);
+      await api.patch("/products/change-position", data);
     },
     onError: fireError,
     onSuccess: () => notifyUpdate(),

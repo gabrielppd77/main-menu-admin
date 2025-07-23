@@ -12,9 +12,10 @@ interface AutoCompleteProps<TData> {
   isLoading?: boolean;
   idField: keyof TData extends string ? keyof TData : never;
   required?: boolean;
-  onChange?: (d: string) => void;
+  onChange?: (d?: string) => void;
   value?: string;
   error?: FieldError;
+  ref?: React.Ref<unknown>;
 }
 
 function AutoCompleteDefault<TData>({
@@ -29,6 +30,7 @@ function AutoCompleteDefault<TData>({
   onChange,
   value,
   error,
+  ref,
 }: AutoCompleteProps<TData>) {
   useEffect(() => {
     if (value && options.length <= 0) {
@@ -40,8 +42,9 @@ function AutoCompleteDefault<TData>({
     <Autocomplete
       id="auto-complete"
       onChange={(_, obj) =>
-        onChange && onChange(obj ? (obj[idField] as string) : "")
+        onChange && onChange(obj ? (obj[idField] as string) : undefined)
       }
+      ref={ref}
       value={options.find((d) => d[idField] === value) || null}
       getOptionLabel={renderOptions}
       getOptionKey={(d) => d[idField] as string}
@@ -85,13 +88,14 @@ function AutoCompleteControlled<TData>({
   return (
     <Controller
       name={name}
-      render={({ field: { onChange, value }, fieldState: { error } }) => (
+      render={({ field: { ref, onChange, value }, fieldState: { error } }) => (
         <AutoCompleteDefault
           {...rest}
           name={name}
           onChange={onChange}
           value={value}
           error={error}
+          ref={ref}
         />
       )}
     />

@@ -1,4 +1,4 @@
-import { useCategoryGetAll } from "@libs/queries/category/useCategoryGetAll";
+import { useListAll } from "@modules/category/@hooks/useListAll";
 import { AutoComplete } from "../AutoComplete";
 
 interface AutoCompleteCategoryProps {
@@ -11,9 +11,8 @@ export function AutoCompleteCategory({ name }: AutoCompleteCategoryProps) {
     isLoading: _isLoading,
     isFetching,
     refetch,
-  } = useCategoryGetAll({ enabled: false });
+  } = useListAll({ enabled: false });
   const isLoading = _isLoading || isFetching;
-
   return (
     <AutoComplete
       options={data || []}
@@ -23,7 +22,6 @@ export function AutoCompleteCategory({ name }: AutoCompleteCategoryProps) {
       idField="id"
       renderOptions={(d) => d.name}
       onRefetch={refetch}
-      required
     />
   );
 }

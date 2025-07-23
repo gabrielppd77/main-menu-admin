@@ -1,4 +1,4 @@
-import { Box, Theme, Toolbar, useMediaQuery } from "@mui/material";
+import { Box, Theme, useMediaQuery } from "@mui/material";
 
 import { Navigate, Outlet } from "react-router-dom";
 
@@ -40,7 +40,7 @@ export function MainLayout() {
           }),
         })}
       >
-        <Toolbar />
+        <div className="h-14" />
         <Outlet />
       </Box>
     </Box>

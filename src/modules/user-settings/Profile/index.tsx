@@ -43,7 +43,7 @@ export function Profile() {
         <Grid size={{ xs: 12, sm: 7, md: 8, lg: 10 }}>
           <FormValidateProvider
             schema={schema}
-            values={data || { name: "" }}
+            values={data}
             onSubmit={onSubmit}
           >
             <Stack spacing={1} className="flex-1">

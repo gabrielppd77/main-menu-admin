@@ -1,15 +1,21 @@
 import { XDialog } from "@modules/core/@components/XDialog";
 import { TextField } from "@modules/core/@components/TextField";
+import { CurrencyTextField } from "@modules/core/@components/CurrencyTextField";
+import { AutoCompleteCategory } from "@modules/core/@components/AutoCompleteCategory";
 
 import { FormValidateProvider, z } from "@modules/core/@validation";
 
 import { useCreate } from "../../@hooks/useCreate";
 import { useUpdate } from "../../@hooks/useUpdate";
 import { useUpdateListAll } from "../../@hooks/useListAll";
+import { Stack } from "@mui/material";
 
 const schema = z.object({
   id: z.string().nullish(),
   name: z.string({ message: "Informe o nome" }).min(1),
+  description: z.string().nullish(),
+  price: z.number({ message: "Informe o preço" }),
+  categoryId: z.string().nullish(),
 });
 
 export type FormDataType = z.infer<typeof schema>;
@@ -31,7 +37,7 @@ export function Form({ isOpen, data, onClose }: FormProps) {
 
   async function handleSubmit(d: FormDataType) {
     if (d.id) {
-      await mutateAsyncUpdate({ categoryId: d.id, name: d.name });
+      await mutateAsyncUpdate({ productId: d.id, ...d });
     } else {
       await mutateAsyncCreate(d);
     }
@@ -50,9 +56,29 @@ export function Form({ isOpen, data, onClose }: FormProps) {
         values={data}
         onSubmit={handleSubmit}
       >
-        <XDialog.Title title="Cadastro de categoria" />
+        <XDialog.Title title="Cadastro de produto" />
         <XDialog.Content>
-          <TextField required label="Nome" name="name" autoFocus />
+          <Stack gap={1}>
+            <TextField required label="Nome" name="name" autoFocus />
+            <CurrencyTextField
+              required
+              label="Preço"
+              name="price"
+              prefix="R$ "
+            />
+            <AutoCompleteCategory name="categoryId" />
+            <TextField
+              label="Descrição"
+              name="description"
+              multiline
+              rows={4}
+              slotProps={{
+                htmlInput: {
+                  maxLength: 500,
+                },
+              }}
+            />
+          </Stack>
         </XDialog.Content>
         <XDialog.Actions />
       </FormValidateProvider>

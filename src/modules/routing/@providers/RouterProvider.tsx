@@ -18,6 +18,7 @@ import { Main as MainHome } from "@modules/home/Main";
 import { Profile } from "@modules/user-settings/Profile";
 import { Main as MainCompany } from "@modules/company/Main";
 import { Main as MainCategory } from "@modules/category/Main";
+import { Main as MainProduct } from "@modules/product/Main";
 
 import { routes as routesPaths } from "@modules/routing/@consts/routes";
 
@@ -79,6 +80,10 @@ const routes = createBrowserRouter([
       {
         element: <MainCategory />,
         path: routesPaths.category,
+      },
+      {
+        element: <MainProduct />,
+        path: routesPaths.product,
       },
     ],
   },

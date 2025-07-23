@@ -1,5 +1,5 @@
 export interface FormDataRequest {
   name: string;
-  description?: string;
+  description?: string | null;
   path: string;
 }

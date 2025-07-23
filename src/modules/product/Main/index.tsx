@@ -12,6 +12,7 @@ import { ChangePosition } from "../ChangePosition";
 
 import { useListAll, useUpdateListAll } from "../@hooks/useListAll";
 import { useRemove } from "../@hooks/useRemove";
+import { formatToCurrency } from "@libs/currency";
 
 export function Main() {
   const {
@@ -24,11 +25,11 @@ export function Main() {
     useDialog(null);
   const { mutateAsync: mutateAsyncRemove } = useRemove();
 
-  const { data, isLoading, isFetching } = useListAll({});
+  const { data, isLoading, isFetching } = useListAll();
   const { handleChange } = useUpdateListAll();
 
-  async function handleRemove(categoryId: string) {
-    await mutateAsyncRemove({ categoryId });
+  async function handleRemove(productId: string) {
+    await mutateAsyncRemove({ productId });
     handleChange();
   }
 
@@ -36,7 +37,7 @@ export function Main() {
     <Container maxWidth="xl" className="p-2">
       <Stack gap={1}>
         <PageHeader
-          title="Categorias"
+          title="Produtos"
           renderRight={
             <div className="flex flex-col gap-2 sm:flex-row">
               <Button onClick={() => toggleChangePosition(null)}>
@@ -68,6 +69,20 @@ export function Main() {
               field: "name",
               headerName: "Nome",
               flex: 1,
+            },
+            {
+              field: "description",
+              headerName: "Descrição",
+              flex: 2,
+            },
+            {
+              field: "price",
+              headerName: "Preço",
+              renderCell: ({ value }) => formatToCurrency(value),
+            },
+            {
+              field: "categoryName",
+              headerName: "Categoria",
             },
             {
               field: "id",

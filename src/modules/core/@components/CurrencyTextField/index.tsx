@@ -35,13 +35,14 @@ function CurrencyTextFieldControlled({
   return (
     <Controller
       name={name}
-      render={({ field: { onChange, value }, fieldState: { error } }) => (
+      render={({ field: { ref, onChange, value }, fieldState: { error } }) => (
         <CurrencyTextFieldDefault
           helperText={error ? error.message : null}
           error={!!error}
           onValueChange={({ floatValue }) => onChange(floatValue)}
           value={value}
           name={name}
+          inputRef={ref}
           {...rest}
         />
       )}

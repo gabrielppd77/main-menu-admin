@@ -19,13 +19,9 @@ import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
 import Paper from "@mui/material/Paper";
-import {
-  CircularProgress,
-  TableCell,
-  TableHead,
-  TableRow,
-} from "@mui/material";
+import { TableCell, TableHead, TableRow } from "@mui/material";
 import { SortableRow } from "../SortableRow";
+import { LoadingOverlay } from "../../LoadingOverlay";
 
 interface BaseItem {
   id: UniqueIdentifier;
@@ -84,11 +80,7 @@ export function SortTable<TData extends BaseItem>({
               </TableRow>
             </TableHead>
             <TableBody>
-              {isLoading && (
-                <div className="absolute inset-0 flex items-center justify-center bg-gray-100/40">
-                  <CircularProgress />
-                </div>
-              )}
+              <LoadingOverlay isLoading={isLoading} />
               {data.map((item) => (
                 <SortableRow key={item.id} id={item.id}>
                   {columns.map((col) => (

@@ -1,12 +1,4 @@
-import {
-  Box,
-  Drawer,
-  List,
-  Stack,
-  Theme,
-  Toolbar,
-  useMediaQuery,
-} from "@mui/material";
+import { Box, Drawer, List, Stack, Theme, useMediaQuery } from "@mui/material";
 
 import { SideItem } from "./SideItem";
 
@@ -41,12 +33,12 @@ export function Sidebar() {
           }),
         })}
       >
-        <Toolbar />
         <Box
           sx={{
             px: 2,
             py: 1,
           }}
+          className="mt-14"
         >
           <List disablePadding>
             <Stack spacing={1}>

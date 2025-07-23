@@ -9,4 +9,5 @@ export const routes = {
   profile: "/settings/profile",
   companyMain: "/company/main",
   category: "/category",
+  product: "/product",
 };

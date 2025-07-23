@@ -1,3 +1,4 @@
+import { Box } from "@mui/material";
 import {
   DataGrid,
   GridRowsProp,
@@ -6,18 +7,21 @@ import {
   GridEventListener,
   useGridApiRef,
 } from "@mui/x-data-grid";
+import { LoadingOverlay } from "../LoadingOverlay";
 
 interface DataTableProps<TData extends GridValidRowModel> {
   data: GridRowsProp<TData>;
   columns: GridColDef<TData>[];
-  isPending?: boolean;
+  isLoading?: boolean;
+  isFetching?: boolean;
   onKeyDown?: (key: string, rows: TData[]) => void;
 }
 
 export function DataTable<TData extends GridValidRowModel>({
   data,
   columns,
-  isPending,
+  isLoading,
+  isFetching,
   onKeyDown,
 }: DataTableProps<TData>) {
   const apiRef = useGridApiRef();
@@ -32,33 +36,36 @@ export function DataTable<TData extends GridValidRowModel>({
   };
 
   return (
-    <DataGrid
-      apiRef={apiRef}
-      loading={isPending}
-      columns={columns}
-      rows={data}
-      initialState={{
-        pagination: {
-          paginationModel: {
-            pageSize: 25,
+    <Box className="relative">
+      <LoadingOverlay isLoading={isLoading} />
+      <DataGrid
+        apiRef={apiRef}
+        loading={isFetching}
+        columns={columns}
+        rows={data}
+        initialState={{
+          pagination: {
+            paginationModel: {
+              pageSize: 25,
+            },
           },
-        },
-      }}
-      onCellKeyDown={handleCellKeyDown}
-      density="compact"
-      disableColumnMenu
-      disableColumnSorting
-      pageSizeOptions={[10, 25, 50]}
-      localeText={{
-        noRowsLabel: "Sem dados",
-        footerRowSelected: (count) =>
-          count !== 1
-            ? `${count.toLocaleString()} linhas selecionadas`
-            : `${count.toLocaleString()} linha selecionada`,
-        paginationRowsPerPage: "Linhas por página",
-        paginationDisplayedRows: ({ from, to, count }) =>
-          `${from}-${to} de ${count}`,
-      }}
-    />
+        }}
+        onCellKeyDown={handleCellKeyDown}
+        density="compact"
+        disableColumnMenu
+        disableColumnSorting
+        pageSizeOptions={[10, 25, 50]}
+        localeText={{
+          noRowsLabel: "Sem dados",
+          footerRowSelected: (count) =>
+            count !== 1
+              ? `${count.toLocaleString()} linhas selecionadas`
+              : `${count.toLocaleString()} linha selecionada`,
+          paginationRowsPerPage: "Linhas por página",
+          paginationDisplayedRows: ({ from, to, count }) =>
+            `${from}-${to} de ${count}`,
+        }}
+      />
+    </Box>
   );
 }

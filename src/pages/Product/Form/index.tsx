@@ -19,7 +19,7 @@
 
 // const schema = z.object({
 //   name: z.string({ message: "Informe o Nome" }).min(1),
-//   description: z.string().optional(),
+//   description: z.string().nullish(),
 //   order: z.number({ message: "Informe a Ordem do Produto" }).min(1),
 //   price: z.number({ message: "Informe o Preço" }),
 //   categoryId: z.string({ message: "Informe a Categoria" }).min(1),

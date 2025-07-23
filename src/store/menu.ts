@@ -17,11 +17,11 @@ const menu: MenuProps[] = [
     icon: "category",
     link: routes.category,
   },
-  // {
-  //   title: "Produtos",
-  //   icon: "store",
-  //   link: "/product",
-  // },
+  {
+    title: "Produtos",
+    icon: "store",
+    link: routes.product,
+  },
 ];
 
 export default menu;

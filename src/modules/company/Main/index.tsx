@@ -9,7 +9,7 @@ import { MainPhoto } from "./MainPhoto";
 
 const schema = z.object({
   name: z.string({ message: "Informe o Nome da loja" }).min(1),
-  description: z.string({ message: "Informe a Descrição da loja" }).optional(),
+  description: z.string({ message: "Informe a Descrição da loja" }).nullish(),
   path: z.string({ message: "Informe o Caminho para acesso da loja" }).min(1),
 });
 
@@ -39,7 +39,7 @@ export function Main() {
         <Grid size={{ xs: 12, sm: 7, md: 8, lg: 10 }}>
           <FormValidateProvider
             schema={schema}
-            values={data || { description: "", name: "", path: "" }}
+            values={data}
             onSubmit={onSubmit}
           >
             <Stack spacing={1} className="flex-1">
