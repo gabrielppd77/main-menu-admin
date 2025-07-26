@@ -1,13 +1,8 @@
-import {
-  Box,
-  Button,
-  CircularProgress,
-  LinearProgress,
-  Stack,
-} from "@mui/material";
+import { Box, Button, CircularProgress, Stack } from "@mui/material";
 import { QrCode2 } from "@mui/icons-material";
 
 import { PageHeader } from "@modules/core/@components/PageHeader";
+import { LinearProgress } from "@modules/core/@components/LinearProgress";
 
 import { useCompanyGetCompany } from "@libs/queries/company/useCompanyGetCompany";
 import { useCompanyGetQRCode } from "@libs/queries/company/useCompanyGetQRCode";
@@ -25,10 +20,7 @@ export default function Company() {
         renderRight={isLoading && <CircularProgress size={25} />}
       />
 
-      <LinearProgress
-        variant={isFetching ? "indeterminate" : "determinate"}
-        value={0}
-      />
+      <LinearProgress isLoading={isFetching} />
 
       <Stack gap={1}>
         <Stack gap={1} flexDirection="row" alignItems="center">

@@ -1,6 +1,7 @@
 import { useRef } from "react";
 
-import { Avatar, IconButton, LinearProgress } from "@mui/material";
+import { Avatar, IconButton } from "@mui/material";
+import { LinearProgress } from "../LinearProgress";
 
 interface UploadImageProps {
   src?: string;
@@ -39,9 +40,7 @@ export function UploadImage({
           />
         </IconButton>
 
-        <LinearProgress
-          className={`invisible w-full ${isLoading && "visible"}`}
-        />
+        <LinearProgress isLoading={isLoading} />
       </div>
 
       <input

@@ -1,14 +1,17 @@
+import { Stack } from "@mui/material";
 import { XDialog } from "@modules/core/@components/XDialog";
 import { TextField } from "@modules/core/@components/TextField";
 import { CurrencyTextField } from "@modules/core/@components/CurrencyTextField";
 import { AutoCompleteCategory } from "@modules/core/@components/AutoCompleteCategory";
+import { LoadingOverlay } from "@modules/core/@components/LoadingOverlay";
+import { LinearProgress } from "@modules/core/@components/LinearProgress";
 
 import { FormValidateProvider, z } from "@modules/core/@validation";
 
 import { useCreate } from "../../@hooks/useCreate";
 import { useUpdate } from "../../@hooks/useUpdate";
 import { useUpdateListAll } from "../../@hooks/useListAll";
-import { Stack } from "@mui/material";
+import { useGet } from "@modules/product/@hooks/useGet";
 
 const schema = z.object({
   id: z.string().nullish(),
@@ -18,22 +21,33 @@ const schema = z.object({
   categoryId: z.string().nullish(),
 });
 
-export type FormDataType = z.infer<typeof schema>;
+type FormDataType = z.infer<typeof schema>;
 
 interface FormProps {
   isOpen: boolean;
-  data: FormDataType | null;
+  data: string | null;
   onClose: () => void;
 }
 
-export function Form({ isOpen, data, onClose }: FormProps) {
+export function Form({ isOpen, data: productId, onClose }: FormProps) {
   const { mutateAsync: mutateAsyncCreate, isPending: isPendingCreate } =
     useCreate();
   const { mutateAsync: mutateAsyncUpdate, isPending: isPendingUpdate } =
     useUpdate();
   const { handleChange } = useUpdateListAll();
 
-  const isPending = isPendingCreate || isPendingUpdate;
+  const {
+    data: dataForm,
+    isLoading,
+    isFetching,
+  } = useGet({
+    params: {
+      productId,
+    },
+  });
+
+  const isPending =
+    isPendingCreate || isPendingUpdate || isLoading || isFetching;
 
   async function handleSubmit(d: FormDataType) {
     if (d.id) {
@@ -53,11 +67,13 @@ export function Form({ isOpen, data, onClose }: FormProps) {
     >
       <FormValidateProvider
         schema={schema}
-        values={data}
+        values={dataForm}
         onSubmit={handleSubmit}
       >
         <XDialog.Title title="Cadastro de produto" />
         <XDialog.Content>
+          <LoadingOverlay isLoading={isLoading} />
+          <LinearProgress isLoading={isFetching} />
           <Stack gap={1}>
             <TextField required label="Nome" name="name" autoFocus />
             <CurrencyTextField

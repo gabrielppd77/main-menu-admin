@@ -7,7 +7,7 @@ import { DataTable } from "@modules/core/@components/DataTable";
 import { useDialog } from "@modules/core/@hooks/useDialog";
 import { confirmDelete } from "@libs/alert";
 
-import { Form, FormDataType } from "./Form";
+import { Form } from "./Form";
 import { ChangePosition } from "../ChangePosition";
 
 import { useListAll, useUpdateListAll } from "../@hooks/useListAll";
@@ -19,7 +19,7 @@ export function Main() {
     toggle: toggleForm,
     isOpen: isOpenForm,
     data: dataForm,
-  } = useDialog<FormDataType | null>(null);
+  } = useDialog<string | null>(null);
 
   const { toggle: toggleChangePosition, isOpen: isOpenChangePosition } =
     useDialog(null);
@@ -55,7 +55,7 @@ export function Main() {
               toggleForm(null);
             }
             if (key === "F2" && row) {
-              toggleForm(row);
+              toggleForm(row.id);
             }
             if (key === "Delete" && row) {
               confirmDelete(async () => await handleRemove(row.id));
@@ -89,7 +89,7 @@ export function Main() {
               headerName: "Ações",
               renderCell: ({ value, row }) => (
                 <Stack direction="row" height="100%" gap={0.5}>
-                  <IconButton onClick={() => toggleForm(row)}>
+                  <IconButton onClick={() => toggleForm(row.id)}>
                     <Edit />
                   </IconButton>
                   <IconButton

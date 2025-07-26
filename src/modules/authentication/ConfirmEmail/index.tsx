@@ -1,18 +1,13 @@
 import { useEffect, useState } from "react";
 
-import {
-  Box,
-  Button,
-  Container,
-  LinearProgress,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Container, Typography } from "@mui/material";
 
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useConfirmEmail } from "../@hooks/useConfirmEmail";
 import { extractError } from "@libs/alert";
 import { Warning } from "@mui/icons-material";
 import { routes } from "@modules/routing/@consts/routes";
+import { LinearProgress } from "@modules/core/@components/LinearProgress";
 
 export function ConfirmEmail() {
   const [countdown, setCountdown] = useState(5);
@@ -68,7 +63,7 @@ export function ConfirmEmail() {
             {isPending && (
               <div className="mb-4">
                 <h3>Confirmando email...</h3>
-                <LinearProgress />
+                <LinearProgress isLoading />
               </div>
             )}
           </div>

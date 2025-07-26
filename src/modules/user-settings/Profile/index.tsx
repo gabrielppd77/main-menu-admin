@@ -1,4 +1,6 @@
-import { Button, Grid, LinearProgress, Stack } from "@mui/material";
+import { Button, Grid, Stack } from "@mui/material";
+import { LinearProgress } from "@modules/core/@components/LinearProgress";
+import { SimpleLoadingPage } from "@modules/core/@components/SimpleLoadingPage";
 
 import { RemoveAccount } from "./RemoveAccount";
 import { MainPhoto } from "./MainPhoto";
@@ -9,7 +11,6 @@ import {
 } from "../@hooks/useGetGeneralData";
 import { FormValidateProvider, z } from "@modules/core/@validation";
 import { TextField } from "@modules/core/@components/TextField";
-import { SimpleLoadingPage } from "@modules/core/@components/SimpleLoadingPage";
 import { useUpdateFormData } from "../@hooks/useUpdateFormData";
 
 const schema = z.object({
@@ -36,9 +37,7 @@ export function Profile() {
 
   return (
     <Stack>
-      <LinearProgress
-        className={`invisible w-full ${isFetching && "visible"}`}
-      />
+      <LinearProgress isLoading={isFetching} />
       <Grid container spacing={2}>
         <Grid size={{ xs: 12, sm: 7, md: 8, lg: 10 }}>
           <FormValidateProvider

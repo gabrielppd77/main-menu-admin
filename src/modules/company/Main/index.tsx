@@ -1,6 +1,7 @@
-import { Button, Grid, LinearProgress, Stack } from "@mui/material";
+import { Button, Grid, Stack } from "@mui/material";
 import { TextField } from "@modules/core/@components/TextField";
 import { SimpleLoadingPage } from "@modules/core/@components/SimpleLoadingPage";
+import { LinearProgress } from "@modules/core/@components/LinearProgress";
 
 import { useUpdateFormData } from "../@hooks/useUpdateFormData";
 import { useGetFormData } from "../@hooks/useGetFormData";
@@ -31,9 +32,7 @@ export function Main() {
 
   return (
     <div className="p-2">
-      <LinearProgress
-        className={`invisible w-full ${isFetching && "visible"}`}
-      />
+      <LinearProgress isLoading={isFetching} />
 
       <Grid container spacing={2} className="p-2">
         <Grid size={{ xs: 12, sm: 7, md: 8, lg: 10 }}>

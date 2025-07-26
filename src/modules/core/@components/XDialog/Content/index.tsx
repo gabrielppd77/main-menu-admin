@@ -5,5 +5,9 @@ interface ContentProps {
 }
 
 export function Content({ children }: ContentProps) {
-  return <DialogContent dividers>{children}</DialogContent>;
+  return (
+    <DialogContent dividers className="relative">
+      {children}
+    </DialogContent>
+  );
 }
