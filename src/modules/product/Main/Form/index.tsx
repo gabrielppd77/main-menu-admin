@@ -5,6 +5,7 @@ import { CurrencyTextField } from "@modules/core/@components/CurrencyTextField";
 import { AutoCompleteCategory } from "@modules/core/@components/AutoCompleteCategory";
 import { LoadingOverlay } from "@modules/core/@components/LoadingOverlay";
 import { LinearProgress } from "@modules/core/@components/LinearProgress";
+import { MainPhoto } from "./MainPhoto";
 
 import { FormValidateProvider, z } from "@modules/core/@validation";
 
@@ -75,6 +76,12 @@ export function Form({ isOpen, data: productId, onClose }: FormProps) {
           <LoadingOverlay isLoading={isLoading} />
           <LinearProgress isLoading={isFetching} />
           <Stack gap={1}>
+            {dataForm && (
+              <MainPhoto
+                productId={dataForm.id}
+                urlImage={dataForm?.urlImage}
+              />
+            )}
             <TextField required label="Nome" name="name" autoFocus />
             <CurrencyTextField
               required

@@ -19,7 +19,7 @@ export function useGet({ params }: RequestProps) {
   }
 
   const result = useQuery({
-    queryKey: [...queryKey, params],
+    queryKey: [...queryKey, params.productId],
     queryFn: handleRequest,
   });
 
@@ -33,14 +33,20 @@ export function useGet({ params }: RequestProps) {
 export function useUpdateGet() {
   const queryClient = useQueryClient();
 
-  function handleChange(newData: Partial<GetProductResponse>) {
-    queryClient.setQueryData<GetProductResponse>(queryKey, (oldData) => {
-      if (!oldData) return oldData;
-      return {
-        ...oldData,
-        ...newData,
-      };
-    });
+  function handleChange(
+    productId: string,
+    newData: Partial<GetProductResponse>,
+  ) {
+    queryClient.setQueryData<GetProductResponse>(
+      [...queryKey, productId],
+      (oldData) => {
+        if (!oldData) return oldData;
+        return {
+          ...oldData,
+          ...newData,
+        };
+      },
+    );
   }
 
   return { handleChange };
