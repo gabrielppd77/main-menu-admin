@@ -59,6 +59,11 @@ export function Main() {
                 className="max-w-2xl"
                 multiline
                 rows={4}
+                slotProps={{
+                  htmlInput: {
+                    maxLength: 500,
+                  },
+                }}
               />
             </Stack>
 
